@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clientDetailsBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="-8dp"
+    android:layout_marginEnd="-8dp"
+    android:background="@drawable/shadow_card_black"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        app:srcCompat="@drawable/ic_close_black_24dp" />
+
+    <TextView
+        style="@style/PrimaryBlackTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Client Name"
+        android:textSize="22sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/loginPhoneCard"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shadow_card_black"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:srcCompat="@drawable/ic_local_phone_green_24dp" />
+
+            <EditText
+                android:id="@+id/clientPhoneNumber"
+                style="@style/PrimaryBlackTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:maxHeight="40dp"
+                android:textAlignment="viewStart"
+                android:textColorHint="@color/light_gray" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shadow_card_black"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:srcCompat="@drawable/ic_person_gray_24dp" />
+
+            <EditText
+                android:id="@+id/clientName"
+                style="@style/PrimaryBlackTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:hint="@string/owner_name"
+                android:inputType="phone"
+                android:maxHeight="40dp"
+                android:textAlignment="viewStart"
+                android:textColorHint="@color/light_gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shadow_card_black"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:srcCompat="@drawable/ic_store_gray_24dp" />
+
+            <EditText
+                android:id="@+id/clientShopName"
+                style="@style/PrimaryBlackTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:hint="@string/shop_name"
+                android:inputType="phone"
+                android:maxHeight="40dp"
+                android:textAlignment="viewStart"
+                android:textColorHint="@color/light_gray" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/updateClientBtn"
+            style="@style/WhiteBlackTextView"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/brown_button_round_10"
+            android:text="Update"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</FrameLayout>
