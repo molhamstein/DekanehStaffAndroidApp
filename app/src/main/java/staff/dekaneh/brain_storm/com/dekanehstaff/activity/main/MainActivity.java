@@ -191,4 +191,14 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 clientName.getText().toString(),
                 clientShopName.getText().toString());
     }
+
+    @OnClick(R.id.clientEditCloseBtn)
+    public void onClientEditCloseBtn() {
+        clientDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @OnClick(R.id.orderDetailsCloseBtn)
+    public void onOrderDetailsCloseBtn() {
+        orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
 }

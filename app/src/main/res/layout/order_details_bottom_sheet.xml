@@ -17,12 +17,16 @@
     >
 
     <ImageView
+        android:id="@+id/orderDetailsCloseBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_close_black_24dp"
         android:padding="8dp"
         android:layout_gravity="end"
         android:layout_margin="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
         />
 
     <TextView
