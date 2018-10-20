@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.User;
+
 
 @Singleton
 public class Session {
@@ -122,5 +124,17 @@ public class Session {
 
     public boolean isLoggedOn() {
         return !getAccessToken().equals("");
+    }
+
+
+    public void setUser(User user, String accessToken) {
+        setAccessToken(accessToken);
+        setUserId(user.getId());
+        setEmail(user.getEmail());
+        setGender(user.getGender());
+        setUserName(user.getUsername());
+        setPhoneNumber(user.getPhoneNumber());
+        setOwnerName(user.getOwnerName());
+        setShopName(user.getShopName());
     }
 }

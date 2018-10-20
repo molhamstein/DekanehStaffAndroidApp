@@ -6,7 +6,8 @@ import staff.dekaneh.brain_storm.com.dekanehstaff.base.BaseView;
 public class LoginVP {
 
     public interface View extends BaseView {
-
+        void startMainActivity();
+        void finish();
     }
 
     public interface Presenter<T extends BaseView> extends BasePresenter<T> {

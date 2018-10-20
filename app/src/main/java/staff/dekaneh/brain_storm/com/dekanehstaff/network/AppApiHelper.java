@@ -5,18 +5,20 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 import java.util.List;
 import io.reactivex.Single;
 import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.Client;
+import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.LoginRequest;
+import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.LoginResponse;
 import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.Order;
 
 public class AppApiHelper {
 
 
-//    public static Single<LoginResponse> login(LoginRequest request) {
-//        return Rx2AndroidNetworking.post(ApiEndPoint.LOGIN)
-//                .addBodyParameter(request)
-//                .addQueryParameter("include", "user")
-//                .build()
-//                .getObjectSingle(LoginResponse.class);
-//    }
+    public static Single<LoginResponse> login(LoginRequest request) {
+        return Rx2AndroidNetworking.post(ApiEndPoint.STAFF_LOGIN)
+                .addBodyParameter(request)
+                .addQueryParameter("include", "user")
+                .build()
+                .getObjectSingle(LoginResponse.class);
+    }
 
     public static Single<List<Order>> getOrders() {
         return Rx2AndroidNetworking.get(ApiEndPoint.PENDING_ORDERS)

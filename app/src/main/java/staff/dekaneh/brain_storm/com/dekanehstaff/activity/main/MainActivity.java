@@ -1,5 +1,7 @@
 package staff.dekaneh.brain_storm.com.dekanehstaff.activity.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,6 +72,11 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     BottomSheetBehavior orderDetailsBottomSheetBehavior;
     BottomSheetBehavior clientDetailsBottomSheetBehavior;
 
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
