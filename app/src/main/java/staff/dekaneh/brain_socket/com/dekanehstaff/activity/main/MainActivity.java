@@ -87,7 +87,6 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        MapsInitializer.initialize(getApplicationContext());
         if (getActivityComponent() != null)
             getActivityComponent().inject(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

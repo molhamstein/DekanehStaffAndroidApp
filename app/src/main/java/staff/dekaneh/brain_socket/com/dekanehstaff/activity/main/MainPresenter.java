@@ -15,8 +15,6 @@ import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenuItem;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -64,12 +62,8 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 MainPresenter.this.orders = orders;
                                 getView().hideLoading();
                                 getView().addOrders(orders);
-//                                new Timer().schedule(new TimerTask() {
-//                                    @Override
-//                                    public void run() {
-//
-//                                    }
-//                                });
+                                if (mMap != null)
+                                    addMarkers();
 
                             }
                         }, new Consumer<Throwable>() {
@@ -188,7 +182,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
 
     @Override
     public ProfileDrawerItem getProfileItem() {
-        return	new ProfileDrawerItem().withName(getCacheStore().getSession().getUserName()).withEmail(getCacheStore().getSession().getEmail());
+        return new ProfileDrawerItem().withName(getCacheStore().getSession().getUserName()).withEmail(getCacheStore().getSession().getEmail());
 
     }
 
@@ -197,20 +191,20 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         getView().showLoading();
         getCompositeDisposable().add(
                 AppApiHelper.logout(getCacheStore().getSession().getAccessToken())
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        getView().hideLoading();
-                        getCacheStore().getSession().logout();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.e("ERRRR", "accept: " + NetworkUtils.getError(throwable), throwable);
-                    }
-                })
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                getView().hideLoading();
+                                getCacheStore().getSession().logout();
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Log.e("ERRRR", "accept: " + NetworkUtils.getError(throwable), throwable);
+                            }
+                        })
         );
     }
 
@@ -241,8 +235,6 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
 //        mMap.setMyLocationEnabled(true);
-        addMarkers();
-
     }
 
     @Override
