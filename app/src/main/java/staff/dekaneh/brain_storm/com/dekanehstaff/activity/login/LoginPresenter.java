@@ -50,6 +50,7 @@ public class LoginPresenter<T extends LoginVP.View> extends BasePresenterImpl<T>
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         getView().hideLoading();
+                        getView().showMessage(NetworkUtils.getError(throwable));
                         Log.e("ERRRR", "accept: " + NetworkUtils.getError(throwable), throwable);
                     }
                 })
