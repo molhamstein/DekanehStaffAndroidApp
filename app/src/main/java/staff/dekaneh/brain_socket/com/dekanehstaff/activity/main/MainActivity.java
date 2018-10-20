@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -86,13 +87,14 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        MapsInitializer.initialize(getApplicationContext());
         if (getActivityComponent() != null)
             getActivityComponent().inject(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
-        mapFragment.getMapAsync(presenter);
         presenter.onAttach(this);
+        mapFragment.getMapAsync(presenter);
         linearLayoutManager = new LinearLayoutManager(this);
 
 

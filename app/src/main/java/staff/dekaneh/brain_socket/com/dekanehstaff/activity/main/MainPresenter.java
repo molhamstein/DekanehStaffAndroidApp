@@ -15,6 +15,8 @@ import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenuItem;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -62,7 +64,12 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 MainPresenter.this.orders = orders;
                                 getView().hideLoading();
                                 getView().addOrders(orders);
-                                addMarkers();
+//                                new Timer().schedule(new TimerTask() {
+//                                    @Override
+//                                    public void run() {
+//
+//                                    }
+//                                });
 
                             }
                         }, new Consumer<Throwable>() {
@@ -234,6 +241,8 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
 //        mMap.setMyLocationEnabled(true);
+        addMarkers();
+
     }
 
     @Override

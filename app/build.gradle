@@ -4,8 +4,8 @@ def androidSupportVersion = "28.0.0"
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "staff.dekaneh.brain_storm.com.dekanehstaff"
-        minSdkVersion 19
+        applicationId "staff.dekaneh.brain_socket.com.dekanehstaff"
+        minSdkVersion 18
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
