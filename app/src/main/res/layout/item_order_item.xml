@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         style="@style/PrimaryBlackTextView"
         android:text="Kitkat"
+        android:layout_gravity="start"
         android:textSize="22sp"
         android:layout_marginStart="8dp"
         />
@@ -17,7 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/SecondaryBlackTextView"
-        android:text="Quantity:"
+        android:text="@string/quantity"
+        android:layout_gravity="start"
         android:layout_marginTop="32dp"
         android:layout_marginStart="8dp"
         />
@@ -28,6 +30,7 @@
         android:layout_height="wrap_content"
         style="@style/SecondaryBlackTextView"
         android:text="2"
+        android:layout_gravity="start"
         android:layout_marginTop="32dp"
         android:layout_marginStart="80dp"
         />
@@ -36,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/SecondaryBlackTextView"
-        android:text="Price"
+        android:text="@string/price"
         android:layout_marginTop="60dp"
         android:layout_marginStart="8dp"
         />
@@ -49,7 +52,7 @@
         style="@style/SecondaryBlackTextView"
         android:text="2000"
         android:layout_marginTop="60dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="60dp"
         />
 
     <View

@@ -2,6 +2,8 @@ package staff.dekaneh.brain_storm.com.dekanehstaff.activity.main;
 
 
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+
 import java.util.List;
 import staff.dekaneh.brain_storm.com.dekanehstaff.base.BasePresenter;
 import staff.dekaneh.brain_storm.com.dekanehstaff.base.BaseView;
@@ -26,6 +28,8 @@ public class MainVP {
         void onEditOrderStatus(Order order, android.view.View view);
         void setClientSheet(Client client);
         void updateClient(String phoneNumber, String clientName, String shopName);
+        ProfileDrawerItem getProfileItem();
+        void logout();
 
     }
 

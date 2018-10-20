@@ -15,6 +15,7 @@ public class ApiEndPoint {
     public static final String USERS = BuildConfig.BASE_API_URL + "users";
     public static final String USER = BuildConfig.BASE_API_URL + "users/{id}";
     public static final String STAFF_LOGIN = USERS + "/staffLogin";
+    public static final String LOGOUT = USERS + "/logout";
     public static final String CLIENTS = USERS + "?filter={\"where\":{\"and\":[{\"status\":\"pending\"}]}}";
 
 }

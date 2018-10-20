@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="100dp">
 
     <TextView
         android:id="@+id/shopName"
+        style="@style/PrimaryBlackTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/PrimaryBlackTextView"
-        android:text="Al Mahaba"
-        android:textSize="22sp"
+        android:layout_gravity="start"
         android:layout_marginStart="8dp"
-        />
+        android:text="Al Mahaba"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/ownerName"
+        style="@style/SecondaryBlackTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/SecondaryBlackTextView"
-        android:text="Ayham Orfali"
-        android:layout_marginTop="32dp"
+        android:layout_gravity="start"
         android:layout_marginStart="8dp"
-        />
+        android:layout_marginTop="32dp"
+        android:text="Ayham Orfali" />
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|start"
         android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+
         >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_vertical|start"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_local_phone_green_24dp"
-            />
+            app:srcCompat="@drawable/ic_local_phone_green_24dp" />
 
         <TextView
             android:id="@+id/phoneNumber"
             style="@style/GrayBoldTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_vertical|end"
             android:layout_marginStart="56dp"
             android:text="00963933074900" />
 
@@ -61,7 +61,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="#4d000000" />
-
 
 
 </FrameLayout>

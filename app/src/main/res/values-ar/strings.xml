@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dekaneh Staff</string>
+    <string name="phone_number">رقم الموبايل</string>
+    <string name="password">كلمة السر</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="owner_name">اسم المالك</string>
+    <string name="client_name">اسم الزبون</string>
+    <string name="update">تعديل</string>
+    <string name="quantity">الكمية:</string>
+    <string name="price">السعر</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="shop_name">اسم المحل</string>
+    <string name="orders">الطلبيات</string>
+    <string name="clients">الزبائن</string>
+    <string name="logout">تسجيل الخروج</string>
+</resources>

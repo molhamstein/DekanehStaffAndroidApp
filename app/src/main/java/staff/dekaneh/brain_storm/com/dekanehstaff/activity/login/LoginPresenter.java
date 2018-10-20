@@ -44,6 +44,7 @@ public class LoginPresenter<T extends LoginVP.View> extends BasePresenterImpl<T>
                         getCacheStore().getSession().setUser(loginResponse.getUser(), loginResponse.getId());
                         getView().startMainActivity();
                         getView().hideLoading();
+                        getView().finish();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

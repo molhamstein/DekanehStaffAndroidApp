@@ -16,8 +16,8 @@ public class LoginActivity extends BaseActivity implements LoginVP.View {
 
     @Inject
     LoginVP.Presenter<LoginVP.View> presenter;
-    @BindView(R.id.loginPhoneNumber)
-    EditText phoneNumberEditText;
+    @BindView(R.id.loginEmail)
+    EditText emailEditText;
     @BindView(R.id.loginPassword)
     EditText passwordEditText;
 
@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity implements LoginVP.View {
 
     @OnClick(R.id.loginBtn)
     public void onLoginBtnClicked() {
-        presenter.login(phoneNumberEditText.getText().toString(), passwordEditText.getText().toString());
+        presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
 //        presenter.login("ahmad.3taya@gmail.com", "123456");
     }
 

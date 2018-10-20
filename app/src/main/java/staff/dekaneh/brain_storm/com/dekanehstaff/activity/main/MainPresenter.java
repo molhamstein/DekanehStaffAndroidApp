@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenuItem;
 
@@ -26,6 +27,7 @@ import staff.dekaneh.brain_storm.com.dekanehstaff.network.AppApiHelper;
 import staff.dekaneh.brain_storm.com.dekanehstaff.network.CacheStore;
 import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.Client;
 import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.Order;
+import staff.dekaneh.brain_storm.com.dekanehstaff.utils.NetworkUtils;
 
 public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> implements MainVP.Presenter<T>, GoogleMap.OnMarkerClickListener {
 
@@ -155,7 +157,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
             selectedClient.setShopName(shopName);
             getView().showLoading();
             getCompositeDisposable().add(
-                    AppApiHelper.patchClient("", selectedClient)
+                    AppApiHelper.patchClient(getCacheStore().getSession().getAccessToken(), selectedClient)
                             .subscribeOn(getSchedulerProvider().io())
                             .observeOn(getSchedulerProvider().ui())
                             .subscribe(new Consumer<Client>() {
@@ -177,10 +179,38 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         }
     }
 
+    @Override
+    public ProfileDrawerItem getProfileItem() {
+        return	new ProfileDrawerItem().withName(getCacheStore().getSession().getUserName()).withEmail(getCacheStore().getSession().getEmail());
+
+    }
+
+    @Override
+    public void logout() {
+        getView().showLoading();
+        getCompositeDisposable().add(
+                AppApiHelper.logout(getCacheStore().getSession().getAccessToken())
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        getView().hideLoading();
+                        getCacheStore().getSession().logout();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("ERRRR", "accept: " + NetworkUtils.getError(throwable), throwable);
+                    }
+                })
+        );
+    }
+
     private void updateOrder(Order order) {
         getView().showLoading();
         getCompositeDisposable().add(
-                AppApiHelper.patchOrder("", order)
+                AppApiHelper.patchOrder(getCacheStore().getSession().getAccessToken(), order)
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
                         .subscribe(new Consumer<Order>() {

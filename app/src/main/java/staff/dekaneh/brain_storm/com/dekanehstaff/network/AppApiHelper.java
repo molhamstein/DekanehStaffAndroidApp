@@ -3,6 +3,8 @@ package staff.dekaneh.brain_storm.com.dekanehstaff.network;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import java.util.List;
+
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.Client;
 import staff.dekaneh.brain_storm.com.dekanehstaff.network.model.LoginRequest;
@@ -20,6 +22,13 @@ public class AppApiHelper {
                 .getObjectSingle(LoginResponse.class);
     }
 
+    public static Maybe<String> logout(String accessToken) {
+        return Rx2AndroidNetworking.post(ApiEndPoint.LOGOUT)
+                .addQueryParameter("access_token", accessToken)
+                .build()
+                .getStringMaybe();
+    }
+
     public static Single<List<Order>> getOrders() {
         return Rx2AndroidNetworking.get(ApiEndPoint.PENDING_ORDERS)
                 .build()
@@ -29,7 +38,7 @@ public class AppApiHelper {
     public static Single<Order> patchOrder(String accessToken, Order order) {
         return Rx2AndroidNetworking.patch(ApiEndPoint.ORDERS)
                 .addApplicationJsonBody(order)
-                .addQueryParameter("access_token", "4PhJEPwLlwjSoeIjuAPbsckeqWYRtcZatrD0pqQEPad0mhFZ522bby2pZFE0hJG2")
+                .addQueryParameter("access_token", accessToken)
                 .build()
                 .getObjectSingle(Order.class);
     }
@@ -44,7 +53,7 @@ public class AppApiHelper {
         return Rx2AndroidNetworking.patch(ApiEndPoint.USER)
                 .addPathParameter("id", client.getId())
                 .addBodyParameter(client)
-                .addQueryParameter("access_token", "4PhJEPwLlwjSoeIjuAPbsckeqWYRtcZatrD0pqQEPad0mhFZ522bby2pZFE0hJG2")
+                .addQueryParameter("access_token", accessToken)
                 .build()
                 .getObjectSingle(Client.class);
     }

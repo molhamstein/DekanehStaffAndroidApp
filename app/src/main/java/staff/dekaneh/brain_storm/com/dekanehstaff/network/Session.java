@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.jakewharton.processphoenix.ProcessPhoenix;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -136,5 +138,10 @@ public class Session {
         setPhoneNumber(user.getPhoneNumber());
         setOwnerName(user.getOwnerName());
         setShopName(user.getShopName());
+    }
+
+    public void logout() {
+        getPreference().edit().clear().apply();
+        ProcessPhoenix.triggerRebirth(context);
     }
 }

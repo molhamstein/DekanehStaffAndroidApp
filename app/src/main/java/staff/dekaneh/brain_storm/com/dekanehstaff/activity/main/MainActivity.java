@@ -12,12 +12,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.List;
 
@@ -135,32 +138,52 @@ public class MainActivity extends BaseActivity implements MainVP.View {
             }
         });
 
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Orders");
-        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName("Clients");
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.orders);
+        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.clients);
+
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.color.colorAccent)
+                .addProfiles(
+                        presenter.getProfileItem()
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
 
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
+                .withAccountHeader(headerResult)
                 .addDrawerItems(
                         item1,
                         item2,
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("Logout")
+                        new SecondaryDrawerItem().withIdentifier(3).withName(R.string.logout)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
-                        switch (position) {
-                            case 0:
-                                listTitle.setText("Orders");
+
+                        switch ((int)drawerItem.getIdentifier()) {
+                            case 1:
+                                listTitle.setText(R.string.orders);
                                 recyclerView.setAdapter(ordersAdapter);
                                 presenter.addMarkers();
                                 break;
-                            case 1:
-                                listTitle.setText("Clients");
+                            case 2:
+                                listTitle.setText(R.string.clients);
                                 recyclerView.setAdapter(clientsAdapter);
                                 presenter.clearMap();
+                                break;
+                            case 3:
+                                presenter.logout();
+                                break;
                         }
 
                         return false;

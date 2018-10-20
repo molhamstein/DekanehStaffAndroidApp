@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">Dekaneh Staff</string>
-    <string name="title_activity_main">Dekaneh Staff</string>
+    <string name="title_activity_main" translatable="false">Dekaneh Staff</string>
     <string name="phone_number">Phone Number</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="owner_name">Owner Name</string>
+    <string name="client_name">Client Name</string>
+    <string name="update">Update</string>
+    <string name="quantity">Quantity:</string>
+    <string name="price">Price</string>
+    <string name="email">Email</string>
     <string name="shop_name">Shop Name</string>
+    <string name="orders">Orders</string>
+    <string name="clients">Clients</string>
+    <string name="logout">Logout</string>
 </resources>
