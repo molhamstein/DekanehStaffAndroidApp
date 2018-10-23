@@ -7,6 +7,8 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -87,6 +89,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         if (getActivityComponent() != null)
             getActivityComponent().inject(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -232,4 +235,25 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     public void onOrderDetailsCloseBtn() {
         orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                presenter.fetchClients();
+                presenter.fetchOrders();
+                return false;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
