@@ -43,8 +43,9 @@ public class AppApiHelper {
                 .getObjectSingle(Order.class);
     }
 
-    public static Single<List<Client>> getClients() {
+    public static Single<List<Client>> getClients(String accessToken) {
         return Rx2AndroidNetworking.get(ApiEndPoint.CLIENTS)
+                .addQueryParameter("access_token", accessToken)
                 .build()
                 .getObjectListSingle(Client.class);
     }

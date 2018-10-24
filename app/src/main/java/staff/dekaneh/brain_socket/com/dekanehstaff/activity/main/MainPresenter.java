@@ -81,7 +81,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         getView().showLoading();
 
         getCompositeDisposable().add(
-                AppApiHelper.getClients()
+                AppApiHelper.getClients(getCacheStore().getSession().getAccessToken())
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
                         .subscribe(new Consumer<List<Client>>() {
@@ -95,7 +95,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                             @Override
                             public void accept(Throwable throwable) throws Exception {
                                 getView().hideLoading();
-                                Log.e("ASD", "accept: ", throwable);
+                                Log.e("ASD", "accept: " + NetworkUtils.getError(throwable), throwable);
 
                             }
                         })
