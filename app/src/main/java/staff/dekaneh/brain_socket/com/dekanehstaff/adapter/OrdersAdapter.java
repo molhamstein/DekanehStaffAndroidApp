@@ -61,7 +61,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
         orderViewHolder.editLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onOrderClickListener.onEditClick(order, orderViewHolder.itemView);
+                onOrderClickListener.onEditClick(order, orderViewHolder.editLayout);
             }
         });
     }
