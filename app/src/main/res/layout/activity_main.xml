@@ -50,7 +50,7 @@
             style="@style/PrimaryBlackTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Orders"
+            android:text="@string/orders"
             android:textSize="28sp" />
 
         <android.support.v7.widget.RecyclerView

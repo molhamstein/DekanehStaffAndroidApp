@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import staff.dekaneh.brain_socket.com.dekanehstaff.R;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Client;
+import staff.dekaneh.brain_socket.com.dekanehstaff.utils.DekanehUtils;
 
 public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsViewHolder> {
 
@@ -48,6 +49,13 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
             }
         });
 
+        clientsViewHolder.phoneLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DekanehUtils.call(view.getContext(), client.getPhoneNumber());
+            }
+        });
+
     }
 
     @Override
@@ -73,6 +81,8 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
         TextView ownerName;
         @BindView(R.id.phoneNumber)
         TextView phoneNumber;
+        @BindView(R.id.phoneLayout)
+        View phoneLayout;
 
 
         public ClientsViewHolder(@NonNull View itemView) {

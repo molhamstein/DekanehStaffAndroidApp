@@ -71,6 +71,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     EditText clientPhoneNumber;
     @BindView(R.id.clientShopName)
     EditText clientShopName;
+    @BindView(R.id.shopName)
+    TextView shopName;
 
 
     LinearLayoutManager linearLayoutManager;
@@ -128,6 +130,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
             @Override
             public void onItemClick(List<OrderItem> orderItems, String shopName) {
                 itemsAdapter.addAllItems(orderItems);
+                MainActivity.this.shopName.setText(shopName);
                 orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
 
@@ -174,7 +177,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
 
-                        switch ((int)drawerItem.getIdentifier()) {
+                        switch ((int) drawerItem.getIdentifier()) {
                             case 1:
                                 listTitle.setText(R.string.orders);
                                 recyclerView.setAdapter(ordersAdapter);

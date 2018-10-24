@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import staff.dekaneh.brain_socket.com.dekanehstaff.R;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Order;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.OrderItem;
+import staff.dekaneh.brain_socket.com.dekanehstaff.utils.DekanehUtils;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewHolder> {
 
@@ -64,6 +65,13 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
                 onOrderClickListener.onEditClick(order, orderViewHolder.editLayout);
             }
         });
+
+        orderViewHolder.phoneLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DekanehUtils.call(view.getContext(), order.getClient().getPhoneNumber());
+            }
+        });
     }
 
     @Override
@@ -96,6 +104,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
         View locationLayout;
         @BindView(R.id.editLayout)
         View editLayout;
+        @BindView(R.id.phoneLayout)
+        View phoneLayout;
 
         OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,7 +115,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
 
     public interface OnOrderClickListener {
         void onLocationClick(double lat, double lng);
+
         void onEditClick(Order order, View view);
+
         void onItemClick(List<OrderItem> orderItems, String shopName);
 
     }
