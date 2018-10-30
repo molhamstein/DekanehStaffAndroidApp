@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.Maybe;
 import io.reactivex.Single;
+import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Area;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Client;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.LoginRequest;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.LoginResponse;
@@ -57,6 +58,12 @@ public class AppApiHelper {
                 .addQueryParameter("access_token", accessToken)
                 .build()
                 .getObjectSingle(Client.class);
+    }
+
+    public static Single<List<Area>> getAreas() {
+        return Rx2AndroidNetworking.get(ApiEndPoint.AREAS)
+                .build()
+                .getObjectListSingle(Area.class);
     }
 
 }

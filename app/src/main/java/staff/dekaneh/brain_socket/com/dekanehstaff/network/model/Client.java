@@ -28,10 +28,17 @@ public class Client implements Serializable {
     private String status;
     @SerializedName("clientType")
     @Expose
-    private String clientType;
+    private Type clientType;
     @SerializedName("creationDate")
     @Expose
     private String creationDate;
+    @SerializedName("locationPoint")
+    @Expose
+    private LocationPoint locationPoint;
+    @SerializedName("location")
+    @Expose
+    private String location;
+
 
 
     public String getId() {
@@ -78,11 +85,33 @@ public class Client implements Serializable {
         this.status = status;
     }
 
-    public String getClientType() {
+    public Type getClientType() {
         return clientType;
     }
 
     public String getCreationDate() {
         return creationDate;
     }
+
+    public void setClientType(Type clientType) {
+        this.clientType = clientType;
+    }
+
+    public void setLocationPoint(LocationPoint locationPoint) {
+        this.locationPoint = locationPoint;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public enum Type {
+        wholesale, retailCostumer
+    }
+
+
 }

@@ -1,15 +1,24 @@
 package staff.dekaneh.brain_socket.com.dekanehstaff.activity.main;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 
 import com.androidnetworking.error.ANError;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenuItem;
@@ -25,7 +34,9 @@ import staff.dekaneh.brain_socket.com.dekanehstaff.application.SchedulerProvider
 import staff.dekaneh.brain_socket.com.dekanehstaff.base.BasePresenterImpl;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.AppApiHelper;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.CacheStore;
+import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Area;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Client;
+import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.LocationPoint;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Order;
 import staff.dekaneh.brain_socket.com.dekanehstaff.utils.NetworkUtils;
 
@@ -90,6 +101,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 getView().hideLoading();
                                 getView().addClients(clients);
                                 Log.d("ASDASD", "accept: " + clients);
+                                getView().requestPermission(Manifest.permission.ACCESS_FINE_LOCATION);
                             }
                         }, new Consumer<Throwable>() {
                             @Override
@@ -147,15 +159,28 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     @Override
     public void setClientSheet(Client client) {
         selectedClient = client;
-        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName());
+        getView().showLoading();
+        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName(), client.getClientType(), client.getLocation());
+        getCompositeDisposable().add(
+                AppApiHelper.getAreas().subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<List<Area>>() {
+                    @Override
+                    public void accept(List<Area> areas) throws Exception {
+                        getView().hideLoading();
+
+                    }
+                })
+        );
     }
 
     @Override
-    public void updateClient(String phoneNumber, String clientName, String shopName) {
+    public void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type) {
         if (selectedClient != null) {
             selectedClient.setPhoneNumber(phoneNumber);
             selectedClient.setOwnerName(clientName);
             selectedClient.setShopName(shopName);
+            selectedClient.setClientType(type);
             getView().showLoading();
             getCompositeDisposable().add(
                     AppApiHelper.patchClient(getCacheStore().getSession().getAccessToken(), selectedClient)
@@ -208,6 +233,35 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         );
     }
 
+    @Override
+    public void moveToCurrentUserLocation(Context context) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        getView().showUpdateLocationView();
+        LocationServices.getFusedLocationProviderClient(context).getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude())));
+                selectedClient.setLocationPoint(new LocationPoint(task.getResult().getLatitude(),task.getResult().getLongitude()));
+            }
+        });
+    }
+
+    @Override
+    public void setClientLocation() {
+        selectedClient.setLocationPoint(new LocationPoint(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude));
+        getView().hideUpdateLocationView();
+    }
+
+
     private void updateOrder(Order order) {
         getView().showLoading();
         getCompositeDisposable().add(
@@ -227,6 +281,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 Log.e("PATCH", "accept: ", throwable);
                             }
                         })
+
         );
     }
 
@@ -234,7 +289,6 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
-//        mMap.setMyLocationEnabled(true);
     }
 
     @Override

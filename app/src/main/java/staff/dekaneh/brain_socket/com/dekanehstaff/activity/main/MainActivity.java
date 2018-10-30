@@ -10,10 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -25,6 +27,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,6 +54,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     ItemsAdapter itemsAdapter;
     @Inject
     ClientsAdapter clientsAdapter;
+
+
     @BindView(R.id.bottomSheet)
     View bottomSheet;
     @BindView(R.id.mainRV)
@@ -73,7 +78,14 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     EditText clientShopName;
     @BindView(R.id.shopName)
     TextView shopName;
-
+    @BindView(R.id.updateClientLocationBtn)
+    Button updateClientLocationBtn;
+    @BindView(R.id.clientTypeSpinner)
+    Spinner clientTypeSpinner;
+    @BindView(R.id.centerLocationPointer)
+    View centerLocationPointer;
+    @BindView(R.id.clientLocationString)
+    EditText clientLocationString;
 
     LinearLayoutManager linearLayoutManager;
     BottomSheetBehavior bottomSheetBehavior;
@@ -145,6 +157,10 @@ public class MainActivity extends BaseActivity implements MainVP.View {
             }
         });
 
+
+        setSpinner();
+
+
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.orders);
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.clients);
 
@@ -197,6 +213,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                     }
                 })
                 .build();
+
     }
 
     @Override
@@ -216,17 +233,44 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     }
 
     @Override
-    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName) {
+    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location) {
         clientPhoneNumber.setText(phoneNumber);
         clientShopName.setText(shopName);
         this.clientName.setText(clientName);
+        clientTypeSpinner.setSelection(type == Client.Type.retailCostumer ? 0 : 1);
+        clientLocationString.setText(location);
     }
+
+    @Override
+    public void showUpdateLocationView() {
+        clientDetailsBottomSheetBehavior.setHideable(true);
+        bottomSheetBehavior.setHideable(true);
+        clientDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        updateClientLocationBtn.animate().translationY(0).start();
+        centerLocationPointer.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideUpdateLocationView() {
+        clientDetailsBottomSheetBehavior.setHideable(false);
+        bottomSheetBehavior.setHideable(false);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        updateClientLocationBtn.animate().translationY(300).start();
+        clientDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        centerLocationPointer.setVisibility(View.GONE);
+    }
+
 
     @OnClick(R.id.updateClientBtn)
     public void onUpdateClientBtnClicked() {
+        Client.Type type = clientTypeSpinner.getSelectedItemPosition() == 0 ? Client.Type.retailCostumer : Client.Type.wholesale;
         presenter.updateClient(clientPhoneNumber.getText().toString(),
                 clientName.getText().toString(),
-                clientShopName.getText().toString());
+                clientShopName.getText().toString(),
+                type
+        );
     }
 
     @OnClick(R.id.clientEditCloseBtn)
@@ -238,6 +282,18 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     public void onOrderDetailsCloseBtn() {
         orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
+
+    @OnClick(R.id.clientLocationPoint)
+    public void onEditClientLocationClicked() {
+        presenter.moveToCurrentUserLocation(this);
+
+    }
+
+    @OnClick(R.id.updateClientLocationBtn)
+    public void onUpdateClientLocationBtnClicked() {
+        presenter.setClientLocation();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,4 +315,16 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void setSpinner() {
+        List<String> types = new ArrayList<>();
+        types.add(Client.Type.retailCostumer.toString());
+        types.add(Client.Type.wholesale.toString());
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        clientTypeSpinner.setAdapter(dataAdapter);
+
+    }
 }

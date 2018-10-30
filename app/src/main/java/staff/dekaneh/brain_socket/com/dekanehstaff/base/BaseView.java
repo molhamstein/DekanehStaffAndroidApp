@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.StringRes;
 import android.view.View;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenuItem;
 
@@ -32,7 +33,6 @@ public interface BaseView {
 
     void dismissPopupMenu();
 
-
-
+    void requestPermission(String permission);
 
 }

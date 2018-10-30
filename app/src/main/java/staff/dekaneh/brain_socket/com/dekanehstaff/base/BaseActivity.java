@@ -1,13 +1,21 @@
 package staff.dekaneh.brain_socket.com.dekanehstaff.base;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenu;
@@ -108,6 +117,17 @@ public class BaseActivity extends AppCompatActivity implements LocaleUtils.Langu
             powerMenu.dismiss();
         }
     }
+
+    @Override
+    public void requestPermission(String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int permissionStatus = ContextCompat.checkSelfPermission(this, permission);
+            if (permissionStatus != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, 11); //TODO change request code
+            }
+        }
+    }
+
 
     @Override
     public void onLanguageChange() {
@@ -265,6 +285,7 @@ public class BaseActivity extends AppCompatActivity implements LocaleUtils.Langu
     private void hideProgressDialog() {
         mProgressDialog.dismiss();
     }
+
 
 }
 
