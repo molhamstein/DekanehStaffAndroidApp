@@ -26,4 +26,12 @@ public class LocationPoint implements Serializable {
     public double getLng() {
         return lng;
     }
+
+    @Override
+    public String toString() {
+        return "LocationPoint{" +
+                "lat=" + lat +
+                ", lng=" + lng +
+                '}';
+    }
 }

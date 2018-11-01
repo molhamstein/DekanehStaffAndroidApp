@@ -54,7 +54,7 @@ public class AppApiHelper {
     public static Single<Client> patchClient(String accessToken, Client client) {
         return Rx2AndroidNetworking.patch(ApiEndPoint.USER)
                 .addPathParameter("id", client.getId())
-                .addBodyParameter(client)
+                .addApplicationJsonBody(client)
                 .addQueryParameter("access_token", accessToken)
                 .build()
                 .getObjectSingle(Client.class);

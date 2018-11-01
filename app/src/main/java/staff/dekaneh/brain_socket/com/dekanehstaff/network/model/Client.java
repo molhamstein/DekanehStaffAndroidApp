@@ -113,5 +113,19 @@ public class Client implements Serializable {
         wholesale, retailCostumer
     }
 
-
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", shopName='" + shopName + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", status='" + status + '\'' +
+                ", clientType=" + clientType +
+                ", creationDate='" + creationDate + '\'' +
+                ", locationPoint=" + locationPoint.toString() +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

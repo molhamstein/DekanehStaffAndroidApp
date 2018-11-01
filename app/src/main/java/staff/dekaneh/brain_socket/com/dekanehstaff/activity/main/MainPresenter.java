@@ -182,6 +182,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
             selectedClient.setShopName(shopName);
             selectedClient.setClientType(type);
             getView().showLoading();
+            Log.d("ASDASDASDASD", "updateClient: " + selectedClient.toString());
             getCompositeDisposable().add(
                     AppApiHelper.patchClient(getCacheStore().getSession().getAccessToken(), selectedClient)
                             .subscribeOn(getSchedulerProvider().io())
@@ -191,6 +192,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 public void accept(Client client) throws Exception {
                                     getView().hideLoading();
                                     getView().showMessage("UPDATED!");
+                                    Log.d("update! ", "accept: " + client.toString());
                                     fetchClients();
                                 }
                             }, new Consumer<Throwable>() {

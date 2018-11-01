@@ -40,6 +40,7 @@ import staff.dekaneh.brain_socket.com.dekanehstaff.adapter.ClientsAdapter;
 import staff.dekaneh.brain_socket.com.dekanehstaff.adapter.ItemsAdapter;
 import staff.dekaneh.brain_socket.com.dekanehstaff.adapter.OrdersAdapter;
 import staff.dekaneh.brain_socket.com.dekanehstaff.base.BaseActivity;
+import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Area;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Client;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.Order;
 import staff.dekaneh.brain_socket.com.dekanehstaff.network.model.OrderItem;
@@ -260,6 +261,11 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         updateClientLocationBtn.animate().translationY(300).start();
         clientDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         centerLocationPointer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void addAreas(List<Area> areas) {
+
     }
 
 
