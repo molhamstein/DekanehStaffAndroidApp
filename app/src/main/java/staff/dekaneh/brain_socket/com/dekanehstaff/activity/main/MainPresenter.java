@@ -100,7 +100,6 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                             public void accept(List<Client> clients) throws Exception {
                                 getView().hideLoading();
                                 getView().addClients(clients);
-                                Log.d("ASDASD", "accept: " + clients);
                                 getView().requestPermission(Manifest.permission.ACCESS_FINE_LOCATION);
                             }
                         }, new Consumer<Throwable>() {
@@ -160,7 +159,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     public void setClientSheet(Client client) {
         selectedClient = client;
         getView().showLoading();
-        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName(), client.getClientType(), client.getLocation());
+        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName(), client.getClientType(), client.getLocation(), client.getStatus());
         getCompositeDisposable().add(
                 AppApiHelper.getAreas().subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
@@ -175,14 +174,14 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     }
 
     @Override
-    public void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type) {
+    public void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status) {
         if (selectedClient != null) {
             selectedClient.setPhoneNumber(phoneNumber);
             selectedClient.setOwnerName(clientName);
             selectedClient.setShopName(shopName);
             selectedClient.setClientType(type);
+            selectedClient.setStatus(status);
             getView().showLoading();
-            Log.d("ASDASDASDASD", "updateClient: " + selectedClient.toString());
             getCompositeDisposable().add(
                     AppApiHelper.patchClient(getCacheStore().getSession().getAccessToken(), selectedClient)
                             .subscribeOn(getSchedulerProvider().io())
@@ -192,7 +191,6 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 public void accept(Client client) throws Exception {
                                     getView().hideLoading();
                                     getView().showMessage("UPDATED!");
-                                    Log.d("update! ", "accept: " + client.toString());
                                     fetchClients();
                                 }
                             }, new Consumer<Throwable>() {

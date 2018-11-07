@@ -83,6 +83,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     Button updateClientLocationBtn;
     @BindView(R.id.clientTypeSpinner)
     Spinner clientTypeSpinner;
+    @BindView(R.id.clientStatusSpinner)
+    Spinner clientStatusSpinner;
     @BindView(R.id.centerLocationPointer)
     View centerLocationPointer;
     @BindView(R.id.clientLocationString)
@@ -159,7 +161,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         });
 
 
-        setSpinner();
+        setSpinners();
 
 
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.orders);
@@ -234,12 +236,25 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     }
 
     @Override
-    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location) {
+    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, Client.Status status) {
         clientPhoneNumber.setText(phoneNumber);
         clientShopName.setText(shopName);
         this.clientName.setText(clientName);
         clientTypeSpinner.setSelection(type == Client.Type.retailCostumer ? 0 : 1);
         clientLocationString.setText(location);
+        int index = 0;
+        switch (status) {
+            case activated:
+                index = 0;
+                break;
+            case deactivated:
+                index = 1;
+                break;
+            case pending:
+                index = 2;
+        }
+
+        clientStatusSpinner.setSelection(index);
     }
 
     @Override
@@ -272,10 +287,28 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     @OnClick(R.id.updateClientBtn)
     public void onUpdateClientBtnClicked() {
         Client.Type type = clientTypeSpinner.getSelectedItemPosition() == 0 ? Client.Type.retailCostumer : Client.Type.wholesale;
+        Client.Status status;
+
+        switch (clientStatusSpinner.getSelectedItemPosition()) {
+            case 0:
+                status = Client.Status.activated;
+                break;
+            case 1:
+                status = Client.Status.deactivated;
+                break;
+            case 2:
+                status = Client.Status.pending;
+                break;
+            default:
+                status = Client.Status.pending;
+                break;
+        }
+
         presenter.updateClient(clientPhoneNumber.getText().toString(),
                 clientName.getText().toString(),
                 clientShopName.getText().toString(),
-                type
+                type,
+                status
         );
     }
 
@@ -322,15 +355,24 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     }
 
 
-    private void setSpinner() {
+    private void setSpinners() {
         List<String> types = new ArrayList<>();
         types.add(Client.Type.retailCostumer.toString());
         types.add(Client.Type.wholesale.toString());
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
+        ArrayAdapter<String> typesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
 
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        clientTypeSpinner.setAdapter(dataAdapter);
+        typesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        clientTypeSpinner.setAdapter(typesAdapter);
+
+        List<String> statuses = new ArrayList<>();
+        statuses.add(Client.Status.activated.toString());
+        statuses.add(Client.Status.deactivated.toString());
+        statuses.add(Client.Status.pending.toString());
+        ArrayAdapter<String> statusesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statuses);
+        statusesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        clientStatusSpinner.setAdapter(statusesAdapter);
+
 
     }
 }

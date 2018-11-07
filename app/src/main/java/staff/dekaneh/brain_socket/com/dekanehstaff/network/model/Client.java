@@ -25,7 +25,7 @@ public class Client implements Serializable {
     private String phoneNumber;
     @SerializedName("status")
     @Expose
-    private String status;
+    private Status status;
     @SerializedName("clientType")
     @Expose
     private Type clientType;
@@ -77,11 +77,11 @@ public class Client implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -111,6 +111,10 @@ public class Client implements Serializable {
 
     public enum Type {
         wholesale, retailCostumer
+    }
+
+    public enum Status {
+        pending, activated, deactivated
     }
 
     @Override
