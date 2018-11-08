@@ -240,7 +240,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         clientPhoneNumber.setText(phoneNumber);
         clientShopName.setText(shopName);
         this.clientName.setText(clientName);
-        clientTypeSpinner.setSelection(type == Client.Type.retailCostumer ? 0 : 1);
+        clientTypeSpinner.setSelection(type == Client.Type.horeca ? 0 : 1);
         clientLocationString.setText(location);
         int index = 0;
         switch (status) {
@@ -286,7 +286,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
     @OnClick(R.id.updateClientBtn)
     public void onUpdateClientBtnClicked() {
-        Client.Type type = clientTypeSpinner.getSelectedItemPosition() == 0 ? Client.Type.retailCostumer : Client.Type.wholesale;
+        Client.Type type = clientTypeSpinner.getSelectedItemPosition() == 0 ? Client.Type.horeca : Client.Type.wholesale;
         Client.Status status;
 
         switch (clientStatusSpinner.getSelectedItemPosition()) {
@@ -357,8 +357,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
     private void setSpinners() {
         List<String> types = new ArrayList<>();
-        types.add(Client.Type.retailCostumer.toString());
-        types.add(Client.Type.wholesale.toString());
+        types.add(getResources().getString(R.string.horeca));
+        types.add(getResources().getString(R.string.whole_sale));
 
         ArrayAdapter<String> typesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
 
@@ -366,9 +366,9 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         clientTypeSpinner.setAdapter(typesAdapter);
 
         List<String> statuses = new ArrayList<>();
-        statuses.add(Client.Status.activated.toString());
-        statuses.add(Client.Status.deactivated.toString());
-        statuses.add(Client.Status.pending.toString());
+        statuses.add(getResources().getString(R.string.activated));
+        statuses.add(getResources().getString(R.string.deactivated));
+        statuses.add(getResources().getString(R.string.pending));
         ArrayAdapter<String> statusesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statuses);
         statusesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clientStatusSpinner.setAdapter(statusesAdapter);

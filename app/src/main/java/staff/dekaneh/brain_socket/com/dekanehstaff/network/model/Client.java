@@ -110,7 +110,7 @@ public class Client implements Serializable {
     }
 
     public enum Type {
-        wholesale, retailCostumer
+        wholesale, horeca
     }
 
     public enum Status {

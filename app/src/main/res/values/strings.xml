@@ -16,4 +16,10 @@
     <string name="logout">Logout</string>
     <string name="refresh">refresh</string>
     <string name="location">Location</string>
+    <string name="horeca">Horeca</string>
+    <string name="whole_sale">Whole sale</string>
+    <string name="activated">Activated</string>
+    <string name="deactivated">Deactivated</string>
+    <string name="pending">Pending</string>
+    <string name="edit_location_text">Edit Client Location</string>
 </resources>
