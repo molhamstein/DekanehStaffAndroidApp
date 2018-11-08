@@ -89,6 +89,10 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     View centerLocationPointer;
     @BindView(R.id.clientLocationString)
     EditText clientLocationString;
+    @BindView(R.id.editLocationMask)
+    View editLocationMask;
+    @BindView(R.id.editLocationMaskClose)
+    View editLocationMaskClose;
 
     LinearLayoutManager linearLayoutManager;
     BottomSheetBehavior bottomSheetBehavior;
@@ -265,6 +269,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         updateClientLocationBtn.animate().translationY(0).start();
         centerLocationPointer.setVisibility(View.VISIBLE);
+        editLocationMask.setVisibility(View.VISIBLE);
 
     }
 
@@ -276,6 +281,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         updateClientLocationBtn.animate().translationY(300).start();
         clientDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         centerLocationPointer.setVisibility(View.GONE);
+        editLocationMask.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -331,6 +338,11 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     @OnClick(R.id.updateClientLocationBtn)
     public void onUpdateClientLocationBtnClicked() {
         presenter.setClientLocation();
+    }
+
+    @OnClick(R.id.editLocationMaskClose)
+    public void onLocationEditCloseBtn() {
+        hideUpdateLocationView();
     }
 
 

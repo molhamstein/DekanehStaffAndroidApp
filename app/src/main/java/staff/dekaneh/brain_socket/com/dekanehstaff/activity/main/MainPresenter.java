@@ -249,7 +249,8 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         LocationServices.getFusedLocationProviderClient(context).getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude())));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude()), 16.0f));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLng());
                 selectedClient.setLocationPoint(new LocationPoint(task.getResult().getLatitude(),task.getResult().getLongitude()));
             }
         });
