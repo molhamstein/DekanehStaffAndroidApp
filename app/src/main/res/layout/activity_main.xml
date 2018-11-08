@@ -91,26 +91,5 @@
         android:textColor="@color/white"
         android:translationY="100dp"/>
 
-    <FrameLayout
-        android:id="@+id/editLocationMask"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#87000000"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        >
-
-        <ImageView
-            android:id="@+id/editLocationMaskClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_close_white_24dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="16dp"/>
-
-    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

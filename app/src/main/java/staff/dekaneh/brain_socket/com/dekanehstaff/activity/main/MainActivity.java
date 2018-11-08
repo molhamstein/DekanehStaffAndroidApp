@@ -89,10 +89,6 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     View centerLocationPointer;
     @BindView(R.id.clientLocationString)
     EditText clientLocationString;
-    @BindView(R.id.editLocationMask)
-    View editLocationMask;
-    @BindView(R.id.editLocationMaskClose)
-    View editLocationMaskClose;
     @BindView(R.id.clientAreasSpinner)
     Spinner clientAreasSpinner;
 
@@ -173,7 +169,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
 
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.orders);
-        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.clients);
+        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.new_clients);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -274,7 +270,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         updateClientLocationBtn.animate().translationY(0).start();
         centerLocationPointer.setVisibility(View.VISIBLE);
-        editLocationMask.setVisibility(View.VISIBLE);
+        toolbar.animate().alpha(0).start();
 
     }
 
@@ -286,7 +282,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         updateClientLocationBtn.animate().translationY(300).start();
         clientDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         centerLocationPointer.setVisibility(View.GONE);
-        editLocationMask.setVisibility(View.GONE);
+        toolbar.animate().alpha(1).start();
 
     }
 
@@ -351,11 +347,6 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         presenter.setClientLocation();
     }
 
-    @OnClick(R.id.editLocationMaskClose)
-    public void onLocationEditCloseBtn() {
-        hideUpdateLocationView();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -394,5 +385,14 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         statusesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clientStatusSpinner.setAdapter(statusesAdapter);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (toolbar.getAlpha() == 0){
+            hideUpdateLocationView();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
