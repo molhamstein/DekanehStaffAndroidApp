@@ -93,11 +93,15 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     View editLocationMask;
     @BindView(R.id.editLocationMaskClose)
     View editLocationMaskClose;
+    @BindView(R.id.clientAreasSpinner)
+    Spinner clientAreasSpinner;
 
     LinearLayoutManager linearLayoutManager;
     BottomSheetBehavior bottomSheetBehavior;
     BottomSheetBehavior orderDetailsBottomSheetBehavior;
     BottomSheetBehavior clientDetailsBottomSheetBehavior;
+
+    String[] areaNames;
 
 
     public static void start(Context context) {
@@ -207,7 +211,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                                 presenter.addMarkers();
                                 break;
                             case 2:
-                                listTitle.setText(R.string.clients);
+                                listTitle.setText(R.string.new_clients);
                                 recyclerView.setAdapter(clientsAdapter);
                                 presenter.clearMap();
                                 break;
@@ -240,7 +244,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     }
 
     @Override
-    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, Client.Status status) {
+    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status) {
         clientPhoneNumber.setText(phoneNumber);
         clientShopName.setText(shopName);
         this.clientName.setText(clientName);
@@ -259,6 +263,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         }
 
         clientStatusSpinner.setSelection(index);
+        clientAreasSpinner.setSelection(areaPos);
     }
 
     @Override
@@ -286,7 +291,12 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     }
 
     @Override
-    public void addAreas(List<Area> areas) {
+    public void setAreaNames(String[] areaNames) {
+        this.areaNames = areaNames;
+
+        ArrayAdapter<String> areasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, areaNames);
+        areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        clientAreasSpinner.setAdapter(areasAdapter);
 
     }
 
@@ -315,7 +325,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 clientName.getText().toString(),
                 clientShopName.getText().toString(),
                 type,
-                status
+                status,
+                areaNames[clientAreasSpinner.getSelectedItemPosition()]
         );
     }
 
@@ -371,9 +382,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         List<String> types = new ArrayList<>();
         types.add(getResources().getString(R.string.horeca));
         types.add(getResources().getString(R.string.whole_sale));
-
         ArrayAdapter<String> typesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
-
         typesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clientTypeSpinner.setAdapter(typesAdapter);
 
@@ -384,7 +393,6 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         ArrayAdapter<String> statusesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statuses);
         statusesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clientStatusSpinner.setAdapter(statusesAdapter);
-
 
     }
 }

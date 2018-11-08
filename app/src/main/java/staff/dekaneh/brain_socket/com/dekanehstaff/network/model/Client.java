@@ -38,7 +38,9 @@ public class Client implements Serializable {
     @SerializedName("location")
     @Expose
     private String location;
-
+    @SerializedName("areaId")
+    @Expose
+    private String areaId;
 
 
     public String getId() {
@@ -91,6 +93,14 @@ public class Client implements Serializable {
 
     public String getCreationDate() {
         return creationDate;
+    }
+
+    public String getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
     }
 
     public void setClientType(Type clientType) {

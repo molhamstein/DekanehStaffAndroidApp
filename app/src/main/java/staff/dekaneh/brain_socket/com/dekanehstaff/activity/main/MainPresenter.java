@@ -45,6 +45,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     private GoogleMap mMap;
     private List<Order> orders;
     private Client selectedClient;
+    private List<Area> areas;
 
 
     @Inject
@@ -57,6 +58,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         super.onAttach(mvpView);
         fetchOrders();
         fetchClients();
+        getAreas();
     }
 
     @Override
@@ -156,31 +158,23 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     }
 
     @Override
-    public void setClientSheet(Client client) {
+    public void setClientSheet(final Client client) {
         selectedClient = client;
-        getView().showLoading();
-        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName(), client.getClientType(), client.getLocation(), client.getStatus());
-        getCompositeDisposable().add(
-                AppApiHelper.getAreas().subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<List<Area>>() {
-                    @Override
-                    public void accept(List<Area> areas) throws Exception {
-                        getView().hideLoading();
-
-                    }
-                })
-        );
+        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName(), client.getClientType(), client.getLocation(), getAreaPositionFromId(client.getAreaId()), client.getStatus());
     }
 
     @Override
-    public void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status) {
+    public void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName) {
         if (selectedClient != null) {
             selectedClient.setPhoneNumber(phoneNumber);
             selectedClient.setOwnerName(clientName);
             selectedClient.setShopName(shopName);
             selectedClient.setClientType(type);
             selectedClient.setStatus(status);
+            for (int i = 0; i < areas.size(); i++) {
+                if (areaName.equals(this.areas.get(i).getNameAr()))
+                    selectedClient.setAreaId(this.areas.get(i).getId());
+            }
             getView().showLoading();
             getCompositeDisposable().add(
                     AppApiHelper.patchClient(getCacheStore().getSession().getAccessToken(), selectedClient)
@@ -198,6 +192,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 public void accept(Throwable throwable) throws Exception {
                                     Log.e("patch client", "accept: ", throwable);
                                     ANError error = (ANError) throwable;
+                                    getView().hideLoading();
                                     Log.e("patch client", "accept: " + error.getErrorBody(), throwable);
                                 }
                             })
@@ -262,6 +257,23 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         getView().hideUpdateLocationView();
     }
 
+    @Override
+    public void getAreas() {
+        getView().hideLoading();
+        getCompositeDisposable().add(
+                AppApiHelper.getAreas().subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(new Consumer<List<Area>>() {
+                            @Override
+                            public void accept(List<Area> areas) throws Exception {
+                                getView().hideLoading();
+                                MainPresenter.this.areas = areas;
+                                getView().setAreaNames(getAreaNamesArray(areas));
+                            }
+                        })
+        );
+    }
+
 
     private void updateOrder(Order order) {
         getView().showLoading();
@@ -302,5 +314,24 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         }
 
         return false;
+    }
+
+    private String[] getAreaNamesArray(List<Area> areas) {
+        String[] names = new String[areas.size()];
+
+        for (int i = 0; i < areas.size(); i++) {
+            names[i] = areas.get(i).getNameAr();
+        }
+
+        return names;
+    }
+
+    private int getAreaPositionFromId(String id) {
+        for (int i = 0; i < areas.size(); i++) {
+            if (areas.get(i).getId().equals(id)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

@@ -20,4 +20,7 @@
     <string name="deactivated">غير مفعل</string>
     <string name="pending">معلق</string>
     <string name="edit_location_text">تحديد موقع الزبون</string>
+    <string name="whole_sale">دكان</string>
+    <string name="horeca">منشأة</string>
+    <string name="new_clients">الزبائن الجدد</string>
 </resources>

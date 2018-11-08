@@ -41,6 +41,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
         clientsViewHolder.shopName.setText(client.getShopName());
         clientsViewHolder.ownerName.setText(client.getOwnerName());
         clientsViewHolder.phoneNumber.setText(client.getPhoneNumber());
+        clientsViewHolder.clientLocation.setText(client.getLocation());
 
         clientsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +84,8 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
         TextView phoneNumber;
         @BindView(R.id.phoneLayout)
         View phoneLayout;
+        @BindView(R.id.clientLocation)
+        TextView clientLocation;
 
 
         public ClientsViewHolder(@NonNull View itemView) {

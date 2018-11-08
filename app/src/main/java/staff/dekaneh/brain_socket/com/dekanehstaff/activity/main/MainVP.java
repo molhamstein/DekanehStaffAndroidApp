@@ -20,10 +20,10 @@ public class MainVP {
         void addOrders(List<Order> orders);
         void addClients(List<Client> clients);
         void markItem(int position);
-        void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, Client.Status status);
+        void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status);
         void showUpdateLocationView();
         void hideUpdateLocationView();
-        void addAreas(List<Area> areas);
+        void setAreaNames(String[] areaNames);
 
     }
 
@@ -35,11 +35,12 @@ public class MainVP {
         void addMarkers();
         void onEditOrderStatus(Order order, android.view.View view);
         void setClientSheet(Client client);
-        void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status);
+        void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName);
         ProfileDrawerItem getProfileItem();
         void logout();
         void moveToCurrentUserLocation(Context context);
         void setClientLocation();
+        void getAreas();
 
     }
 

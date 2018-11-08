@@ -22,4 +22,5 @@
     <string name="deactivated">Deactivated</string>
     <string name="pending">Pending</string>
     <string name="edit_location_text">Edit Client Location</string>
+    <string name="new_clients">New clients</string>
 </resources>
