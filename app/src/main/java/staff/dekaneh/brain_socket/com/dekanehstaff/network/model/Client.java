@@ -138,7 +138,6 @@ public class Client implements Serializable {
                 ", status='" + status + '\'' +
                 ", clientType=" + clientType +
                 ", creationDate='" + creationDate + '\'' +
-                ", locationPoint=" + locationPoint.toString() +
                 ", location='" + location + '\'' +
                 '}';
     }

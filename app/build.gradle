@@ -1,14 +1,54 @@
 apply plugin: 'com.android.application'
 def androidSupportVersion = "28.0.0"
 
+
+
+ext.versionMajor = 0 // major change - Api changes or major UI/UX change
+ext.versionMinor = 0 // minor change
+ext.versionPatch = 0 // bug-fixes
+ext.versionClassifier = 'alpha'
+ext.minimumSdkVersion = 18
+
+
+private Integer generateVersionCode() {
+    return ext.minimumSdkVersion * 10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
+//    if (ext.versionClassifier == null) {
+//        if (ext.isSnapshot) {
+//            ext.versionClassifier = "SNAPSHOT"
+//        }
+//    }
+
+    if (ext.versionClassifier != null) {
+        versionName += "-" + ext.versionClassifier
+    }
+    return versionName
+}
+
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'w31c0m31'
+            storeFile file('/Users/ayham/Desktop/DekanehStaff/Untitled')
+            storePassword 'w31c0m31'
+        }
+    }
+    lintOptions {
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "staff.dekaneh.brain_socket.com.dekanehstaff"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode generateVersionCode()
+        versionName generateVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -17,7 +57,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_API_URL", '"http://104.217.253.15:3003/api/"'
+            buildConfigField "String", "BASE_API_URL", '"http://167.99.214.78/api/"'
+            debuggable true
+            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
@@ -28,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.dagger:dagger:2.16'
@@ -36,13 +78,11 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation "com.android.support:support-v4:$androidSupportVersion"
     implementation "com.android.support:design:$androidSupportVersion"
-    implementation "com.mikepenz:materialdrawer:6.0.8"
+    implementation 'com.mikepenz:materialdrawer:6.0.8'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation "com.github.skydoves:powermenu:2.0.5"
+    implementation 'com.github.skydoves:powermenu:2.0.5'
     implementation 'com.jakewharton:process-phoenix:2.0.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-
-
     annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'

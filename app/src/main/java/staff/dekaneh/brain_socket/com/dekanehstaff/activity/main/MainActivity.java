@@ -317,12 +317,17 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 break;
         }
 
+        String selectedArea = "";
+        if (areaNames.length > 0) {
+            selectedArea = areaNames[clientAreasSpinner.getSelectedItemPosition()];
+        }
+
         presenter.updateClient(clientPhoneNumber.getText().toString(),
                 clientName.getText().toString(),
                 clientShopName.getText().toString(),
                 type,
                 status,
-                areaNames[clientAreasSpinner.getSelectedItemPosition()]
+                selectedArea
         );
     }
 
