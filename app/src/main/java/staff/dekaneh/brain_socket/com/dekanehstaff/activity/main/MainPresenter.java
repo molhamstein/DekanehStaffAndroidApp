@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.JsonObject;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenuItem;
@@ -145,6 +146,22 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                 switch (position) {
                     case 0:
                         order.setStatus("delivered");
+                        getView().showLoading();
+                        getCompositeDisposable().add(AppApiHelper.deliver(getCacheStore().getSession().getAccessToken(), order)
+                                .subscribeOn(getSchedulerProvider().io())
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(new Consumer<JsonObject>() {
+                                    @Override
+                                    public void accept(JsonObject jsonObject) throws Exception {
+                                        getView().hideLoading();
+                                    }
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        Log.d("ASDASD", "accept: " + NetworkUtils.getError(throwable) + " id = " + order.getId());
+                                    }
+                                })
+                        );
                         break;
                     case 1:
                         order.setStatus("canceled");
@@ -152,9 +169,10 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                 }
 
                 getView().dismissPopupMenu();
-                updateOrder(order);
+//                updateOrder(order);
             }
         }, view, new PowerMenuItem("Delivered", false), new PowerMenuItem("Cancel", false));
+
     }
 
     @Override
@@ -246,7 +264,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
             public void onComplete(@NonNull Task<Location> task) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude()), 16.0f));
 //                mMap.moveCamera(CameraUpdateFactory.newLatLng());
-                selectedClient.setLocationPoint(new LocationPoint(task.getResult().getLatitude(),task.getResult().getLongitude()));
+                selectedClient.setLocationPoint(new LocationPoint(task.getResult().getLatitude(), task.getResult().getLongitude()));
             }
         });
     }

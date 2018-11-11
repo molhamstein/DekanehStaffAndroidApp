@@ -1,6 +1,7 @@
 package staff.dekaneh.brain_socket.com.dekanehstaff.network;
 
 
+import com.google.gson.JsonObject;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import java.util.List;
 
@@ -64,6 +65,14 @@ public class AppApiHelper {
         return Rx2AndroidNetworking.get(ApiEndPoint.AREAS)
                 .build()
                 .getObjectListSingle(Area.class);
+    }
+
+    public static Single<JsonObject> deliver(String accessToken, Order order) {
+        return Rx2AndroidNetworking.post(ApiEndPoint.DELIVER)
+                .addPathParameter("orderId", order.getId())
+                .addQueryParameter("access_token", accessToken)
+                .build()
+                .getObjectSingle(JsonObject.class);
     }
 
 }
