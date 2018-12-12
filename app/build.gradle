@@ -44,7 +44,7 @@ android {
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "staff.dekaneh.brain_socket.com.dekanehstaff"
+        applicationId "com.brain_socket.dekanehstaff"
         minSdkVersion 18
         targetSdkVersion 28
         versionCode generateVersionCode()
