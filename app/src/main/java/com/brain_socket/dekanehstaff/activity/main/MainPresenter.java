@@ -348,6 +348,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     }
 
     private int getAreaPositionFromId(String id) {
+        if (areas != null)
         for (int i = 0; i < areas.size(); i++) {
             if (areas.get(i).getId().equals(id)) {
                 return i;

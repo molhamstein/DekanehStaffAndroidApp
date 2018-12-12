@@ -2,6 +2,7 @@ package com.brain_socket.dekanehstaff.activity.login;
 
 import android.util.Log;
 
+import com.androidnetworking.error.ANError;
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
 import com.brain_socket.dekanehstaff.base.BasePresenterImpl;
 import com.brain_socket.dekanehstaff.network.AppApiHelper;
@@ -51,8 +52,8 @@ public class LoginPresenter<T extends LoginVP.View> extends BasePresenterImpl<T>
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         getView().hideLoading();
+                        handleApiError((ANError) throwable);
                         getView().showMessage(NetworkUtils.getError(throwable));
-                        Log.e("ERRRR", "accept: " + NetworkUtils.getError(throwable), throwable);
                     }
                 })
 
