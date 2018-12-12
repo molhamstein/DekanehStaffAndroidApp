@@ -36,7 +36,6 @@ import com.skydoves.powermenu.PowerMenuItem;
 import java.util.Arrays;
 
 
-
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity implements LocaleUtils.LanguageListener, BaseView {
 
@@ -138,7 +137,8 @@ public class BaseActivity extends AppCompatActivity implements LocaleUtils.Langu
                 .applicationComponent(((App) getApplication()).getApplicationComponent())
                 .build();
         mProgressDialog = new ProgressDialog(this);
-        powerMenu = new PowerMenu.Builder(this).build();
+        if (powerMenu == null)
+            powerMenu = new PowerMenu.Builder(this).build();
     }
 
     public ActivityComponent getActivityComponent() {

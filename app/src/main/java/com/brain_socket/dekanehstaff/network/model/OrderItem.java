@@ -13,7 +13,7 @@ public class OrderItem implements Serializable {
     @SerializedName("nameAr")
     @Expose
     private String nameAr;
-    @SerializedName("retailPrice")
+    @SerializedName("price")
     @Expose
     private int retailPrice;
 

@@ -23,6 +23,7 @@ public class MainVP {
         void showUpdateLocationView();
         void hideUpdateLocationView();
         void setAreaNames(String[] areaNames);
+        void moveToCurrentLocation();
 
     }
 
@@ -37,6 +38,7 @@ public class MainVP {
         void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName);
         ProfileDrawerItem getProfileItem();
         void logout();
+        void moveToCurrentUserLocationWithPin(Context context);
         void moveToCurrentUserLocation(Context context);
         void setClientLocation();
         void getAreas();

@@ -250,7 +250,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     }
 
     @Override
-    public void moveToCurrentUserLocation(Context context) {
+    public void moveToCurrentUserLocationWithPin(Context context) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -266,8 +266,27 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude()), 16.0f));
-//                mMap.moveCamera(CameraUpdateFactory.newLatLng());
                 selectedClient.setLocationPoint(new LocationPoint(task.getResult().getLatitude(), task.getResult().getLongitude()));
+            }
+        });
+    }
+
+    @Override
+    public void moveToCurrentUserLocation(Context context) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.getFusedLocationProviderClient(context).getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude()), 12.0f));
             }
         });
     }
@@ -323,6 +342,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
+        getView().moveToCurrentLocation();
     }
 
     @Override

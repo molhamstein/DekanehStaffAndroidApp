@@ -295,6 +295,11 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
     }
 
+    @Override
+    public void moveToCurrentLocation() {
+        presenter.moveToCurrentUserLocation(this);
+    }
+
 
     @OnClick(R.id.updateClientBtn)
     public void onUpdateClientBtnClicked() {

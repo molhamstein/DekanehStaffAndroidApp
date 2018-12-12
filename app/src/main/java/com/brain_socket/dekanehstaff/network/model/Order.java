@@ -43,7 +43,7 @@ public class Order implements Serializable {
     @SerializedName("client")
     @Expose
     private Client client;
-    @SerializedName("products")
+    @SerializedName("orderProducts")
     @Expose
     private List<OrderItem> orderItems;
 
