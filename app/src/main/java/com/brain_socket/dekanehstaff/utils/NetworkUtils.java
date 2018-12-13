@@ -22,8 +22,7 @@ public class NetworkUtils {
 
         if (throwable instanceof ANError) {
             ANError anError = (ANError) throwable;
-            Error error =  anError.getErrorAsObject(Error.class);
-            return error.getMessage();
+            return anError.getErrorBody();
         }
         return "Not Instance Of Error.class";
     }
