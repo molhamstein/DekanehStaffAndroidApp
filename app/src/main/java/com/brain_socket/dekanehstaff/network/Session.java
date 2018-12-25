@@ -125,7 +125,7 @@ public class Session {
     }
 
     public boolean isLoggedOn() {
-        return !getAccessToken().equals("");
+        return getAccessToken() != null && !getAccessToken().equals("");
     }
 
 

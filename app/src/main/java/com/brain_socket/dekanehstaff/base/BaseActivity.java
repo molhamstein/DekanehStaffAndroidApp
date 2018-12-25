@@ -39,7 +39,6 @@ import java.util.Arrays;
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity implements LocaleUtils.LanguageListener, BaseView {
 
-    private View vLoading;
     ProgressDialog mProgressDialog;
     private PowerMenu powerMenu;
     private ActivityComponent activityComponent;
@@ -178,25 +177,7 @@ public class BaseActivity extends AppCompatActivity implements LocaleUtils.Langu
     }
 
     /////////////////////////
-    //--- Loading
-    /////////////////////////
-
-    protected void showLoading(boolean show) {
-        try {
-            if (vLoading == null)
-                ///vLoading = findViewById(R.id.vLoading);
-                if (show) {
-                    vLoading.setVisibility(View.VISIBLE);
-                } else {
-                    vLoading.setVisibility(View.GONE);
-                }
-        } catch (Exception ignored) {
-
-        }
-    }
-
-    /////////////////////////
-    //--- Alerts & toasts
+    //--- Alerts & toasts--//
     /////////////////////////
 
     private void displayCustomToast(String txt) {
@@ -282,5 +263,10 @@ public class BaseActivity extends AppCompatActivity implements LocaleUtils.Langu
     }
 
 
+    @Override
+    protected void onDestroy() {
+        hideProgressDialog();
+        super.onDestroy();
+    }
 }
 

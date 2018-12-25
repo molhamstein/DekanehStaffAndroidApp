@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 def androidSupportVersion = "28.0.0"
 
+def keystorePropertiesFile = rootProject.file("keystore.properties");
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-
-ext.versionMajor = 0 // major change - Api changes or major UI/UX change
+ext.versionMajor = 1 // major change - Api changes or major UI/UX change
 ext.versionMinor = 0 // minor change
 ext.versionPatch = 0 // bug-fixes
-ext.versionClassifier = 'alpha'
+ext.versionClassifier = ''
 ext.minimumSdkVersion = 18
 
 
@@ -31,10 +33,10 @@ private String generateVersionName() {
 android {
     signingConfigs {
         config {
-            keyAlias 'key0'
-            keyPassword 'w31c0m31'
-            storeFile file('/Users/ayham/Desktop/DekanehStaff/Untitled')
-            storePassword 'w31c0m31'
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
         }
     }
     lintOptions {
@@ -64,7 +66,8 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_API_URL", '"http://104.217.253.15:3003/api/"'
+//            buildConfigField "String", "BASE_API_URL", '"http://104.217.253.15:3003/api/"'
+            buildConfigField "String", "BASE_API_URL", '"http://192.168.1.5:3000/api/"'
         }
     }
 }
@@ -83,6 +86,7 @@ dependencies {
     implementation 'com.github.skydoves:powermenu:2.0.5'
     implementation 'com.jakewharton:process-phoenix:2.0.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.github.iwgang:countdownview:2.1.6'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'

@@ -61,6 +61,8 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         fetchOrders();
         fetchClients();
         getAreas();
+        Log.i("token", "onAttach: " + getCacheStore().getSession().getAccessToken());
+        Log.i("userId", "onAttach: " + getCacheStore().getSession().getUserId());
     }
 
     @Override
@@ -75,11 +77,12 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                             public void accept(List<Order> orders) throws Exception {
 
                                 MainPresenter.this.orders = orders;
+                                if (orders.isEmpty()) getView().showEmptyCartLogo();
+                                else getView().hideEmptyCartLogo();
                                 getView().hideLoading();
                                 getView().addOrders(orders);
                                 if (mMap != null)
                                     addMarkers();
-
                             }
                         }, new Consumer<Throwable>() {
                             @Override
@@ -276,6 +279,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
+            ActivityCompat.requestPermissions((MainActivity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
@@ -283,10 +287,12 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        mMap.setMyLocationEnabled(true);
         LocationServices.getFusedLocationProviderClient(context).getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude()), 12.0f));
+                if (task.getResult() != null)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(task.getResult().getLatitude(), task.getResult().getLongitude()), 12.0f));
             }
         });
     }
@@ -349,7 +355,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     public boolean onMarkerClick(Marker marker) {
 
         for (Order order : orders) {
-            if (marker.getTitle().equals(order.getClient().getShopName())) {
+            if (marker.getTitle() != null && marker.getTitle().equals(order.getClient().getShopName())) {
                 getView().markItem(orders.indexOf(order));
             }
         }
@@ -369,11 +375,11 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
 
     private int getAreaPositionFromId(String id) {
         if (areas != null)
-        for (int i = 0; i < areas.size(); i++) {
-            if (areas.get(i).getId().equals(id)) {
-                return i;
+            for (int i = 0; i < areas.size(); i++) {
+                if (areas.get(i).getId().equals(id)) {
+                    return i;
+                }
             }
-        }
         return -1;
     }
 }

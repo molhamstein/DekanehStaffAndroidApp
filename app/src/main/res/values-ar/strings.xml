@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dekaneh Staff</string>
+    <string name="app_name">طاقم دَكّان</string>
     <string name="phone_number">رقم الموبايل</string>
     <string name="password">كلمة السر</string>
     <string name="login">تسجيل الدخول</string>
@@ -23,4 +23,5 @@
     <string name="whole_sale">دكان</string>
     <string name="horeca">منشأة</string>
     <string name="new_clients">الزبائن الجدد</string>
+    <string name="in_delivery">قيد التوصيل</string>
 </resources>

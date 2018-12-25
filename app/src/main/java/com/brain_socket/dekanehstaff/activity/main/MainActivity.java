@@ -1,9 +1,12 @@
 package com.brain_socket.dekanehstaff.activity.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -90,6 +93,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     EditText clientLocationString;
     @BindView(R.id.clientAreasSpinner)
     Spinner clientAreasSpinner;
+    @BindView(R.id.emptyCartImg)
+    View emptyCartImg;
 
     LinearLayoutManager linearLayoutManager;
     BottomSheetBehavior bottomSheetBehavior;
@@ -203,12 +208,15 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                             case 1:
                                 listTitle.setText(R.string.orders);
                                 recyclerView.setAdapter(ordersAdapter);
+                                if (ordersAdapter.empty())
+                                    emptyCartImg.setVisibility(View.VISIBLE);
                                 presenter.addMarkers();
                                 break;
                             case 2:
                                 listTitle.setText(R.string.new_clients);
                                 recyclerView.setAdapter(clientsAdapter);
                                 presenter.clearMap();
+                                emptyCartImg.setVisibility(View.GONE);
                                 break;
                             case 3:
                                 presenter.logout();
@@ -300,6 +308,16 @@ public class MainActivity extends BaseActivity implements MainVP.View {
         presenter.moveToCurrentUserLocation(this);
     }
 
+    @Override
+    public void hideEmptyCartLogo() {
+        emptyCartImg.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEmptyCartLogo() {
+        emptyCartImg.setVisibility(View.VISIBLE);
+    }
+
 
     @OnClick(R.id.updateClientBtn)
     public void onUpdateClientBtnClicked() {
@@ -347,7 +365,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
     @OnClick(R.id.clientLocationPoint)
     public void onEditClientLocationClicked() {
-        presenter.moveToCurrentUserLocation(this);
+        presenter.moveToCurrentUserLocationWithPin(this);
 
     }
 
@@ -398,10 +416,20 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
     @Override
     public void onBackPressed() {
-        if (toolbar.getAlpha() == 0){
+        if (toolbar.getAlpha() == 0) {
             hideUpdateLocationView();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                presenter.moveToCurrentUserLocation(this);
+            }
         }
     }
 }

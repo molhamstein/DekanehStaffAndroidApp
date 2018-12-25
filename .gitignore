@@ -1,8 +1,13 @@
 *.iml
 .gradle
 /local.properties
+/keyStore.properties
 *.idea
 .DS_Store
 /build
 /captures
 .externalNativeBuild
+DockaanStaff.keystore.jks
+Staff Secrets.zip
+app/libs/
+app/release/*

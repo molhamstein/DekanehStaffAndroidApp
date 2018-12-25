@@ -2,6 +2,7 @@ package com.brain_socket.dekanehstaff.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,15 @@ import com.brain_socket.dekanehstaff.network.model.OrderItem;
 import com.brain_socket.dekanehstaff.utils.DekanehUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.iwgang.countdownview.CountdownView;
+import cn.iwgang.countdownview.DynamicConfig;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewHolder> {
 
@@ -40,12 +44,19 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
     public void onBindViewHolder(@NonNull final OrderViewHolder orderViewHolder, int i) {
 
         final Order order = orders.get(i);
+        long orderDateMilliSeconds = order.getOrderDate().getTime() + 86400000 - new Date().getTime();
 
         orderViewHolder.shopName.setText(order.getClient().getShopName());
         orderViewHolder.ownerName.setText(order.getClient().getOwnerName());
         orderViewHolder.phoneNumber.setText(order.getClient().getPhoneNumber());
         orderViewHolder.location.setText(order.getClient().getLocation());
         orderViewHolder.price.setText(String.valueOf(order.getTotalPrice()));
+        orderViewHolder.countDown.updateShow(orderDateMilliSeconds);
+        orderViewHolder.countDown.start(orderDateMilliSeconds);
+        Log.d("ASDQWEASDQWE", "onBindViewHolder: " + orderViewHolder.countDown.getHour());
+        if (orderViewHolder.countDown.getRemainTime() < 7200000) {
+            orderViewHolder.countDown.dynamicShow(new DynamicConfig.Builder().setSuffixTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.bad_rating_color)).setTimeTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.bad_rating_color)).build());
+        }
 
         orderViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +100,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
         this.onOrderClickListener = onOrderClickListener;
     }
 
+    public boolean empty() {
+        return this.orders.isEmpty();
+    }
+
     class OrderViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.shopName)
@@ -107,6 +122,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
         View editLayout;
         @BindView(R.id.phoneLayout)
         View phoneLayout;
+        @BindView(R.id.countDown)
+        CountdownView countDown;
 
         OrderViewHolder(@NonNull View itemView) {
             super(itemView);

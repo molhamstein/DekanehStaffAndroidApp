@@ -24,6 +24,8 @@ public class MainVP {
         void hideUpdateLocationView();
         void setAreaNames(String[] areaNames);
         void moveToCurrentLocation();
+        void hideEmptyCartLogo();
+        void showEmptyCartLogo();
 
     }
 
