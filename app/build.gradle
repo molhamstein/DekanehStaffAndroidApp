@@ -7,7 +7,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 ext.versionMajor = 1 // major change - Api changes or major UI/UX change
 ext.versionMinor = 0 // minor change
-ext.versionPatch = 0 // bug-fixes
+ext.versionPatch = 1 // bug-fixes
 ext.versionClassifier = ''
 ext.minimumSdkVersion = 18
 
