@@ -24,4 +24,6 @@
     <string name="edit_location_text">Edit Client Location</string>
     <string name="new_clients">New clients</string>
     <string name="in_delivery">In Delivery</string>
+    <string name="delivered">Delivered</string>
+    <string name="cancel">Cancel</string>
 </resources>

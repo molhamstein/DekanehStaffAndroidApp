@@ -143,7 +143,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     }
 
     @Override
-    public void onEditOrderStatus(final Order order, View view) {
+    public void onEditOrderStatus(Context context, final Order order, View view) {
         getView().showPopupMenu(new OnMenuItemClickListener() {
             @Override
             public void onItemClick(int position, Object item) {
@@ -177,7 +177,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                 getView().dismissPopupMenu();
 //                updateOrder(order);
             }
-        }, view, new PowerMenuItem("Delivered", false), new PowerMenuItem("Cancel", false));
+        }, view, new PowerMenuItem(context.getString(R.string.delivered), false), new PowerMenuItem(context.getString(R.string.cancel), false));
 
     }
 

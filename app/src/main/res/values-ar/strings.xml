@@ -24,4 +24,6 @@
     <string name="horeca">منشأة</string>
     <string name="new_clients">الزبائن الجدد</string>
     <string name="in_delivery">قيد التوصيل</string>
+    <string name="delivered">تم التوصيل</string>
+    <string name="cancel">إلغاء</string>
 </resources>

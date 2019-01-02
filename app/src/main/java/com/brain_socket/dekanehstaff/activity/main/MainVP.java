@@ -35,7 +35,7 @@ public class MainVP {
         void focusOn(double lat, double lng);
         void clearMap();
         void addMarkers();
-        void onEditOrderStatus(Order order, android.view.View view);
+        void onEditOrderStatus(Context context, Order order, android.view.View view);
         void setClientSheet(Client client);
         void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName);
         ProfileDrawerItem getProfileItem();

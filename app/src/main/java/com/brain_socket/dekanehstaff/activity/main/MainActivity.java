@@ -147,7 +147,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
             @Override
             public void onEditClick(Order order, View view) {
-                presenter.onEditOrderStatus(order, view);
+                presenter.onEditOrderStatus(MainActivity.this, order, view);
             }
 
             @Override
