@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
 import com.brain_socket.dekanehstaff.network.model.OrderItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         itemViewHolder.name.setText(orderItem.getNameAr());
         itemViewHolder.count.setText(String.valueOf(orderItem.getCount()));
         itemViewHolder.price.setText(String.valueOf(orderItem.getRetailPrice()));
-
+        if (!orderItem.getThumbnailUrl().equals(""))
+            Picasso.get().load(orderItem.getThumbnailUrl()).into(itemViewHolder.itemImage);
     }
 
     @Override
@@ -61,6 +64,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         TextView count;
         @BindView(R.id.itemPrice)
         TextView price;
+        @BindView(R.id.itemImage)
+        ImageView itemImage;
 
 
         public ItemViewHolder(@NonNull View itemView) {

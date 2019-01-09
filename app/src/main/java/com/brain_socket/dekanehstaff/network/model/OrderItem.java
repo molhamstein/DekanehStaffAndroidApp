@@ -16,6 +16,10 @@ public class OrderItem implements Serializable {
     @SerializedName("price")
     @Expose
     private int retailPrice;
+    @SerializedName("media")
+    @Expose
+    private Media media;
+
 
     public int getCount() {
         return count;
@@ -27,5 +31,20 @@ public class OrderItem implements Serializable {
 
     public int getRetailPrice() {
         return retailPrice;
+    }
+
+    public String getThumbnailUrl() {
+        return media.thumbnail;
+    }
+
+    public class Media implements Serializable {
+
+        @SerializedName("thumbnail")
+        @Expose
+        private String thumbnail;
+
+        public String getThumbnail() {
+            return thumbnail;
+        }
     }
 }

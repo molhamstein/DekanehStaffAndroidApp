@@ -7,7 +7,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 ext.versionMajor = 1 // major change - Api changes or major UI/UX change
 ext.versionMinor = 0 // minor change
-ext.versionPatch = 1 // bug-fixes
+ext.versionPatch = 2 // bug-fixes
 ext.versionClassifier = ''
 ext.minimumSdkVersion = 18
 
@@ -59,8 +59,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_API_URL", '"http://167.99.214.78/api/"'
-            debuggable true
+            buildConfigField "String", "BASE_API_URL", '"http://dockaan.com/api/"'
+            debuggable false
             signingConfig signingConfigs.config
         }
         debug {
@@ -87,6 +87,7 @@ dependencies {
     implementation 'com.jakewharton:process-phoenix:2.0.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.github.iwgang:countdownview:2.1.6'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'
