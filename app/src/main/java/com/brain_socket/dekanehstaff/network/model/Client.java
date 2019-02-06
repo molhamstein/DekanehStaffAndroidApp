@@ -41,6 +41,9 @@ public class Client implements Serializable {
     @SerializedName("areaId")
     @Expose
     private String areaId;
+    @SerializedName("notes")
+    @Expose
+    private String notes;
 
 
     public String getId() {
@@ -111,6 +114,14 @@ public class Client implements Serializable {
         this.locationPoint = locationPoint;
     }
 
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -134,6 +145,7 @@ public class Client implements Serializable {
                 ", username='" + username + '\'' +
                 ", shopName='" + shopName + '\'' +
                 ", ownerName='" + ownerName + '\'' +
+                ", notes='" + notes + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", status='" + status + '\'' +
                 ", clientType=" + clientType +

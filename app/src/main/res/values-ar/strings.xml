@@ -16,6 +16,7 @@
     <string name="logout">تسجيل الخروج</string>
     <string name="refresh">تحديث</string>
     <string name="location">الموقع</string>
+    <string name="notes">الملاحظات</string>
     <string name="activated">مفعل</string>
     <string name="deactivated">غير مفعل</string>
     <string name="pending">معلق</string>

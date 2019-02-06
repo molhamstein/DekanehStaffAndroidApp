@@ -20,7 +20,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this)).build();
 
@@ -33,7 +32,6 @@ public class App extends Application {
         Configuration config = new Configuration();
         config.locale = locale;
         getResources().updateConfiguration(config, null);
-
 
     }
 

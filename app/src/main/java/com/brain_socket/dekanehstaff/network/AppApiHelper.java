@@ -31,8 +31,10 @@ public class AppApiHelper {
                 .getStringMaybe();
     }
 
-    public static Single<List<Order>> getOrders() {
+    public static Single<List<Order>> getOrders(String accessToken, String staffMemberId) {
         return Rx2AndroidNetworking.get(ApiEndPoint.PENDING_ORDERS)
+                //.addQueryParameter("access_token", accessToken)
+                .addPathParameter("deliveryMemberId", staffMemberId)
                 .build()
                 .getObjectListSingle(Order.class);
     }

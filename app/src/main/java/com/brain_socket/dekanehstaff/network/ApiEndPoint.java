@@ -11,7 +11,7 @@ public class ApiEndPoint {
 
     //    public static final String PRODUCTS = BuildConfig.BASE_API_URL ;
     public static final String ORDERS = BuildConfig.BASE_API_URL + "orders";
-    public static final String PENDING_ORDERS = ORDERS + "?filter={\"where\":{\"and\":[{\"status\":\"inDelivery\"}]},\"include\":[\"client\"]}";
+    public static final String PENDING_ORDERS = ORDERS + "?filter={\"where\":{\"and\":[{\"status\":\"inDelivery\"},{\"deliveryMemberId\":\"{deliveryMemberId}\"}]},\"include\":[\"client\"]}";
     public static final String USERS = BuildConfig.BASE_API_URL + "users";
     public static final String USER = BuildConfig.BASE_API_URL + "users/{id}";
     public static final String STAFF_LOGIN = USERS + "/staffLogin";

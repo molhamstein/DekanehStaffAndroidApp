@@ -61,15 +61,15 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
         fetchOrders();
         fetchClients();
         getAreas();
-        Log.i("token", "onAttach: " + getCacheStore().getSession().getAccessToken());
-        Log.i("userId", "onAttach: " + getCacheStore().getSession().getUserId());
+        //Log.i("token", "onAttach: " + getCacheStore().getSession().getAccessToken());
+        //Log.i("userId", "onAttach: " + getCacheStore().getSession().getUserId());
     }
 
     @Override
     public void fetchOrders() {
         getView().showLoading();
         getCompositeDisposable().add(
-                AppApiHelper.getOrders()
+                AppApiHelper.getOrders(getCacheStore().getSession().getAccessToken(), getCacheStore().getSession().getUserId())
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
                         .subscribe(new Consumer<List<Order>>() {
@@ -77,8 +77,10 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                             public void accept(List<Order> orders) throws Exception {
 
                                 MainPresenter.this.orders = orders;
-                                if (orders.isEmpty()) getView().showEmptyCartLogo();
-                                else getView().hideEmptyCartLogo();
+                                if (orders.isEmpty())
+                                    getView().showEmptyCartLogo();
+                                else
+                                    getView().hideEmptyCartLogo();
                                 getView().hideLoading();
                                 getView().addOrders(orders);
                                 if (mMap != null)

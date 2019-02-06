@@ -42,6 +42,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         itemViewHolder.name.setText(orderItem.getNameAr());
         itemViewHolder.count.setText(String.valueOf(orderItem.getCount()));
         itemViewHolder.price.setText(String.valueOf(orderItem.getRetailPrice()));
+        itemViewHolder.pack.setText(String.valueOf(orderItem.getPack()));
         if (!orderItem.getThumbnailUrl().equals(""))
             Picasso.get().load(orderItem.getThumbnailUrl()).into(itemViewHolder.itemImage);
     }
@@ -66,6 +67,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         TextView price;
         @BindView(R.id.itemImage)
         ImageView itemImage;
+        @BindView(R.id.itemPack)
+        TextView pack;
 
 
         public ItemViewHolder(@NonNull View itemView) {
