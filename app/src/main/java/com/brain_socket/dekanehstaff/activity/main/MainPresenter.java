@@ -19,6 +19,7 @@ import com.brain_socket.dekanehstaff.network.model.Area;
 import com.brain_socket.dekanehstaff.network.model.Client;
 import com.brain_socket.dekanehstaff.network.model.LocationPoint;
 import com.brain_socket.dekanehstaff.network.model.Order;
+import com.brain_socket.dekanehstaff.network.model.OrderItem;
 import com.brain_socket.dekanehstaff.utils.NetworkUtils;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +36,10 @@ import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.skydoves.powermenu.PowerMenuItem;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -85,6 +89,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 getView().addOrders(orders);
                                 if (mMap != null)
                                     addMarkers();
+
                             }
                         }, new Consumer<Throwable>() {
                             @Override
@@ -97,7 +102,33 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     }
 
     @Override
+    public List<OrderItem> aggregatedOrders() {
+
+        Map<String, OrderItem> tempItems = new HashMap<>();
+
+        for (Order order : orders) {
+            for(OrderItem item : order.getOrderItems()) {
+                String key = item.getId();
+                int itemCount = item.getCount();
+                if (tempItems.containsKey(key)) {
+                    Log.d("containsKey", "aggregate: " + key);
+                    tempItems.get(key).setCount(tempItems.get(key).getCount() + itemCount);
+                }
+                else {
+                    Log.d("notContainsKey", "aggregate: " + key);
+                    tempItems.put(key, new OrderItem(item));
+                }
+            }
+
+        }
+
+        return new ArrayList<>(tempItems.values());
+//        return new ArrayList<>();
+    }
+
+    @Override
     public void fetchClients() {
+
         getView().showLoading();
 
         getCompositeDisposable().add(
@@ -151,7 +182,6 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
             public void onItemClick(int position, Object item) {
                 switch (position) {
                     case 0:
-                        Log.d("ASDASD", "accept: " + " order id = " + order.getId() + " user id = " + getCacheStore().getSession().getUserId());
                         order.setStatus("delivered");
                         getView().showLoading();
                         getCompositeDisposable().add(AppApiHelper.deliver(getCacheStore().getSession().getAccessToken(), order)

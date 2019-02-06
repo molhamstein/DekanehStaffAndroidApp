@@ -152,9 +152,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
             @Override
             public void onItemClick(List<OrderItem> orderItems, String shopName) {
-                itemsAdapter.addAllItems(orderItems);
-                MainActivity.this.shopName.setText(shopName);
-                orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                openOrderDetailsBottomSheet(orderItems, shopName, false);
             }
 
         });
@@ -174,6 +172,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.orders);
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.new_clients);
+        PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.all_orders);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -196,6 +195,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 .addDrawerItems(
                         item1,
                         item2,
+                        item3,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withIdentifier(3).withName(R.string.logout)
                 )
@@ -219,6 +219,9 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                                 emptyCartImg.setVisibility(View.GONE);
                                 break;
                             case 3:
+                                openOrderDetailsBottomSheet(presenter.aggregatedOrders(), getString(R.string.all_orders), true);
+                                break;
+                            case 4:
                                 presenter.logout();
                                 break;
                         }
@@ -228,6 +231,13 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 })
                 .build();
 
+    }
+
+    private void openOrderDetailsBottomSheet(List<OrderItem> orderItems, String shopName, boolean allOrders) {
+        itemsAdapter.setDockaanPrice(allOrders);
+        itemsAdapter.addAllItems(orderItems);
+        MainActivity.this.shopName.setText(shopName);
+        orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override

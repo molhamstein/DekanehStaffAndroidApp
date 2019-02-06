@@ -27,4 +27,5 @@
     <string name="in_delivery">In Delivery</string>
     <string name="delivered">Delivered</string>
     <string name="cancel">Cancel</string>
+    <string name="all_orders">All Orders</string>
 </resources>
