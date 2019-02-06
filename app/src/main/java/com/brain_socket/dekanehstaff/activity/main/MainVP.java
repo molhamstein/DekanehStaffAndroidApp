@@ -23,7 +23,7 @@ public class MainVP {
 
         void markItem(int position);
 
-        void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status);
+        void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status, String notes);
 
         void showUpdateLocationView();
 
@@ -54,7 +54,7 @@ public class MainVP {
 
         void setClientSheet(Client client);
 
-        void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName);
+        void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName, String notes);
 
         ProfileDrawerItem getProfileItem();
 

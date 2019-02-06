@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     EditText clientPhoneNumber;
     @BindView(R.id.clientShopName)
     EditText clientShopName;
+    @BindView(R.id.clientNotesString)
+    EditText clientNotesString;
     @BindView(R.id.shopName)
     TextView shopName;
     @BindView(R.id.updateClientLocationBtn)
@@ -257,12 +259,13 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     }
 
     @Override
-    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status) {
+    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status, String notes) {
         clientPhoneNumber.setText(phoneNumber);
         clientShopName.setText(shopName);
         this.clientName.setText(clientName);
         clientTypeSpinner.setSelection(type == Client.Type.horeca ? 0 : 1);
         clientLocationString.setText(location);
+        clientNotesString.setText(notes);
         int index = 0;
         switch (status) {
             case activated:
@@ -359,7 +362,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 clientShopName.getText().toString(),
                 type,
                 status,
-                selectedArea
+                selectedArea,
+                clientNotesString.getText().toString()
         );
     }
 

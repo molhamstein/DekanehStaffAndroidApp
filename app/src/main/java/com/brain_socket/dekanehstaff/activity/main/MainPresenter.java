@@ -216,17 +216,18 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
     @Override
     public void setClientSheet(final Client client) {
         selectedClient = client;
-        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName(), client.getClientType(), client.getLocation(), getAreaPositionFromId(client.getAreaId()), client.getStatus());
+        getView().updateClientDetailsSheet(client.getPhoneNumber(), client.getOwnerName(), client.getShopName(), client.getClientType(), client.getLocation(), getAreaPositionFromId(client.getAreaId()), client.getStatus(), client.getNotes());
     }
 
     @Override
-    public void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName) {
+    public void updateClient(String phoneNumber, String clientName, String shopName, Client.Type type, Client.Status status, String areaName, String notes) {
         if (selectedClient != null) {
             selectedClient.setPhoneNumber(phoneNumber);
             selectedClient.setOwnerName(clientName);
             selectedClient.setShopName(shopName);
             selectedClient.setClientType(type);
             selectedClient.setStatus(status);
+            selectedClient.setNotes(notes);
             for (int i = 0; i < areas.size(); i++) {
                 if (areaName.equals(this.areas.get(i).getNameAr()))
                     selectedClient.setAreaId(this.areas.get(i).getId());
