@@ -28,4 +28,6 @@
     <string name="delivered">تم التوصيل</string>
     <string name="cancel">إلغاء</string>
     <string name="all_orders">كل الطلبات</string>
+    <string name="api_default_error">حصل خطأ غير متوقع</string>
+    <string name="user_not_activated_error">حسابك غير مفعل</string>
 </resources>

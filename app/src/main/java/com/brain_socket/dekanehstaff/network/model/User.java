@@ -15,7 +15,7 @@ public class User implements Serializable {
     private String phoneNumber;
     @SerializedName("status")
     @Expose
-    private String status;
+    private Status status;
     @SerializedName("email")
     @Expose
     private String email;
@@ -52,7 +52,7 @@ public class User implements Serializable {
         return phoneNumber;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -82,5 +82,10 @@ public class User implements Serializable {
 
     public String getGender() {
         return gender;
+    }
+
+
+    public enum Status {
+        pending,activated,deactivated
     }
 }

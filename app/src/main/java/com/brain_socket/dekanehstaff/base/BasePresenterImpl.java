@@ -1,7 +1,10 @@
 package com.brain_socket.dekanehstaff.base;
 
+import com.androidnetworking.common.ANConstants;
 import com.androidnetworking.error.ANError;
+import com.brain_socket.dekanehstaff.R;
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
+import com.brain_socket.dekanehstaff.network.AppApiHelper;
 import com.brain_socket.dekanehstaff.network.CacheStore;
 
 import javax.inject.Inject;
@@ -62,14 +65,15 @@ public class BasePresenterImpl<T extends BaseView> implements BasePresenter<T> {
     @Override
     public void handleApiError(ANError error) {
 
-//        if (error == null || error.getErrorBody() == null) {
-//            getView().onError(R.string.api_default_error);
-//        }
-//
-//        else if (error.getErrorCode() == AppApiHelper.API_STATUS_CODE_LOCAL_ERROR
-//                && error.getErrorDetail().equals(ANConstants.CONNECTION_ERROR)) {
-//            getView().onError(R.string.connection_error);
-//        }
+        if (error == null || error.getErrorBody() == null) {
+            getView().onError(R.string.api_default_error);
+        }
+
+
+
+        else {
+            getView().onError(R.string.user_not_activated_error);
+        }
 //
 //        else if (error.getErrorCode() == AppApiHelper.API_STATUS_CODE_LOCAL_ERROR
 //                && error.getErrorDetail().equals(ANConstants.REQUEST_CANCELLED_ERROR)) {

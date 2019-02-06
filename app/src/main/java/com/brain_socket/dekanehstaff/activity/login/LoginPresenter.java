@@ -9,6 +9,7 @@ import com.brain_socket.dekanehstaff.network.AppApiHelper;
 import com.brain_socket.dekanehstaff.network.CacheStore;
 import com.brain_socket.dekanehstaff.network.model.LoginRequest;
 import com.brain_socket.dekanehstaff.network.model.LoginResponse;
+import com.brain_socket.dekanehstaff.network.model.User;
 import com.brain_socket.dekanehstaff.utils.NetworkUtils;
 
 import javax.inject.Inject;
@@ -43,10 +44,15 @@ public class LoginPresenter<T extends LoginVP.View> extends BasePresenterImpl<T>
                 .subscribe(new Consumer<LoginResponse>() {
                     @Override
                     public void accept(LoginResponse loginResponse) throws Exception {
-                        getCacheStore().getSession().setUser(loginResponse.getUser(), loginResponse.getId());
-                        getView().startMainActivity();
-                        getView().hideLoading();
-                        getView().finish();
+                        if(loginResponse.getUser().getStatus() == User.Status.activated) {
+                            getCacheStore().getSession().setUser(loginResponse.getUser(), loginResponse.getId());
+                            getView().startMainActivity();
+                            getView().hideLoading();
+                            getView().finish();
+                        }
+                        else {
+                            handleApiError(new ANError());
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
