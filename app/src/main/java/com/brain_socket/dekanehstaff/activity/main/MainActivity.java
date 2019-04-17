@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     EditText clientPhoneNumber;
     @BindView(R.id.clientShopName)
     EditText clientShopName;
+    @BindView(R.id.clientNotesString)
+    EditText clientNotesString;
     @BindView(R.id.shopName)
     TextView shopName;
     @BindView(R.id.updateClientLocationBtn)
@@ -152,9 +154,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
             @Override
             public void onItemClick(List<OrderItem> orderItems, String shopName) {
-                itemsAdapter.addAllItems(orderItems);
-                MainActivity.this.shopName.setText(shopName);
-                orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                openOrderDetailsBottomSheet(orderItems, shopName, false);
             }
 
         });
@@ -174,6 +174,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
 
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.orders);
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.new_clients);
+        PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.all_orders);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -196,6 +197,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 .addDrawerItems(
                         item1,
                         item2,
+                        item3,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withIdentifier(3).withName(R.string.logout)
                 )
@@ -219,6 +221,9 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                                 emptyCartImg.setVisibility(View.GONE);
                                 break;
                             case 3:
+                                openOrderDetailsBottomSheet(presenter.aggregatedOrders(), getString(R.string.all_orders), true);
+                                break;
+                            case 4:
                                 presenter.logout();
                                 break;
                         }
@@ -228,6 +233,13 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 })
                 .build();
 
+    }
+
+    private void openOrderDetailsBottomSheet(List<OrderItem> orderItems, String shopName, boolean allOrders) {
+        itemsAdapter.setDockaanPrice(allOrders);
+        itemsAdapter.addAllItems(orderItems);
+        MainActivity.this.shopName.setText(shopName);
+        orderDetailsBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override
@@ -247,12 +259,13 @@ public class MainActivity extends BaseActivity implements MainVP.View {
     }
 
     @Override
-    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status) {
+    public void updateClientDetailsSheet(String phoneNumber, String clientName, String shopName, Client.Type type, String location, int areaPos, Client.Status status, String notes) {
         clientPhoneNumber.setText(phoneNumber);
         clientShopName.setText(shopName);
         this.clientName.setText(clientName);
         clientTypeSpinner.setSelection(type == Client.Type.horeca ? 0 : 1);
         clientLocationString.setText(location);
+        clientNotesString.setText(notes);
         int index = 0;
         switch (status) {
             case activated:
@@ -349,7 +362,8 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                 clientShopName.getText().toString(),
                 type,
                 status,
-                selectedArea
+                selectedArea,
+                clientNotesString.getText().toString()
         );
     }
 

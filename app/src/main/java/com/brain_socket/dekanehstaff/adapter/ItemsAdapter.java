@@ -2,6 +2,7 @@ package com.brain_socket.dekanehstaff.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,16 @@ import butterknife.ButterKnife;
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
     private List<OrderItem> orderItems;
+    private boolean dockaanPrice;
 
     @Inject
     public ItemsAdapter() {
         orderItems = new ArrayList<>();
+        this.dockaanPrice = false;
+    }
+
+    public void setDockaanPrice(boolean dockaanPrice) {
+        this.dockaanPrice = dockaanPrice;
     }
 
     @NonNull
@@ -39,9 +46,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
 
         OrderItem orderItem = orderItems.get(i);
+        int price = dockaanPrice ? orderItem.getDockanBuyingPrice() : orderItem.getRetailPrice();
         itemViewHolder.name.setText(orderItem.getNameAr());
         itemViewHolder.count.setText(String.valueOf(orderItem.getCount()));
-        itemViewHolder.price.setText(String.valueOf(orderItem.getRetailPrice()));
+        itemViewHolder.price.setText(String.valueOf(price));
         itemViewHolder.pack.setText(String.valueOf(orderItem.getPack()));
         if (!orderItem.getThumbnailUrl().equals(""))
             Picasso.get().load(orderItem.getThumbnailUrl()).into(itemViewHolder.itemImage);

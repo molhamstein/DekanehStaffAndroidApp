@@ -27,4 +27,7 @@
     <string name="in_delivery">In Delivery</string>
     <string name="delivered">Delivered</string>
     <string name="cancel">Cancel</string>
+    <string name="all_orders">All Orders</string>
+    <string name="api_default_error">An error occured</string>
+    <string name="user_not_activated_error">Your account is not activated</string>
 </resources>
