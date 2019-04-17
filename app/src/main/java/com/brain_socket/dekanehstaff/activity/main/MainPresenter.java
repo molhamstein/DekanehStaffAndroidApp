@@ -135,11 +135,13 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
 
     @Override
     public void addMarkers() {
-        for (Order order : orders) {
-            if (order.getClient().getLocationPoint() != null) {
-                LatLng location = new LatLng(order.getClient().getLocationPoint().getLat(), order.getClient().getLocationPoint().getLng());
-                MarkerOptions marker = new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_showroom)).title(order.getClient().getShopName());
-                mMap.addMarker(marker);
+        if (orders != null) {
+            for (Order order : orders) {
+                if (order.getClient().getLocationPoint() != null) {
+                    LatLng location = new LatLng(order.getClient().getLocationPoint().getLat(), order.getClient().getLocationPoint().getLng());
+                    MarkerOptions marker = new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_showroom)).title(order.getClient().getShopName());
+                    mMap.addMarker(marker);
+                }
             }
         }
     }
@@ -151,7 +153,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
             public void onItemClick(int position, Object item) {
                 switch (position) {
                     case 0:
-                        Log.d("ASDASD", "accept: " + " order id = " + order.getId() + " user id = " + getCacheStore().getSession().getUserId());
+
                         order.setStatus("delivered");
                         getView().showLoading();
                         getCompositeDisposable().add(AppApiHelper.deliver(getCacheStore().getSession().getAccessToken(), order)
@@ -166,7 +168,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 }, new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-//                                        Log.d("ASDASD", "accept: " + NetworkUtils.getError(throwable) + " id = " + order.getId());
+//                                         Log.d("ASDASD", "accept: " + NetworkUtils.getError(throwable) + " id = " + order.getId());
                                     }
                                 })
                         );
