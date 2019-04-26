@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 def androidSupportVersion = "28.0.0"
 
-def keystorePropertiesFile = rootProject.file("keystore.properties");
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+//def keystorePropertiesFile = rootProject.file("keystore.properties");
+//def keystoreProperties = new Properties()
+//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 ext.versionMajor = 1 // major change - Api changes or major UI/UX change
 ext.versionMinor = 1 // minor change
@@ -31,14 +31,14 @@ private String generateVersionName() {
 }
 
 android {
-    signingConfigs {
-        config {
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-        }
-    }
+//    signingConfigs {
+//        config {
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//        }
+//    }
     lintOptions {
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
@@ -61,7 +61,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BASE_API_URL", '"http://dockaan.com/api/"'
             debuggable false
-            signingConfig signingConfigs.config
+           // signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
