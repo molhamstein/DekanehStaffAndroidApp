@@ -16,6 +16,12 @@ import butterknife.BindView;
 public class OrdersAdapter  extends  RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
 
 
+    private OrderClickListener listener;
+
+    public OrdersAdapter(OrderClickListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -23,8 +29,13 @@ public class OrdersAdapter  extends  RecyclerView.Adapter<OrdersAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(position);
+            }
+        });
     }
 
     @Override
@@ -50,5 +61,9 @@ public class OrdersAdapter  extends  RecyclerView.Adapter<OrdersAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
+    }
+
+    public interface OrderClickListener{
+        void onClick(int pos);
     }
 }

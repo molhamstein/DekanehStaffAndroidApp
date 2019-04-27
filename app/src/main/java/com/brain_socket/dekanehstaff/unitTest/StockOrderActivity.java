@@ -8,6 +8,8 @@ import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -20,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @SuppressLint("Registered")
-public class TestActivity extends AppCompatActivity {
+public class StockOrderActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, OrdersAdapter.OrderClickListener {
 
 
     @BindView(R.id.nameText)
@@ -45,6 +47,8 @@ public class TestActivity extends AppCompatActivity {
     RadioGroup headerTab;
     @BindView(R.id.editText)
     EditText editText;
+    @BindView(R.id.recylcerViewStock)
+    RecyclerView recylcerViewStock;
     @BindView(R.id.all)
     RadioButton all;
     @BindView(R.id.pending)
@@ -53,14 +57,18 @@ public class TestActivity extends AppCompatActivity {
     RadioButton packed;
     @BindView(R.id.tagFilter)
     RadioGroup tagFilter;
-    @BindView(R.id.searchOrFilterLayout)
-    ConstraintLayout searchOrFilterLayout;
+    @BindView(R.id.recylcerViewOrders)
+    RecyclerView recylcerViewOrders;
 
-    @BindView(R.id.recylcerView)
-    RecyclerView recylcerView;
 
-    OrdersAdapter adapter;
-    LinearLayoutManager layoutManager;
+    OrdersAdapter ordersAdapter;
+    LinearLayoutManager lm;
+    StockAdapter stockAdapter;
+    LinearLayoutManager lm2;
+    @BindView(R.id.stockLayout)
+    ConstraintLayout stockLayout;
+    @BindView(R.id.ordersLayout)
+    ConstraintLayout ordersLayout;
 
 
     @Override
@@ -68,10 +76,35 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orders_stock_stuff);
         ButterKnife.bind(this);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        adapter = new OrdersAdapter();
-        recylcerView.setLayoutManager(layoutManager);
-        recylcerView.setAdapter(adapter);
+        lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        lm2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        stockAdapter = new StockAdapter();
+        ordersAdapter = new OrdersAdapter(this);
+
+        recylcerViewOrders.setLayoutManager(lm);
+        recylcerViewStock.setLayoutManager(lm2);
+        recylcerViewOrders.setAdapter(ordersAdapter);
+        recylcerViewStock.setAdapter(stockAdapter);
+
+        stock.setOnCheckedChangeListener(this);
+        orders.setOnCheckedChangeListener(this);
+
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView == stock && isChecked) {
+            stockLayout.setVisibility(View.VISIBLE);
+            ordersLayout.setVisibility(View.GONE);
+        } else if (buttonView == orders && isChecked) {
+            stockLayout.setVisibility(View.GONE);
+            ordersLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onClick(int pos) {
 
     }
 }

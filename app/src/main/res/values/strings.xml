@@ -30,4 +30,17 @@
     <string name="all_orders">All Orders</string>
     <string name="api_default_error">An error occured</string>
     <string name="user_not_activated_error">Your account is not activated</string>
+    
+    <string name="name">Name</string>
+    <string name="stock">Stock</string>
+    <string name="search">Search</string>
+    <string name="all">All</string>
+    <string name="packed">Packed</string>
+    <string name="cost">Cost</string>
+    <string name="status">Status</string>
+    <string name="pieces">pieces</string>
+    <string name="shop_owner_name">Shope Owner Name</string>
+    
+
+
 </resources>

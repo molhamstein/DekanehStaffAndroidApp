@@ -52,18 +52,49 @@
             app:layout_constraintEnd_toStartOf="@+id/checkIcon"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/checkIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/check_selector"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            app:srcCompat="@drawable/check_selector" />
+        <LinearLayout
+            android:id="@+id/pieces"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/manufacture"
+            app:layout_constraintTop_toBottomOf="@+id/manufacture">
+
+            <TextView
+                android:id="@+id/piecesNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:layout_gravity="center"
+                android:textColor="@color/light_gray_text_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:text="@string/pieces"
+                android:textColor="@color/light_gray_text_color"
+                android:textSize="16sp" />
 
 
-
+        </LinearLayout>
 
 
     </android.support.constraint.ConstraintLayout>

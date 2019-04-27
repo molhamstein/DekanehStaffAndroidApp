@@ -30,4 +30,15 @@
     <string name="all_orders">كل الطلبات</string>
     <string name="api_default_error">حصل خطأ غير متوقع</string>
     <string name="user_not_activated_error">حسابك غير مفعل</string>
+
+    <string name="name">الاسم</string>
+    <string name="stock">البضاعة</string>
+    <string name="search">بحث</string>
+    <string name="all">الكل</string>
+    <string name="packed">موضبة</string>
+    <string name="cost">الكلفة</string>
+    <string name="status">الحالة</string>
+    <string name="pieces">قطعة</string>
+    <string name="shop_owner_name">اسم صاحب المحل</string>
+
 </resources>

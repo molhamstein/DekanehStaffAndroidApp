@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -102,7 +103,7 @@
             android:paddingTop="14dp"
             android:paddingEnd="10dp"
             android:paddingBottom="14dp"
-            android:text="Orders"
+            android:text="@string/orders"
             android:textColor="@color/text_color_selector"
             android:textDirection="locale"
             android:textSize="22sp" />
@@ -119,111 +120,42 @@
             android:paddingTop="14dp"
             android:paddingEnd="10dp"
             android:paddingBottom="14dp"
-            android:text="Stock"
+            android:text="@string/stock"
             android:textColor="@color/text_color_selector"
             android:textDirection="locale"
             android:textSize="22sp" />
 
     </RadioGroup>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/searchOrFilterLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerTab">
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/brown2"
-            android:drawableStart="@drawable/ic_search_icon"
-            android:drawablePadding="20dp"
-            android:hint="Search"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/light_gray_text_color"
-            android:textDirection="locale"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/tagFilter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/brown_border_bg"
-                android:button="@drawable/brown_border_bg"
-                android:checked="true"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="5dp"
-                android:text="All"
-                android:textColor="@color/text_color_selector" />
-
-            <RadioButton
-                android:id="@+id/pending"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/brown_border_bg"
-                android:button="@drawable/brown_border_bg"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="5dp"
-                android:text="Pending"
-                android:textColor="@color/text_color_selector" />
-
-            <RadioButton
-                android:id="@+id/packed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/brown_border_bg"
-                android:button="@drawable/brown_border_bg"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="5dp"
-                android:text="Packed"
-                android:textColor="@color/text_color_selector" />
-
-        </RadioGroup>
-
-
-    </android.support.constraint.ConstraintLayout>
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recylcerView"
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/stockLayout"
+        layout="@layout/stock_layout"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerTab" />
+
+    <include
+        android:id="@+id/ordersLayout"
+        layout="@layout/orders_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchOrFilterLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/headerTab" />
+
+
 
 </android.support.constraint.ConstraintLayout>
