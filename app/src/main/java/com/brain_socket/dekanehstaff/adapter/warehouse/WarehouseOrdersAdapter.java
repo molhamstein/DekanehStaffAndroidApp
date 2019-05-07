@@ -1,4 +1,4 @@
-package com.brain_socket.dekanehstaff.unitTest;
+package com.brain_socket.dekanehstaff.adapter.warehouse;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,23 +9,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
-import com.brain_socket.dekanehstaff.adapter.ClientsAdapter;
+import com.brain_socket.dekanehstaff.network.model.Order;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class OrdersAdapter  extends  RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
+public class WarehouseOrdersAdapter extends  RecyclerView.Adapter<WarehouseOrdersAdapter.ViewHolder> {
 
 
     private OrderClickListener listener;
+    private List<Order> orders;
 
-    public OrdersAdapter(OrderClickListener listener) {
+    @Inject
+    public WarehouseOrdersAdapter(OrderClickListener listener) {
         this.listener = listener;
+        orders  = new ArrayList<>() ;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new OrdersAdapter.ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.staff_order_item, viewGroup, false));
+        return new WarehouseOrdersAdapter.ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.warehouse_order_item, viewGroup, false));
     }
 
     @Override
@@ -40,7 +48,13 @@ public class OrdersAdapter  extends  RecyclerView.Adapter<OrdersAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 10;
+        return orders.size();
+    }
+
+
+    public void addAllOrder(List<Order> orders) {
+        this.orders = orders;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,6 +76,9 @@ public class OrdersAdapter  extends  RecyclerView.Adapter<OrdersAdapter.ViewHold
             super(itemView);
         }
     }
+
+
+
 
     public interface OrderClickListener{
         void onClick(int pos);

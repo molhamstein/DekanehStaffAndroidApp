@@ -14,6 +14,8 @@ import com.brain_socket.dekanehstaff.application.AppSchedulerProvider;
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
 import com.brain_socket.dekanehstaff.network.CacheStore;
 import com.brain_socket.dekanehstaff.network.Session;
+import com.brain_socket.dekanehstaff.adapter.warehouse.StockAdapter;
+import com.brain_socket.dekanehstaff.adapter.warehouse.WarehouseOrdersAdapter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -45,12 +47,12 @@ public class ActivityModule {
     }
 
     @Provides
-    AppCompatActivity providesActivity(){
+    AppCompatActivity providesActivity() {
         return activity;
     }
 
     @Provides
-    CompositeDisposable provideCompositeDisposable(){
+    CompositeDisposable provideCompositeDisposable() {
         return new CompositeDisposable();
     }
 
@@ -83,4 +85,28 @@ public class ActivityModule {
     ClientsAdapter providesClientsAdapter() {
         return new ClientsAdapter();
     }
+
+
+    @Provides
+    WarehouseOrdersAdapter.OrderClickListener providesClickListener(AppCompatActivity activity) {
+        return (WarehouseOrdersAdapter.OrderClickListener)activity;
+    }
+
+    @Provides
+    WarehouseOrdersAdapter providesWarehouseOrdersAdapter() {
+        return new WarehouseOrdersAdapter(providesClickListener(activity));
+    }
+
+    @Provides
+    StockAdapter providesStockAdapter() {
+        return new StockAdapter();
+    }
+
+
+
+
+
+
+
+
 }

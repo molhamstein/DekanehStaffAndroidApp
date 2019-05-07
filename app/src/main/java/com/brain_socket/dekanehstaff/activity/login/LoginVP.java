@@ -8,6 +8,7 @@ public class LoginVP {
 
     public interface View extends BaseView {
         void startMainActivity();
+        void startWarehouseOrdersStockActivity() ;
         void finish();
     }
 

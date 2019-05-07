@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activity.warehouse.StockCheckActivity">
 
 
     <android.support.constraint.ConstraintLayout
@@ -18,6 +19,7 @@
 
         <TextView
             android:id="@+id/shopOwnerNameText"
+            style="@style/BrownRegularTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -25,25 +27,27 @@
             android:text="@string/name"
             android:textColor="@color/light_gray_text_color"
             android:textDirection="locale"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/shopOwnerName"
+            style="@style/BrownBoldTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:text="@string/shop_owner_name"
             android:textColor="@color/gray_text_color"
             android:textDirection="locale"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shopOwnerNameText" />
 
 
         <TextView
             android:id="@+id/shopNameText"
+            style="@style/BrownRegularTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
@@ -51,24 +55,26 @@
             android:text="@string/shop_name"
             android:textColor="@color/light_gray_text_color"
             android:textDirection="locale"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shopOwnerName" />
 
         <TextView
             android:id="@+id/shopName"
+            style="@style/BrownBoldTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:text="@string/shop_name"
             android:textColor="@color/gray_text_color"
             android:textDirection="locale"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shopNameText" />
 
         <TextView
             android:id="@+id/coseText"
+            style="@style/BrownRegularTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
@@ -76,42 +82,45 @@
             android:text="@string/cost"
             android:textColor="@color/light_gray_text_color"
             android:textDirection="locale"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/shopOwnerName"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/cost"
+            style="@style/BrownBoldTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="80,000"
             android:textColor="@color/gray_text_color"
             android:textDirection="locale"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/coseText"
             app:layout_constraintTop_toBottomOf="@+id/coseText" />
 
 
         <TextView
             android:id="@+id/statusText"
+            style="@style/BrownRegularTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/status"
             android:textColor="@color/light_gray_text_color"
             android:textDirection="locale"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/cost"
             app:layout_constraintTop_toBottomOf="@+id/cost" />
 
         <TextView
             android:id="@+id/status"
+            style="@style/BrownBoldTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/pending"
             android:textColor="@color/gray_text_color"
             android:textDirection="locale"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/statusText"
             app:layout_constraintTop_toBottomOf="@+id/statusText" />
 
@@ -123,17 +132,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.25" />
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylcerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidline1" />
+
+
+    <ImageView
+        android:id="@+id/addButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/black_button_bg"
+        android:elevation="5dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_add" />
+
 
 </android.support.constraint.ConstraintLayout>

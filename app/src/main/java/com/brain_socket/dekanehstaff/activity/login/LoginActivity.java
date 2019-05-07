@@ -1,10 +1,12 @@
 package com.brain_socket.dekanehstaff.activity.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
 import com.brain_socket.dekanehstaff.R;
 import com.brain_socket.dekanehstaff.activity.main.MainActivity;
+import com.brain_socket.dekanehstaff.activity.warehouse.StockOrderActivity;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
 
 import javax.inject.Inject;
@@ -52,5 +54,11 @@ public class LoginActivity extends BaseActivity implements LoginVP.View {
     @Override
     public void startMainActivity() {
         MainActivity.start(this);
+    }
+
+    @Override
+    public void startWarehouseOrdersStockActivity() {
+        Intent intent = new Intent(this, StockOrderActivity.class) ;
+        startActivity(intent);
     }
 }

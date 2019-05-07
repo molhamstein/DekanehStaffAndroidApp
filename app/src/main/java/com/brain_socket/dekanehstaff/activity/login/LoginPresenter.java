@@ -1,7 +1,5 @@
 package com.brain_socket.dekanehstaff.activity.login;
 
-import android.util.Log;
-
 import com.androidnetworking.error.ANError;
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
 import com.brain_socket.dekanehstaff.base.BasePresenterImpl;
@@ -29,7 +27,8 @@ public class LoginPresenter<T extends LoginVP.View> extends BasePresenterImpl<T>
     public void onAttach(T mvpView) {
         super.onAttach(mvpView);
         if (getCacheStore().getSession().isLoggedOn()){
-            getView().startMainActivity();
+//            getView().startMainActivity();
+            getView().startWarehouseOrdersStockActivity();
             getView().finish();
         }
     }
@@ -46,7 +45,8 @@ public class LoginPresenter<T extends LoginVP.View> extends BasePresenterImpl<T>
                     public void accept(LoginResponse loginResponse) throws Exception {
                         if(loginResponse.getUser().getStatus() == User.Status.activated) {
                             getCacheStore().getSession().setUser(loginResponse.getUser(), loginResponse.getId());
-                            getView().startMainActivity();
+//                            getView().startMainActivity();
+                            getView().startWarehouseOrdersStockActivity();
                             getView().hideLoading();
                             getView().finish();
                         }

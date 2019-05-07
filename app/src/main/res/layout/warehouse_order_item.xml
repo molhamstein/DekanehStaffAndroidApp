@@ -4,26 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="8dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
-    app:cardElevation="10dp">
+    app:cardElevation="10dp"
+    app:cardUseCompatPadding="true">
 
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/marketName"
+            style="@style/BrownBoldTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="Market name"
+            android:includeFontPadding="false"
             android:textColor="@color/gray_text_color"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,11 +29,11 @@
 
         <TextView
             android:id="@+id/owenerName"
+            style="@style/BrownRegularTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="4dp"
             android:text="Owner Name"
+
             android:textColor="@color/light_gray_text_color"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,9 +41,11 @@
 
         <TextView
             android:id="@+id/quantityText"
+            style="@style/BrownBoldTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:includeFontPadding="false"
             android:text="450"
             android:textColor="@color/gray_text_color"
             android:textSize="22sp"
@@ -63,10 +63,12 @@
 
         <TextView
             android:id="@+id/status"
+            style="@style/BrownBoldTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="Delivered"
+
             android:textColor="@color/light_green"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/arrowIcon"
@@ -75,10 +77,12 @@
 
         <TextView
             android:id="@+id/timer"
+            style="@style/BrownRegularTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
+            android:layout_height="wrap_content"
             android:text="23 : 54 : 03"
+
             android:textColor="@color/gray_text_color"
             android:textDirection="ltr"
             android:textSize="18sp"

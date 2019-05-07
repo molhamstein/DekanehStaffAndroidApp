@@ -40,5 +40,7 @@
     <string name="status">الحالة</string>
     <string name="pieces">قطعة</string>
     <string name="shop_owner_name">اسم صاحب المحل</string>
+    <string name="no_orders">لا يوجد أية طلبات...</string>
+    <string name="no_stock">لا يوجد أية بضاعة...</string>
 
 </resources>

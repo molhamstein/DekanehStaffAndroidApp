@@ -6,6 +6,7 @@ import com.brain_socket.dekanehstaff.network.model.Client;
 import com.brain_socket.dekanehstaff.network.model.LoginRequest;
 import com.brain_socket.dekanehstaff.network.model.LoginResponse;
 import com.brain_socket.dekanehstaff.network.model.Order;
+import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
 import com.google.gson.JsonObject;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import java.util.List;
@@ -76,6 +77,24 @@ public class AppApiHelper {
                 .build()
                 .getObjectSingle(JsonObject.class);
     }
+
+
+    public static Single<List<Order>> getWarehouseOrders() {
+        return Rx2AndroidNetworking.get(ApiEndPoint.WAREHOUSE_ORDERS)
+//                .addQueryParameter("access_token", accessToken)
+                //.addPathParameter("deliveryMemberId", staffMemberId)
+                .build()
+                .getObjectListSingle(Order.class);
+    }
+
+    public static Single<List<WareHouseProduct>> getWarehouseStock() {
+        return Rx2AndroidNetworking.get(ApiEndPoint.WAREHOUSE_STOCK)
+//                .addQueryParameter("access_token", accessToken)
+                //.addPathParameter("deliveryMemberId", staffMemberId)
+                .build()
+                .getObjectListSingle(WareHouseProduct.class);
+    }
+
 
 
 

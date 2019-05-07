@@ -1,23 +1,32 @@
-package com.brain_socket.dekanehstaff.unitTest;
+package com.brain_socket.dekanehstaff.adapter.warehouse;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
-public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> {
+public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.ViewHolder> {
 
+
+    @Inject
+    public StockCheckAdapter() {
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new StockAdapter.ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.stock_item, viewGroup, false));
+        return new StockCheckAdapter.ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.checked_stock_item, viewGroup, false));
+
     }
 
     @Override
@@ -38,10 +47,17 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
         TextView manufacture;
         @BindView(R.id.quantityText)
         TextView quantityText;
+        @BindView(R.id.checkIcon)
+        CheckBox checkIcon;
+        @BindView(R.id.piecesNumber)
+        TextView piecesNumber;
+        @BindView(R.id.text)
+        TextView text;
+        @BindView(R.id.pieces)
+        LinearLayout pieces;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
         }
     }
 }

@@ -24,9 +24,10 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="24dp"
             android:text="Name"
+            style="@style/BrownBoldTextView"
             android:textColor="@color/light_gray_text_color"
             android:textDirection="locale"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,15 +39,16 @@
             android:text="Operator Name"
             android:textColor="@color/gray_text_color"
             android:textDirection="locale"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            style="@style/BrownBoldTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="105dp"
+            android:layout_height="105dp"
             android:layout_marginEnd="30dp"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.24" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guidline2"
@@ -67,14 +69,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
 
-        app:layout_constraintGuide_percent="0.21" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guidline3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.19" />
+        app:layout_constraintGuide_percent="0.23" />
 
 
     <RadioGroup
@@ -95,8 +97,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/white"
-            android:button="@drawable/brown_border_bg"
+            android:background="@drawable/order_stock_selector"
+            android:button="@null"
+            style="@style/BrownBlackTextView"
             android:checked="true"
             android:gravity="center"
             android:paddingStart="10dp"
@@ -106,15 +109,17 @@
             android:text="@string/orders"
             android:textColor="@color/text_color_selector"
             android:textDirection="locale"
-            android:textSize="22sp" />
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/stock"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/white"
-            android:button="@drawable/brown_border_bg"
+            android:button="@null"
+
+            style="@style/BrownBlackTextView"
+            android:background="@drawable/order_stock_selector"
             android:gravity="center"
             android:paddingStart="10dp"
             android:paddingTop="14dp"
@@ -123,7 +128,7 @@
             android:text="@string/stock"
             android:textColor="@color/text_color_selector"
             android:textDirection="locale"
-            android:textSize="22sp" />
+            android:textSize="18sp" />
 
     </RadioGroup>
 
@@ -133,8 +138,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginBottom="8dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -148,9 +151,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginBottom="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
