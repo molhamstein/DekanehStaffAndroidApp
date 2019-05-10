@@ -87,13 +87,18 @@ public class AppApiHelper {
                 .getObjectListSingle(Order.class);
     }
 
-    public static Single<List<WareHouseProduct>> getWarehouseStock() {
+    public static Single<List<WareHouseProduct>> getWarehouseStock(Integer limit,Integer skip) {
         return Rx2AndroidNetworking.get(ApiEndPoint.WAREHOUSE_STOCK)
 //                .addQueryParameter("access_token", accessToken)
-                //.addPathParameter("deliveryMemberId", staffMemberId)
+                .addPathParameter("skip", skip.toString())
+                .addPathParameter("limit", limit.toString())
                 .build()
                 .getObjectListSingle(WareHouseProduct.class);
     }
+
+
+
+
 
 
 

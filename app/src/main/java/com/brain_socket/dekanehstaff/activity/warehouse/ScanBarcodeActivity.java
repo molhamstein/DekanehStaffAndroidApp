@@ -2,6 +2,7 @@ package com.brain_socket.dekanehstaff.activity.warehouse;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -46,13 +47,14 @@ public class ScanBarcodeActivity extends BaseActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result rawResult) {
         // Do something with the result here
-        ConfirmProductDialogFragment confirmProductDialogFragment = new ConfirmProductDialogFragment() ;
-        confirmProductDialogFragment.show(getSupportFragmentManager(),"Dialog");
+
         mScannerView.stopCamera();
+        Intent intent = new Intent() ;
+        intent.putExtra("Code",rawResult.getText()) ;
+        setResult(RESULT_OK,intent);
+        finish();
 
 
-//        // If you would like to resume scanning, call this method below:
-//        mScannerView.resumeCameraPreview(this);
     }
 }
 

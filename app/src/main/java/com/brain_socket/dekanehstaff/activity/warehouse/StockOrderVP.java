@@ -32,7 +32,7 @@ public class StockOrderVP {
 
         void getOrders();
 
-        void getStock();
+        void getStock(Integer limit,Integer skip);
 
 
 

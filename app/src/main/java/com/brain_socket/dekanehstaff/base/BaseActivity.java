@@ -262,6 +262,10 @@ public class BaseActivity extends AppCompatActivity implements LocaleUtils.Langu
         mProgressDialog.dismiss();
     }
 
+    public Boolean isLoading(){
+        return mProgressDialog.isShowing();
+    }
+
 
     @Override
     protected void onDestroy() {

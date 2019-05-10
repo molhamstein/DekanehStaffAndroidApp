@@ -3,6 +3,7 @@ package com.brain_socket.dekanehstaff.activity.warehouse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v7.widget.LinearLayoutManager;
@@ -85,7 +86,21 @@ public class StockCheckActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         if(v == addButton){
             Intent intent = new Intent(this,ScanBarcodeActivity.class) ;
-            startActivity(intent);
+            startActivityForResult(intent,1);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if(requestCode == 1){
+            if(resultCode == RESULT_OK){
+                ConfirmProductDialogFragment confirmProductDialogFragment = new ConfirmProductDialogFragment() ;
+
+                confirmProductDialogFragment.show(getSupportFragmentManager(),"Dialog");
+            }
         }
     }
 }

@@ -101,44 +101,81 @@ public class StockOrderActivity extends BaseActivity implements
     @Inject
     StockOrderPresenter<StockOrderVP.View> presenter;
 
+    final private Integer limit = 10;
+    private Integer pageId = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_order);
         ButterKnife.bind(this);
+
         if (getActivityComponent() != null)
             getActivityComponent().inject(this);
-        lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        lm2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
+        setupOrdersLayout();
+        setupStockLayout();
 
-        recylcerViewOrders.setLayoutManager(lm);
-        recylcerViewStock.setLayoutManager(lm2);
-
-        recylcerViewOrders.setAdapter(ordersAdapter);
-        recylcerViewStock.setAdapter(stockAdapter);
-        stockLayout.setVisibility(View.GONE);
-        ordersLayout.setVisibility(View.VISIBLE);
-
-        stock.setOnCheckedChangeListener(this);
-        orders.setOnCheckedChangeListener(this);
-        refreshStock.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-               presenter.getStock();
-            }
-        });
-
-        refreshOrders.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-               presenter.getOrders();
-            }
-        });
 
         presenter.onAttach(this);
 
+
+    }
+
+    private void setupOrdersLayout() {
+        ordersLayout.setVisibility(View.VISIBLE);
+        lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recylcerViewOrders.setLayoutManager(lm);
+        recylcerViewOrders.setAdapter(ordersAdapter);
+        orders.setOnCheckedChangeListener(this);
+        refreshOrders.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getOrders();
+            }
+        });
+    }
+
+    private void setupStockLayout() {
+        stockLayout.setVisibility(View.GONE);
+        lm2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        recylcerViewStock.setLayoutManager(lm2);
+        recylcerViewStock.setAdapter(stockAdapter);
+        recylcerViewStock.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = lm2.getChildCount();
+                int totalItemCount = lm2.getItemCount();
+                int firstVisibleItemPosition = lm2.findFirstVisibleItemPosition();
+                if (!isLoading())
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= limit) {
+                        pageId++;
+                        presenter.getStock(limit, pageId * limit);
+                    }
+            }
+
+        });
+
+        stock.setOnCheckedChangeListener(this);
+
+        refreshStock.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pageId = 0;
+                stockAdapter.reset();
+                presenter.getStock(limit, pageId * limit);
+            }
+        });
 
     }
 
@@ -147,7 +184,7 @@ public class StockOrderActivity extends BaseActivity implements
         if (buttonView == stock && isChecked) {
             stockLayout.setVisibility(View.VISIBLE);
             ordersLayout.setVisibility(View.GONE);
-            presenter.getStock();
+            presenter.getStock(limit, pageId * limit);
         } else if (buttonView == orders && isChecked) {
             stockLayout.setVisibility(View.GONE);
             ordersLayout.setVisibility(View.VISIBLE);
@@ -168,7 +205,7 @@ public class StockOrderActivity extends BaseActivity implements
 
     @Override
     public void addWareHouseProducts(List<WareHouseProduct> wareHouseProducts) {
-
+        stockAdapter.addAll(wareHouseProducts);
     }
 
     @Override

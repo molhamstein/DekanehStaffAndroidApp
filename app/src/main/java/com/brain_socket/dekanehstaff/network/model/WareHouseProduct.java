@@ -1,12 +1,14 @@
 
-package com.brain_socket.dekanehstaff.network.model;
+        package com.brain_socket.dekanehstaff.network.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WareHouseProduct implements Serializable {
+        public class WareHouseProduct implements Serializable
+{
 
     @SerializedName("totalCount")
     @Expose
@@ -44,7 +46,15 @@ public class WareHouseProduct implements Serializable {
     @SerializedName("productAbstractId")
     @Expose
     private String productAbstractId;
+    @SerializedName("warehouse")
+    @Expose
+    private Warehouse warehouse;
+    @SerializedName("productAbstract")
+    @Expose
+    private ProductAbstract productAbstract;
 
+
+    private final static long serialVersionUID = 6691583094329525845L;
 
     public Integer getTotalCount() {
         return totalCount;
@@ -142,4 +152,21 @@ public class WareHouseProduct implements Serializable {
         this.productAbstractId = productAbstractId;
     }
 
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public ProductAbstract getProductAbstract() {
+        return productAbstract;
+    }
+
+    public void setProductAbstract(ProductAbstract productAbstract) {
+        this.productAbstract = productAbstract;
+    }
 }
+
+

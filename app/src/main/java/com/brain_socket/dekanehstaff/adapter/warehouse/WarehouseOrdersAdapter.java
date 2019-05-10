@@ -53,8 +53,8 @@ public class WarehouseOrdersAdapter extends  RecyclerView.Adapter<WarehouseOrder
 
 
     public void addAllOrder(List<Order> orders) {
-        this.orders = orders;
-        notifyDataSetChanged();
+        this.orders.addAll(orders);
+        notifyItemRangeInserted(this.orders.size(),orders.size());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

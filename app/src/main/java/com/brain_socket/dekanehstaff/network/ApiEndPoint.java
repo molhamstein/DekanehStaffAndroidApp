@@ -21,6 +21,6 @@ public class ApiEndPoint {
     public static final String AREAS = BuildConfig.BASE_API_URL + "areas";
     public static final String DELIVER = ORDERS + "/{orderId}/delivered";
     public static final String WAREHOUSE_ORDERS = ORDERS + "?filter={\"where\":{\"and\":[{\"warehouseKeeperId\":\"225b98bdad41477e4d8958bc36\"}]}}";
-    public static final String WAREHOUSE_STOCK = WAREHOUSE + "?filter={\"limit\":20,\"skip\":20}";
-
+    public static final String WAREHOUSE_STOCK = WAREHOUSE + "?filter={\"limit\":{limit},\"skip\":{skip},\"include\":[\"productAbstract\"]}";
+    public static final String CHECK_BARCODE = BuildConfig.BASE_API_URL+ "/api/productAbstracts/barcode?code={barCode}" ;
 }

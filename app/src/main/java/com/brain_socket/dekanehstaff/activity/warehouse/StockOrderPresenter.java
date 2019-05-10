@@ -56,10 +56,10 @@ public class StockOrderPresenter<T extends StockOrderVP.View> extends BasePresen
     }
 
     @Override
-    public void getStock() {
+    public void getStock(Integer limit,Integer skip) {
         getView().showLoading();
         getCompositeDisposable().add(
-                AppApiHelper.getWarehouseStock()
+                AppApiHelper.getWarehouseStock(limit,skip)
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
                         .subscribe(new Consumer<List<WareHouseProduct>>() {
@@ -71,6 +71,7 @@ public class StockOrderPresenter<T extends StockOrderVP.View> extends BasePresen
                                            else
                                                getView().hideEmptyStockIcon();
                                            getView().hideLoading();
+                                           getView().stopStockRefreshing();
                                            getView().addWareHouseProducts(wareHouseProducts);
                                        }
                                    }, new Consumer<Throwable>() {

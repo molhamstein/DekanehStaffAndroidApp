@@ -99,7 +99,7 @@ public class ActivityModule {
 
     @Provides
     StockAdapter providesStockAdapter() {
-        return new StockAdapter();
+        return new StockAdapter(providesContext());
     }
 
 
