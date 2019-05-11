@@ -10,16 +10,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
+import com.brain_socket.dekanehstaff.network.model.OrderProduct;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.ViewHolder> {
 
 
+    List<OrderProduct> data;
+
     @Inject
     public StockCheckAdapter() {
+        data = new ArrayList<>();
+    }
+
+    public void addAll(List<OrderProduct> data) {
+        this.data.addAll(data);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -30,13 +43,16 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.productName.setText(data.get(position).getProduct().getNameAr());
+        holder.manufacture.setText(data.get(position).getProduct().getManufacturer().getNameAr());
+        holder.piecesNumber.setText(data.get(position).getCount().toString());
+        holder.quantityText.setText(data.get(position).getProduct().getOfferMaxQuantity().toString());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return data.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,6 +74,7 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 }

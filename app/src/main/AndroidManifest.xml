@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.warehouse.ScanBarcodeActivity"></activity>
-        <activity android:name=".activity.warehouse.StockCheckActivity" >
+        <activity android:name=".activity.warehouse.OrderDetailsActivity" >
 
 
         </activity>

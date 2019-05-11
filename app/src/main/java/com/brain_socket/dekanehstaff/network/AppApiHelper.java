@@ -2,11 +2,13 @@ package com.brain_socket.dekanehstaff.network;
 
 
 import com.brain_socket.dekanehstaff.network.model.Area;
+import com.brain_socket.dekanehstaff.network.model.Barcode;
 import com.brain_socket.dekanehstaff.network.model.Client;
 import com.brain_socket.dekanehstaff.network.model.LoginRequest;
 import com.brain_socket.dekanehstaff.network.model.LoginResponse;
 import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
+import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 import com.google.gson.JsonObject;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import java.util.List;
@@ -79,23 +81,32 @@ public class AppApiHelper {
     }
 
 
-    public static Single<List<Order>> getWarehouseOrders() {
+    public static Single<List<WarehouseOrder>> getWarehouseOrders(String userId) {
         return Rx2AndroidNetworking.get(ApiEndPoint.WAREHOUSE_ORDERS)
 //                .addQueryParameter("access_token", accessToken)
                 //.addPathParameter("deliveryMemberId", staffMemberId)
+                .addPathParameter("userId", userId)
                 .build()
-                .getObjectListSingle(Order.class);
+                .getObjectListSingle(WarehouseOrder.class);
     }
 
-    public static Single<List<WareHouseProduct>> getWarehouseStock(Integer limit,Integer skip) {
+    public static Single<List<WareHouseProduct>> getWarehouseStock(Integer limit,Integer skip ) {
         return Rx2AndroidNetworking.get(ApiEndPoint.WAREHOUSE_STOCK)
 //                .addQueryParameter("access_token", accessToken)
                 .addPathParameter("skip", skip.toString())
                 .addPathParameter("limit", limit.toString())
+
                 .build()
                 .getObjectListSingle(WareHouseProduct.class);
     }
 
+
+    public static Single<List<Barcode>> checkBarcode(String Barcode) {
+        return Rx2AndroidNetworking.get(ApiEndPoint.CHECK_Barcode)
+                .addPathParameter("Barcode",Barcode)
+                .build()
+                .getObjectListSingle(Barcode.class);
+    }
 
 
 

@@ -22,6 +22,7 @@ import com.brain_socket.dekanehstaff.adapter.warehouse.WarehouseOrdersAdapter;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
 import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
+import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 
 import java.util.List;
 
@@ -99,7 +100,7 @@ public class StockOrderActivity extends BaseActivity implements
     LinearLayoutManager lm2;
 
     @Inject
-    StockOrderPresenter<StockOrderVP.View> presenter;
+    StockOrderPresenter presenter;
 
     final private Integer limit = 10;
     private Integer pageId = 0;
@@ -193,13 +194,14 @@ public class StockOrderActivity extends BaseActivity implements
     }
 
     @Override
-    public void onClick(int pos) {
-        Intent intent = new Intent(this, StockCheckActivity.class);
+    public void onClick(WarehouseOrder order) {
+        Intent intent = new Intent(this, OrderDetailsActivity.class);
+        intent.putExtra("Order",order);
         startActivity(intent);
     }
 
     @Override
-    public void addOrders(List<Order> orders) {
+    public void addOrders(List<WarehouseOrder> orders) {
         ordersAdapter.addAllOrder(orders);
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,13 +16,15 @@ import android.widget.TextView;
 import com.brain_socket.dekanehstaff.R;
 import com.brain_socket.dekanehstaff.adapter.warehouse.StockCheckAdapter;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
+import com.brain_socket.dekanehstaff.network.model.Product;
+import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StockCheckActivity extends BaseActivity implements View.OnClickListener {
+public class OrderDetailsActivity extends BaseActivity implements OrderDetailsVP.View, View.OnClickListener {
 
     @BindView(R.id.shopOwnerNameText)
     TextView shopOwnerNameText;
@@ -31,8 +34,8 @@ public class StockCheckActivity extends BaseActivity implements View.OnClickList
     TextView shopNameText;
     @BindView(R.id.shopName)
     TextView shopName;
-    @BindView(R.id.coseText)
-    TextView coseText;
+    @BindView(R.id.costText)
+    TextView costText;
     @BindView(R.id.cost)
     TextView cost;
     @BindView(R.id.statusText)
@@ -54,6 +57,11 @@ public class StockCheckActivity extends BaseActivity implements View.OnClickList
     @Inject
     StockCheckAdapter adapter;
 
+    @Inject
+    OrderDetailsPresenter presenter;
+
+    private WarehouseOrder order;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +69,29 @@ public class StockCheckActivity extends BaseActivity implements View.OnClickList
         overridePendingTransition(R.anim.anim_slide_in_from_left, R.anim.anim_slide_out_to_right);
 
 
-        setContentView(R.layout.activity_stock_check);
+        setContentView(R.layout.activity_order_details);
         ButterKnife.bind(this);
-
 
         if (getActivityComponent() != null)
             getActivityComponent().inject(this);
 
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
+        presenter.onAttach(this);
+
+        order = (WarehouseOrder) getIntent().getSerializableExtra("Order");
+
+        shopName.setText(order.getWarehouse().getNameAr());
+        shopOwnerName.setText(order.getWarehouseKeeper().getUsername());
+
+        cost.setText(order.getTotalPrice().toString());
+        status.setText(order.getStatus());
+
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         recylcerView.setLayoutManager(layoutManager);
         recylcerView.setAdapter(adapter);
+
+        adapter.addAll(order.getOrderProducts());
         addButton.setOnClickListener(this);
     }
 
@@ -84,10 +103,16 @@ public class StockCheckActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v == addButton){
-            Intent intent = new Intent(this,ScanBarcodeActivity.class) ;
-            startActivityForResult(intent,1);
+        if (v == addButton) {
+            Intent intent = new Intent(this, ScanBarcodeActivity.class);
+            startActivityForResult(intent, 1);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onAttach(this);
     }
 
     @Override
@@ -95,12 +120,26 @@ public class StockCheckActivity extends BaseActivity implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if(requestCode == 1){
-            if(resultCode == RESULT_OK){
-                ConfirmProductDialogFragment confirmProductDialogFragment = new ConfirmProductDialogFragment() ;
-
-                confirmProductDialogFragment.show(getSupportFragmentManager(),"Dialog");
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                presenter.checkBarcode(data.getStringExtra("Code"));
             }
         }
+    }
+
+    @Override
+    public void openDialog(Product product) {
+
+        ConfirmProductDialogFragment confirmProductDialogFragment = new ConfirmProductDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Product", product);
+        confirmProductDialogFragment.setArguments(bundle);
+        confirmProductDialogFragment.show(getSupportFragmentManager(), "Dialog");
+
+    }
+
+    @Override
+    public AppCompatActivity getActivity() {
+        return this ;
     }
 }

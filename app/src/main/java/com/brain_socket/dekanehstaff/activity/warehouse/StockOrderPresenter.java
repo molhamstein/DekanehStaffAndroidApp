@@ -6,6 +6,7 @@ import com.brain_socket.dekanehstaff.network.AppApiHelper;
 import com.brain_socket.dekanehstaff.network.CacheStore;
 import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
+import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 
 import java.util.List;
 
@@ -14,9 +15,8 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
-public class StockOrderPresenter<T extends StockOrderVP.View> extends BasePresenterImpl<T> implements StockOrderVP.Presenter<T> {
-    private List<Order> orders;
-    private List<WareHouseProduct> wareHouseProducts;
+public class StockOrderPresenter extends BasePresenterImpl<StockOrderVP.View> implements StockOrderVP.Presenter<StockOrderVP.View> {
+
 
     @Inject
     public StockOrderPresenter(SchedulerProvider schedulerProvider, CompositeDisposable compositeDisposable, CacheStore cacheStore) {
@@ -27,14 +27,13 @@ public class StockOrderPresenter<T extends StockOrderVP.View> extends BasePresen
     public void getOrders() {
         getView().showLoading();
         getCompositeDisposable().add(
-                AppApiHelper.getWarehouseOrders()
+                AppApiHelper.getWarehouseOrders(getCacheStore().getSession().getUserId())
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
-                        .subscribe(new Consumer<List<Order>>() {
+                        .subscribe(new Consumer<List<WarehouseOrder>>() {
                             @Override
-                            public void accept(List<Order> orders) throws Exception {
+                            public void accept(List<WarehouseOrder> orders) throws Exception {
 
-                                StockOrderPresenter.this.orders = orders;
                                 if (orders.isEmpty())
                                     getView().showEmptyOrdersIcon();
                                 else
@@ -65,7 +64,7 @@ public class StockOrderPresenter<T extends StockOrderVP.View> extends BasePresen
                         .subscribe(new Consumer<List<WareHouseProduct>>() {
                                        @Override
                                        public void accept(List<WareHouseProduct> wareHouseProducts) throws Exception {
-                                           StockOrderPresenter.this.wareHouseProducts = wareHouseProducts;
+
                                            if (wareHouseProducts.isEmpty())
                                                getView().showEmptyStockIcon();
                                            else
@@ -85,7 +84,7 @@ public class StockOrderPresenter<T extends StockOrderVP.View> extends BasePresen
 
 
     @Override
-    public void onAttach(T mvpView) {
+    public void onAttach(StockOrderVP.View mvpView) {
         super.onAttach(mvpView);
         getOrders();
     }

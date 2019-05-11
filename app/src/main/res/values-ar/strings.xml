@@ -43,4 +43,7 @@
     <string name="no_orders">لا يوجد أية طلبات...</string>
     <string name="no_stock">لا يوجد أية بضاعة...</string>
 
+    <string name="pack">الرزمة</string>
+    <string name="report">التبليغ للأدمن</string>
+
 </resources>

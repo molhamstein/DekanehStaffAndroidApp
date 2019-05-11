@@ -25,8 +25,9 @@ public class OrderItem implements Serializable {
     @SerializedName("media")
     @Expose
     private Media media;
-    private String pack;
     @SerializedName("pack")
+    @Expose
+    private String pack;
 
 
     public int getCount() {

@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/productImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -75,7 +75,7 @@
                 android:textAppearance="@style/BrownBlackTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                app:layout_constraintTop_toBottomOf="@+id/productImage" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -83,17 +83,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="104dp"
-                android:text="Pack"
+                android:text="الرزمة"
                 android:textAppearance="@style/GrayBoldTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/productName" />
 
             <TextView
                 android:id="@+id/product"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:text="PEPSI co"
                 android:textAppearance="@style/BrownBoldTextView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -109,10 +111,11 @@
 
             <TextView
                 android:id="@+id/pack"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="عبوة٠.٥ لتر "
                 android:textAppearance="@style/PrimaryBlackTextView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -143,7 +146,7 @@
                 android:backgroundTint="@color/light_gray_text_color"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
-                android:text="Report to Admin"
+                android:text="@string/report"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintCircleRadius="300dp"

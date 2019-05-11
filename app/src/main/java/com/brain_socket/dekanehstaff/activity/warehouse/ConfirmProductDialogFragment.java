@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
+import com.brain_socket.dekanehstaff.network.model.Product;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +30,8 @@ public class ConfirmProductDialogFragment extends DialogFragment {
     TextView textView12;
     @BindView(R.id.quantity)
     TextView quantity;
-    @BindView(R.id.imageView2)
-    ImageView imageView2;
+    @BindView(R.id.productImage)
+    ImageView productImage;
     @BindView(R.id.guidline1)
     Guideline guidline1;
     @BindView(R.id.productName)
@@ -50,6 +52,9 @@ public class ConfirmProductDialogFragment extends DialogFragment {
     Button buttonCancel;
     Unbinder unbinder;
 
+
+    private Product data;
+
     public ConfirmProductDialogFragment() {
         // Required empty public constructor
     }
@@ -61,6 +66,9 @@ public class ConfirmProductDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_confirm_product_dialog, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        data = (Product) getArguments().getSerializable("Product");
+
         return view;
     }
 
@@ -68,6 +76,11 @@ public class ConfirmProductDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        productName.setText(data.getNameAr());
+        quantity.setText(data.getOfferMaxQuantity().toString());
+        product.setText(data.getCategory().getTitleAr());
+        pack.setText(data.getPack());
+        Picasso.get().load(data.getMedia().getUrl()).into(productImage);
 
 
     }
@@ -79,7 +92,7 @@ public class ConfirmProductDialogFragment extends DialogFragment {
     }
 
     @OnClick(R.id.buttonCancel)
-    void onCancelClicked(){
+    void onCancelClicked() {
         dismiss();
     }
 
@@ -88,13 +101,11 @@ public class ConfirmProductDialogFragment extends DialogFragment {
     void onReportClicked() {
         dismiss();
     }
+
     @OnClick(R.id.checkButton)
     void onCheckClicked() {
         dismiss();
     }
 
 
-
-
-
-    }
+}

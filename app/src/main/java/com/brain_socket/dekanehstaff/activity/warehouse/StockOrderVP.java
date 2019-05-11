@@ -4,6 +4,7 @@ import com.brain_socket.dekanehstaff.base.BasePresenter;
 import com.brain_socket.dekanehstaff.base.BaseView;
 import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
+import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class StockOrderVP {
 
     public interface View extends BaseView {
 
-        void addOrders(List<Order> orders);
+        void addOrders(List<WarehouseOrder> orders);
 
         void addWareHouseProducts(List<WareHouseProduct> wareHouseProducts);
 

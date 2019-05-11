@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.warehouse.StockCheckActivity">
+    tools:context=".activity.warehouse.OrderDetailsActivity">
 
 
     <android.support.constraint.ConstraintLayout
@@ -73,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@+id/shopNameText" />
 
         <TextView
-            android:id="@+id/coseText"
+            android:id="@+id/costText"
             style="@style/BrownRegularTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -95,8 +95,8 @@
             android:textColor="@color/gray_text_color"
             android:textDirection="locale"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/coseText"
-            app:layout_constraintTop_toBottomOf="@+id/coseText" />
+            app:layout_constraintStart_toStartOf="@+id/costText"
+            app:layout_constraintTop_toBottomOf="@+id/costText" />
 
 
         <TextView
