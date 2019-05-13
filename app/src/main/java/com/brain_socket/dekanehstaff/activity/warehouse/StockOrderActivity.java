@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -59,7 +60,7 @@ public class StockOrderActivity extends BaseActivity implements
     @BindView(R.id.headerTab)
     RadioGroup headerTab;
     @BindView(R.id.search)
-    EditText search;
+    AppCompatEditText search;
     @BindView(R.id.recylcerViewStock)
     RecyclerView recylcerViewStock;
     @BindView(R.id.all)
