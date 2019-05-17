@@ -87,14 +87,10 @@ public class ActivityModule {
     }
 
 
-    @Provides
-    WarehouseOrdersAdapter.OrderClickListener providesClickListener(AppCompatActivity activity) {
-        return (WarehouseOrdersAdapter.OrderClickListener)activity;
-    }
 
     @Provides
     WarehouseOrdersAdapter providesWarehouseOrdersAdapter() {
-        return new WarehouseOrdersAdapter(providesClickListener(activity));
+        return new WarehouseOrdersAdapter(activity);
     }
 
     @Provides

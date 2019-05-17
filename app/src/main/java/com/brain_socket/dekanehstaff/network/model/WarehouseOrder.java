@@ -64,6 +64,17 @@ public class WarehouseOrder implements Serializable {
     private Warehouse warehouse;
     private final static long serialVersionUID = 5346530049653893058L;
 
+    private String diffTime ;
+
+
+    public String getDiffTime() {
+        return diffTime;
+    }
+
+    public void setDiffTime(String diffTime) {
+        this.diffTime = diffTime;
+    }
+
     public Boolean getPrintable() {
         return printable;
     }

@@ -24,6 +24,7 @@
             android:background="@drawable/brown_border_bg"
             android:button="@drawable/brown_border_bg"
             android:checked="true"
+            android:textSize="12sp"
             android:gravity="center"
             android:paddingStart="20dp"
             android:paddingTop="5dp"
@@ -41,6 +42,7 @@
             android:background="@drawable/brown_border_bg"
             android:button="@drawable/brown_border_bg"
             android:gravity="center"
+            android:textSize="12sp"
             android:paddingStart="20dp"
             android:paddingTop="5dp"
             android:paddingEnd="20dp"
@@ -60,9 +62,29 @@
             android:paddingStart="20dp"
             android:paddingTop="5dp"
             android:paddingEnd="20dp"
+            android:textSize="12sp"
             android:paddingBottom="5dp"
             android:text="@string/packed"
             android:textColor="@color/text_color_selector" />
+
+        <RadioButton
+            android:id="@+id/pendingDelivery"
+            style="@style/BrownRegularTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="12sp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/brown_border_bg"
+            android:button="@drawable/brown_border_bg"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
+            android:text="@string/pending_delivery"
+            android:textColor="@color/text_color_selector" />
+
 
     </RadioGroup>
 

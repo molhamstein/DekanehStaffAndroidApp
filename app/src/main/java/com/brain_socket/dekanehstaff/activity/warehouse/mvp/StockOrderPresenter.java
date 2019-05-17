@@ -1,12 +1,12 @@
-package com.brain_socket.dekanehstaff.activity.warehouse;
+package com.brain_socket.dekanehstaff.activity.warehouse.mvp;
 
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
 import com.brain_socket.dekanehstaff.base.BasePresenterImpl;
 import com.brain_socket.dekanehstaff.network.AppApiHelper;
 import com.brain_socket.dekanehstaff.network.CacheStore;
-import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
+import com.brain_socket.dekanehstaff.utils.WarehouseStatuses;
 
 import java.util.List;
 
@@ -39,7 +39,9 @@ public class StockOrderPresenter extends BasePresenterImpl<StockOrderVP.View> im
                                 else
                                     getView().hideEmptyOrdersIcon();
                                 getView().hideLoading();
+
                                 getView().addOrders(orders);
+
                                 getView().stopOrdersRefreshing();
 
 
@@ -55,10 +57,10 @@ public class StockOrderPresenter extends BasePresenterImpl<StockOrderVP.View> im
     }
 
     @Override
-    public void getStock(Integer limit,Integer skip) {
+    public void getStock(Integer limit, Integer skip) {
         getView().showLoading();
         getCompositeDisposable().add(
-                AppApiHelper.getWarehouseStock(limit,skip)
+                AppApiHelper.getWarehouseStock(limit, skip)
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
                         .subscribe(new Consumer<List<WareHouseProduct>>() {
@@ -69,6 +71,7 @@ public class StockOrderPresenter extends BasePresenterImpl<StockOrderVP.View> im
                                                getView().showEmptyStockIcon();
                                            else
                                                getView().hideEmptyStockIcon();
+
                                            getView().hideLoading();
                                            getView().stopStockRefreshing();
                                            getView().addWareHouseProducts(wareHouseProducts);
@@ -82,10 +85,19 @@ public class StockOrderPresenter extends BasePresenterImpl<StockOrderVP.View> im
                         ));
     }
 
+    @Override
+    public void filterOrders(WarehouseStatuses status) {
+        getView().getFilteredOrders(status);
+    }
+
 
     @Override
     public void onAttach(StockOrderVP.View mvpView) {
         super.onAttach(mvpView);
+
+        getView().setupOrdersLayout();
+        getView().setupStockLayout();
+
         getOrders();
     }
 

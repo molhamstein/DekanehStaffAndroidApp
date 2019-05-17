@@ -1,5 +1,7 @@
 package com.brain_socket.dekanehstaff.activity.login;
 
+import android.support.v7.app.AlertDialog;
+
 import com.androidnetworking.error.ANError;
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
 import com.brain_socket.dekanehstaff.base.BasePresenterImpl;
@@ -59,10 +61,18 @@ public class LoginPresenter<T extends LoginVP.View> extends BasePresenterImpl<T>
                     public void accept(Throwable throwable) throws Exception {
                         getView().hideLoading();
                         handleApiError((ANError) throwable);
-                        getView().showMessage(NetworkUtils.getError(throwable));
+//                        getView().showMessage(NetworkUtils.getError(throwable));
                     }
                 })
 
         );
+    }
+
+    @Override
+    public void handleApiError(ANError error) {
+        super.handleApiError(error);
+        new AlertDialog.Builder(getView().getActivity())
+                .setMessage("هناك خطأ في اسم المستخدم او كلمة المرور\n  الرجاء المحاولة مجدداً")
+                .setNeutralButton("حسنا", null).show();
     }
 }

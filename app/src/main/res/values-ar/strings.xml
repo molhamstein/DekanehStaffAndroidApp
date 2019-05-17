@@ -36,6 +36,7 @@
     <string name="search">بحث</string>
     <string name="all">الكل</string>
     <string name="packed">موضبة</string>
+    <string name="pending_delivery">بانتظار التوصيل</string>
     <string name="cost">الكلفة</string>
     <string name="status">الحالة</string>
     <string name="pieces">قطعة</string>

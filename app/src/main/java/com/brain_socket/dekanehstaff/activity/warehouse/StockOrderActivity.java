@@ -11,19 +11,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
+import com.brain_socket.dekanehstaff.activity.warehouse.mvp.StockOrderPresenter;
+import com.brain_socket.dekanehstaff.activity.warehouse.mvp.StockOrderVP;
 import com.brain_socket.dekanehstaff.adapter.warehouse.StockAdapter;
 import com.brain_socket.dekanehstaff.adapter.warehouse.WarehouseOrdersAdapter;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
-import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
+import com.brain_socket.dekanehstaff.network.model.Warehouse;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
+import com.brain_socket.dekanehstaff.utils.WarehouseStatuses;
 
 import java.util.List;
 
@@ -35,7 +37,6 @@ import butterknife.ButterKnife;
 
 public class StockOrderActivity extends BaseActivity implements
         CompoundButton.OnCheckedChangeListener,
-        WarehouseOrdersAdapter.OrderClickListener,
         StockOrderVP.View {
 
 
@@ -104,7 +105,16 @@ public class StockOrderActivity extends BaseActivity implements
     StockOrderPresenter presenter;
 
     final private Integer limit = 10;
+    @BindView(R.id.pendingDelivery)
+    RadioButton pendingDelivery;
+    @BindView(R.id.emptyCartImg)
+    ImageView emptyCartImg;
+    @BindView(R.id.noResultText)
+    TextView noResultText;
     private Integer pageId = 0;
+
+
+    private RadioButton.OnCheckedChangeListener onCheckedChangeListener;
 
 
     @Override
@@ -125,21 +135,48 @@ public class StockOrderActivity extends BaseActivity implements
 
     }
 
-    private void setupOrdersLayout() {
+    @Override
+    public void setupOrdersLayout() {
         ordersLayout.setVisibility(View.VISIBLE);
         lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recylcerViewOrders.setLayoutManager(lm);
         recylcerViewOrders.setAdapter(ordersAdapter);
         orders.setOnCheckedChangeListener(this);
+
         refreshOrders.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                ordersAdapter.reset();
                 presenter.getOrders();
             }
         });
+
+        onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                WarehouseStatuses status;
+                if (all.isChecked())
+                    status = WarehouseStatuses.all;
+                else if (pending.isChecked())
+                    status = WarehouseStatuses.inWarehouse;
+                else if (pendingDelivery.isChecked())
+                    status = WarehouseStatuses.pendingDelivery;
+                else
+                    status = WarehouseStatuses.packed;
+
+                presenter.filterOrders(status);
+            }
+        };
+
+        all.setOnCheckedChangeListener(onCheckedChangeListener);
+        pending.setOnCheckedChangeListener(onCheckedChangeListener);
+        pendingDelivery.setOnCheckedChangeListener(onCheckedChangeListener);
+        packed.setOnCheckedChangeListener(onCheckedChangeListener);
+
     }
 
-    private void setupStockLayout() {
+    @Override
+    public void setupStockLayout() {
         stockLayout.setVisibility(View.GONE);
         lm2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
@@ -186,24 +223,26 @@ public class StockOrderActivity extends BaseActivity implements
         if (buttonView == stock && isChecked) {
             stockLayout.setVisibility(View.VISIBLE);
             ordersLayout.setVisibility(View.GONE);
+            stockAdapter.reset();
             presenter.getStock(limit, pageId * limit);
         } else if (buttonView == orders && isChecked) {
             stockLayout.setVisibility(View.GONE);
             ordersLayout.setVisibility(View.VISIBLE);
+            ordersAdapter.reset();
             presenter.getOrders();
         }
     }
 
     @Override
-    public void onClick(WarehouseOrder order) {
+    public void onOrderClicked(WarehouseOrder order) {
         Intent intent = new Intent(this, OrderDetailsActivity.class);
-        intent.putExtra("Order",order);
+        intent.putExtra("Order", order);
         startActivity(intent);
     }
 
     @Override
     public void addOrders(List<WarehouseOrder> orders) {
-        ordersAdapter.addAllOrder(orders);
+        ordersAdapter.addAllOrders(orders);
     }
 
     @Override
@@ -215,14 +254,12 @@ public class StockOrderActivity extends BaseActivity implements
     public void hideEmptyOrdersIcon() {
         noResultOrders.setVisibility(View.GONE);
         recylcerViewOrders.setVisibility(View.VISIBLE);
-        tagFilter.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showEmptyOrdersIcon() {
         noResultOrders.setVisibility(View.VISIBLE);
         recylcerViewOrders.setVisibility(View.GONE);
-        tagFilter.setVisibility(View.GONE);
 
     }
 
@@ -248,5 +285,11 @@ public class StockOrderActivity extends BaseActivity implements
     @Override
     public void stopStockRefreshing() {
         refreshStock.setRefreshing(false);
+    }
+
+    @Override
+    public void getFilteredOrders(WarehouseStatuses status) {
+        ordersAdapter.notifyDataSetChanged();
+        ordersAdapter.getFilter().filter(status.toString());
     }
 }

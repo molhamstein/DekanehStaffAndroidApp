@@ -66,7 +66,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
         TextView productName;
         @BindView(R.id.manufacture)
         TextView manufacture;
-        @BindView(R.id.quantityText)
+        @BindView(R.id.totalPrice)
         TextView quantityText;
 
         public ViewHolder(@NonNull View itemView) {

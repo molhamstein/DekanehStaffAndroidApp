@@ -4,98 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".activity.login.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        tools:context=".activity.registration.RegistrationActivity">
+        android:paddingBottom="20dp">
 
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="70dp"
+            app:srcCompat="@drawable/ic_dekan_logo" />
 
         <LinearLayout
-            android:id="@+id/loginPhoneCard"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/shadow_card_black"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                app:srcCompat="@drawable/ic_email_black_24dp" />
-
-            <EditText
-                android:id="@+id/loginEmail"
-                style="@style/PrimaryBlackTextView"
+            <LinearLayout
+                android:id="@+id/loginPhoneCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="8dp"
-                android:background="@null"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:maxHeight="40dp"
-                android:textAlignment="viewStart"
-                android:textColorHint="@color/light_gray" />
+                android:background="@drawable/shadow_card_black"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_email_black_24dp" />
+
+                <EditText
+                    android:id="@+id/loginEmail"
+                    style="@style/PrimaryBlackTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@null"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:maxHeight="40dp"
+                    android:textAlignment="viewStart"
+                    android:textColorHint="@color/light_gray" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/loginPasswordCard"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/shadow_card_black"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_lock_gray_24dp" />
+
+                <EditText
+                    android:id="@+id/loginPassword"
+                    style="@style/PrimaryBlackTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@null"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textAlignment="viewStart"
+                    android:textColorHint="@color/light_gray" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/loginBtn"
+                style="@style/WhiteBlackTextView"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/brown_button_round_10"
+                android:text="@string/login"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
-
-        <LinearLayout
-            android:id="@+id/loginPasswordCard"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/shadow_card_black"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                app:srcCompat="@drawable/ic_lock_gray_24dp" />
-
-            <EditText
-                android:id="@+id/loginPassword"
-                style="@style/PrimaryBlackTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@null"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:textAlignment="viewStart"
-                android:textColorHint="@color/light_gray" />
-
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/loginBtn"
-            style="@style/WhiteBlackTextView"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/brown_button_round_10"
-            android:text="@string/login"
-            android:textColor="@color/white" />
 
     </LinearLayout>
 </ScrollView>

@@ -33,6 +33,16 @@ public class OrderProduct implements Serializable {
     private Product product;
     private final static long serialVersionUID = 2707724014355845879L;
 
+    private Boolean checked = false ;
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
+
     public Integer getSellingPrice() {
         return sellingPrice;
     }

@@ -102,7 +102,7 @@ public class AppApiHelper {
 
 
     public static Single<List<Barcode>> checkBarcode(String Barcode) {
-        return Rx2AndroidNetworking.get(ApiEndPoint.CHECK_Barcode)
+        return Rx2AndroidNetworking.get(ApiEndPoint.CHECK_BARCODE)
                 .addPathParameter("Barcode",Barcode)
                 .build()
                 .getObjectListSingle(Barcode.class);

@@ -14,10 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
+import com.brain_socket.dekanehstaff.activity.warehouse.mvp.OrderDetailsPresenter;
+import com.brain_socket.dekanehstaff.activity.warehouse.mvp.OrderDetailsVP;
 import com.brain_socket.dekanehstaff.adapter.warehouse.StockCheckAdapter;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
+import com.brain_socket.dekanehstaff.network.model.OrderProduct;
 import com.brain_socket.dekanehstaff.network.model.Product;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -109,11 +114,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsVP
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.onAttach(this);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -134,12 +134,28 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsVP
         Bundle bundle = new Bundle();
         bundle.putSerializable("Product", product);
         confirmProductDialogFragment.setArguments(bundle);
+//        confirmProductDialogFragment.setTargetFragment(this,2);
         confirmProductDialogFragment.show(getSupportFragmentManager(), "Dialog");
+
 
     }
 
     @Override
     public AppCompatActivity getActivity() {
         return this ;
+    }
+
+    @Override
+    public void updateProduct(String productId) {
+        Integer position = presenter.searchForProduct(productId) ;
+        if(position == -1 ){
+            return ;
+        }
+        adapter.checkProduct(position);
+    }
+
+    @Override
+    public List<OrderProduct> getAllProducts() {
+        return order.getOrderProducts();
     }
 }

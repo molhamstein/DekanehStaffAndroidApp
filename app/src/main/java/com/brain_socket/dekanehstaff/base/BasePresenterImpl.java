@@ -67,11 +67,7 @@ public class BasePresenterImpl<T extends BaseView> implements BasePresenter<T> {
 
         if (error == null || error.getErrorBody() == null) {
             getView().onError(R.string.api_default_error);
-        }
-
-
-
-        else {
+        } else {
             getView().onError(R.string.user_not_activated_error);
         }
 //

@@ -77,8 +77,8 @@ public class ConfirmProductDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         productName.setText(data.getNameAr());
-        quantity.setText(data.getOfferMaxQuantity().toString());
-        product.setText(data.getCategory().getTitleAr());
+        quantity.setText(data.getParentCount().toString());
+        product.setText(data.getNameAr());
         pack.setText(data.getPack());
         Picasso.get().load(data.getMedia().getUrl()).into(productImage);
 
@@ -104,6 +104,7 @@ public class ConfirmProductDialogFragment extends DialogFragment {
 
     @OnClick(R.id.checkButton)
     void onCheckClicked() {
+        ((OrderDetailsActivity)getActivity()).updateProduct(data.getId());
         dismiss();
     }
 

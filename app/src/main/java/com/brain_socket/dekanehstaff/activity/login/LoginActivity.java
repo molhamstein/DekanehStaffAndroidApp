@@ -2,6 +2,7 @@ package com.brain_socket.dekanehstaff.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
 import com.brain_socket.dekanehstaff.R;
@@ -60,5 +61,10 @@ public class LoginActivity extends BaseActivity implements LoginVP.View {
     public void startWarehouseOrdersStockActivity() {
         Intent intent = new Intent(this, StockOrderActivity.class) ;
         startActivity(intent);
+    }
+
+    @Override
+    public AppCompatActivity getActivity() {
+        return this;
     }
 }

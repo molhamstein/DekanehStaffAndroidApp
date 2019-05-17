@@ -27,7 +27,9 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
 
     @Inject
     public StockCheckAdapter() {
+
         data = new ArrayList<>();
+
     }
 
     public void addAll(List<OrderProduct> data) {
@@ -46,13 +48,19 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.productName.setText(data.get(position).getProduct().getNameAr());
         holder.manufacture.setText(data.get(position).getProduct().getManufacturer().getNameAr());
-        holder.piecesNumber.setText(data.get(position).getCount().toString());
-        holder.quantityText.setText(data.get(position).getProduct().getOfferMaxQuantity().toString());
+        holder.piecesNumber.setText(data.get(position).getProduct().getPack());
+        holder.quantityText.setText(data.get(position).getCount().toString());
+        holder.checkIcon.setChecked(data.get(position).getChecked());
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public void checkProduct(Integer position) {
+        data.get(position).setChecked(true);
+        notifyItemChanged(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,20 +69,18 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
         TextView productName;
         @BindView(R.id.manufacture)
         TextView manufacture;
-        @BindView(R.id.quantityText)
+        @BindView(R.id.totalPrice)
         TextView quantityText;
         @BindView(R.id.checkIcon)
         CheckBox checkIcon;
         @BindView(R.id.piecesNumber)
         TextView piecesNumber;
-        @BindView(R.id.text)
-        TextView text;
         @BindView(R.id.pieces)
         LinearLayout pieces;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

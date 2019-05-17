@@ -1,21 +1,14 @@
-package com.brain_socket.dekanehstaff.activity.warehouse;
+package com.brain_socket.dekanehstaff.activity.warehouse.mvp;
 
-import android.content.Context;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.androidnetworking.error.ANError;
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
-import com.brain_socket.dekanehstaff.base.BaseActivity;
-import com.brain_socket.dekanehstaff.base.BasePresenter;
 import com.brain_socket.dekanehstaff.base.BasePresenterImpl;
-import com.brain_socket.dekanehstaff.base.BaseView;
 import com.brain_socket.dekanehstaff.network.AppApiHelper;
 import com.brain_socket.dekanehstaff.network.CacheStore;
 import com.brain_socket.dekanehstaff.network.model.Barcode;
-import com.brain_socket.dekanehstaff.network.model.Order;
-import com.brain_socket.dekanehstaff.network.model.Product;
+import com.brain_socket.dekanehstaff.network.model.OrderProduct;
 
 import java.util.List;
 
@@ -46,7 +39,7 @@ public class OrderDetailsPresenter extends BasePresenterImpl<OrderDetailsVP.View
                                 if (barcodes.size() > 0)
                                     getView().openDialog(barcodes.get(0).getProduct());
                                 else {
-                                     new AlertDialog.Builder(getView().getActivity())
+                                    new AlertDialog.Builder(getView().getActivity())
                                             .setMessage("لا يوجد أي منتج موافق للرمز")
                                             .setNeutralButton("حسنا", null).show();
 
@@ -64,6 +57,16 @@ public class OrderDetailsPresenter extends BasePresenterImpl<OrderDetailsVP.View
         );
     }
 
+
+    @Override
+    public Integer searchForProduct(String productId) {
+        List<OrderProduct> products = getView().getAllProducts();
+        for (int i = 0; i < products.size(); i++) {
+            if(products.get(i).getProductId().equals(productId))
+                return i ;
+        }
+        return -1;
+    }
 
     @Override
     public void onAttach(OrderDetailsVP.View view) {
