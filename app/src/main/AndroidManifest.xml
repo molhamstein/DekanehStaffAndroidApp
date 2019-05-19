@@ -28,7 +28,7 @@
 
         </activity>
         <activity
-            android:name=".activity.warehouse.StockOrderActivity"
+            android:name=".activity.warehouse.WarehouseMainActivity"
             android:screenOrientation="portrait"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

@@ -2,7 +2,6 @@ package com.brain_socket.dekanehstaff.adapter.warehouse;
 
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -17,16 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
-import com.brain_socket.dekanehstaff.activity.warehouse.StockOrderActivity;
-import com.brain_socket.dekanehstaff.activity.warehouse.mvp.StockOrderVP;
+import com.brain_socket.dekanehstaff.activity.warehouse.WarehouseMainActivity;
+import com.brain_socket.dekanehstaff.activity.warehouse.mvp.WarehouseMainVP;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 import com.brain_socket.dekanehstaff.utils.DateHelper;
-import com.brain_socket.dekanehstaff.utils.WarehouseStatuses;
+import com.brain_socket.dekanehstaff.utils.Enums;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 
 import javax.inject.Inject;
@@ -40,7 +37,7 @@ public class WarehouseOrdersAdapter extends RecyclerView.Adapter<WarehouseOrders
     private List<WarehouseOrder> orders;
     private List<WarehouseOrder> filteredOrders;
     private Context context;
-    private String status = WarehouseStatuses.all.toString();
+    private String status = Enums.WarehouseStatuses.all.toString();
 
     @Inject
     public WarehouseOrdersAdapter(Context context) {
@@ -60,7 +57,7 @@ public class WarehouseOrdersAdapter extends RecyclerView.Adapter<WarehouseOrders
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((StockOrderActivity) context).onOrderClicked(filteredOrders.get(position));
+                ((WarehouseMainActivity) context).onOrderClicked(filteredOrders.get(position));
             }
         });
 
@@ -68,7 +65,7 @@ public class WarehouseOrdersAdapter extends RecyclerView.Adapter<WarehouseOrders
         holder.owenerName.setText(filteredOrders.get(position).getClient().getOwnerName());
         holder.totalPrice.setText(filteredOrders.get(position).getTotalPrice().toString());
         holder.status.setText(filteredOrders.get(position).getStatus());
-        if (holder.status.toString().equals(WarehouseStatuses.inWarehouse))
+        if (filteredOrders.get(position).getStatus().toString().equals(Enums.WarehouseStatuses.inWarehouse.toString()))
             holder.status.setTextColor(ContextCompat.getColor(context, R.color.md_orange_500));
         else
             holder.status.setTextColor(ContextCompat.getColor(context, R.color.light_green));
@@ -141,7 +138,7 @@ public class WarehouseOrdersAdapter extends RecyclerView.Adapter<WarehouseOrders
 
                 filteredOrders.clear();
 
-                if (TextUtils.isEmpty(charSequence) || charSequence.equals(WarehouseStatuses.all.toString())) {
+                if (TextUtils.isEmpty(charSequence) || charSequence.equals(Enums.WarehouseStatuses.all.toString())) {
                     filteredOrders.addAll(orders);
                 } else {
                     List<WarehouseOrder> filteredList = new ArrayList<>();
@@ -163,9 +160,9 @@ public class WarehouseOrdersAdapter extends RecyclerView.Adapter<WarehouseOrders
                 notifyDataSetChanged();
                 filteredOrders = (List<WarehouseOrder>) filterResults.values;
                 if (filteredOrders.isEmpty())
-                    ((StockOrderVP.View) context).showEmptyOrdersIcon();
+                    ((WarehouseMainVP.View) context).showEmptyOrdersIcon();
                 else
-                    ((StockOrderVP.View) context).hideEmptyOrdersIcon();
+                    ((WarehouseMainVP.View) context).hideEmptyOrdersIcon();
                 notifyDataSetChanged();
 
             }

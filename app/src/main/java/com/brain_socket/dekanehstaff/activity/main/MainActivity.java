@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements MainVP.View {
                         item2,
                         item3,
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withIdentifier(3).withName(R.string.logout)
+                        new SecondaryDrawerItem().withIdentifier(4).withName(R.string.logout)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

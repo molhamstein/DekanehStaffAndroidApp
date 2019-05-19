@@ -46,5 +46,9 @@
 
     <string name="pack">الرزمة</string>
     <string name="report">التبليغ للأدمن</string>
+    <string name="are_you_sure">هل أنت متأكد؟</string>
+    <string name="ok_button">نعم</string>
+
+
 
 </resources>

@@ -15,17 +15,24 @@ public class OrderDetailsVP {
 
 
     public interface View extends BaseView {
-        void openDialog(Product product) ;
-        AppCompatActivity getActivity() ;
+        void openDialog(Product product);
+
+        AppCompatActivity getActivity();
+
         List<OrderProduct> getAllProducts();
-        void updateProduct(String productId) ;
+
+        void updateProduct(String productId);
+
 
     }
 
     public interface Presenter<T extends BaseView> extends BasePresenter<T> {
 
-       void checkBarcode(String Barcode) ;
-       Integer searchForProduct(String productId);
+        void checkBarcode(String Barcode);
+
+        void setProductChecked(String productId);
+
+        void assignPack(String orderId);
 
 
     }

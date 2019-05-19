@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
 
@@ -37,6 +38,9 @@ public class User implements Serializable {
     @SerializedName("gender")
     @Expose
     private String gender;
+    @SerializedName("roles")
+    @Expose
+    private List<Role> roles;
 
     public User(String phoneNumber, String ownerName, String shopName) {
         this.phoneNumber = phoneNumber;
@@ -84,6 +88,13 @@ public class User implements Serializable {
         return gender;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public enum Status {
         pending,activated,deactivated

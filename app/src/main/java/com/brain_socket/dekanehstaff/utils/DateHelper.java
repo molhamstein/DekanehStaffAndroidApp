@@ -27,9 +27,10 @@ public class DateHelper {
             Long minuts = (diff / (1000 * 60)) % 60;
             Long seconds = (diff / (1000)) % 60;
 
-            hours = Math.min(24, hours);
-            minuts = Math.min(60, minuts);
-            seconds = Math.min(60, seconds);
+            hours = Math.min(23, hours);
+            minuts = Math.min(59, minuts);
+            seconds = Math.min(59, seconds);
+
             String temp = hours.toString() + ":" + minuts.toString() + ":" + seconds.toString();
             SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss", Locale.US);
             Date dd = sdf2.parse(temp);

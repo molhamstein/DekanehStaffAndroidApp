@@ -142,17 +142,17 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsVP
 
     @Override
     public AppCompatActivity getActivity() {
-        return this ;
+        return this;
     }
 
     @Override
     public void updateProduct(String productId) {
-        Integer position = presenter.searchForProduct(productId) ;
-        if(position == -1 ){
-            return ;
-        }
-        adapter.checkProduct(position);
+        presenter.setProductChecked(productId);
+        adapter.notifyDataSetChanged();
+        presenter.assignPack(order.getId());
+
     }
+
 
     @Override
     public List<OrderProduct> getAllProducts() {

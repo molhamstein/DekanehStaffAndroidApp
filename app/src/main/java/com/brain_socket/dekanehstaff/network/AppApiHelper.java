@@ -6,6 +6,7 @@ import com.brain_socket.dekanehstaff.network.model.Barcode;
 import com.brain_socket.dekanehstaff.network.model.Client;
 import com.brain_socket.dekanehstaff.network.model.LoginRequest;
 import com.brain_socket.dekanehstaff.network.model.LoginResponse;
+import com.brain_socket.dekanehstaff.network.model.Message;
 import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
@@ -107,6 +108,15 @@ public class AppApiHelper {
                 .build()
                 .getObjectListSingle(Barcode.class);
     }
+
+    public static Single<Message> assignPack(String orderId,String accessToken) {
+        return Rx2AndroidNetworking.post(ApiEndPoint.ASSIGN_PACK)
+                .addPathParameter("orderId",orderId)
+                .addQueryParameter("access_token", accessToken )
+                .build()
+                .getObjectSingle(Message.class);
+    }
+
 
 
 

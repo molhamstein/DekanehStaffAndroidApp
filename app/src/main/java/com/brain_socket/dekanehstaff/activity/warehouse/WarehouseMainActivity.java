@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -17,15 +18,24 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
-import com.brain_socket.dekanehstaff.activity.warehouse.mvp.StockOrderPresenter;
-import com.brain_socket.dekanehstaff.activity.warehouse.mvp.StockOrderVP;
+import com.brain_socket.dekanehstaff.activity.warehouse.mvp.WarehouseMainPresenter;
+import com.brain_socket.dekanehstaff.activity.warehouse.mvp.WarehouseMainVP;
 import com.brain_socket.dekanehstaff.adapter.warehouse.StockAdapter;
 import com.brain_socket.dekanehstaff.adapter.warehouse.WarehouseOrdersAdapter;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
+import com.brain_socket.dekanehstaff.network.model.User;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
-import com.brain_socket.dekanehstaff.network.model.Warehouse;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
-import com.brain_socket.dekanehstaff.utils.WarehouseStatuses;
+import com.brain_socket.dekanehstaff.utils.Enums;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.List;
 
@@ -35,9 +45,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class StockOrderActivity extends BaseActivity implements
+public class WarehouseMainActivity extends BaseActivity implements
         CompoundButton.OnCheckedChangeListener,
-        StockOrderVP.View {
+        WarehouseMainVP.View {
 
 
     @BindView(R.id.nameText)
@@ -102,7 +112,7 @@ public class StockOrderActivity extends BaseActivity implements
     LinearLayoutManager lm2;
 
     @Inject
-    StockOrderPresenter presenter;
+    WarehouseMainPresenter presenter;
 
     final private Integer limit = 10;
     @BindView(R.id.pendingDelivery)
@@ -111,6 +121,8 @@ public class StockOrderActivity extends BaseActivity implements
     ImageView emptyCartImg;
     @BindView(R.id.noResultText)
     TextView noResultText;
+    @BindView(R.id.mainToolbar)
+    Toolbar mainToolbar;
     private Integer pageId = 0;
 
 
@@ -120,19 +132,63 @@ public class StockOrderActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_order);
+        setContentView(R.layout.activity_warehouse_main);
         ButterKnife.bind(this);
-
+        setSupportActionBar(mainToolbar);
         if (getActivityComponent() != null)
             getActivityComponent().inject(this);
 
-        setupOrdersLayout();
-        setupStockLayout();
+
 
 
         presenter.onAttach(this);
 
 
+    }
+
+    @Override
+    public void setupMainView(String userName) {
+
+        name.setText(userName);
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.color.colorAccent)
+                .addProfiles(
+                        presenter.getProfileItem()
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(mainToolbar)
+                .withAccountHeader(headerResult)
+                .addDrawerItems(
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withIdentifier(4).withName(R.string.logout)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+
+
+                        switch ((int) drawerItem.getIdentifier()) {
+
+                            case 4:
+
+                                presenter.logout();
+                                break;
+                        }
+
+                        return false;
+                    }
+                })
+                .build();
     }
 
     @Override
@@ -154,15 +210,15 @@ public class StockOrderActivity extends BaseActivity implements
         onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                WarehouseStatuses status;
+                Enums.WarehouseStatuses status;
                 if (all.isChecked())
-                    status = WarehouseStatuses.all;
+                    status = Enums.WarehouseStatuses.all;
                 else if (pending.isChecked())
-                    status = WarehouseStatuses.inWarehouse;
+                    status = Enums.WarehouseStatuses.inWarehouse;
                 else if (pendingDelivery.isChecked())
-                    status = WarehouseStatuses.pendingDelivery;
+                    status = Enums.WarehouseStatuses.pendingDelivery;
                 else
-                    status = WarehouseStatuses.packed;
+                    status = Enums.WarehouseStatuses.packed;
 
                 presenter.filterOrders(status);
             }
@@ -288,7 +344,7 @@ public class StockOrderActivity extends BaseActivity implements
     }
 
     @Override
-    public void getFilteredOrders(WarehouseStatuses status) {
+    public void getFilteredOrders(Enums.WarehouseStatuses status) {
         ordersAdapter.notifyDataSetChanged();
         ordersAdapter.getFilter().filter(status.toString());
     }

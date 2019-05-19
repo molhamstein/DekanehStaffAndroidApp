@@ -11,7 +11,7 @@ public class LoginVP {
     public interface View extends BaseView {
         AppCompatActivity getActivity() ;
         void startMainActivity();
-        void startWarehouseOrdersStockActivity() ;
+        void startWarehouseMainActivity() ;
         void finish();
     }
 

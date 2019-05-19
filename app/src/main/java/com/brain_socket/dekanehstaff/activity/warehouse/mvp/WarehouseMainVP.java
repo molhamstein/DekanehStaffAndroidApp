@@ -2,17 +2,20 @@ package com.brain_socket.dekanehstaff.activity.warehouse.mvp;
 
 import com.brain_socket.dekanehstaff.base.BasePresenter;
 import com.brain_socket.dekanehstaff.base.BaseView;
-import com.brain_socket.dekanehstaff.network.model.Order;
+import com.brain_socket.dekanehstaff.network.model.User;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
-import com.brain_socket.dekanehstaff.utils.WarehouseStatuses;
+import com.brain_socket.dekanehstaff.utils.Enums;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 
 import java.util.List;
 
-public class StockOrderVP {
+public class WarehouseMainVP {
 
     public interface View extends BaseView {
 
+
+        void setupMainView(String userName);
 
         void setupOrdersLayout();
 
@@ -34,18 +37,22 @@ public class StockOrderVP {
 
         void stopStockRefreshing();
 
-        void getFilteredOrders(WarehouseStatuses status);
+        void getFilteredOrders(Enums.WarehouseStatuses status);
 
         void onOrderClicked(WarehouseOrder order);
     }
 
     public interface Presenter<T extends BaseView> extends BasePresenter<T> {
 
+        ProfileDrawerItem getProfileItem();
+
         void getOrders();
 
         void getStock(Integer limit, Integer skip);
 
-        void filterOrders(WarehouseStatuses status);
+        void filterOrders(Enums.WarehouseStatuses status);
+
+        void logout();
 
 
     }

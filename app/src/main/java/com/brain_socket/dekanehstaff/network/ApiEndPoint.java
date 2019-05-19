@@ -24,7 +24,7 @@ public class ApiEndPoint {
     public static final String WAREHOUSE_STOCK = WAREHOUSE + "?filter={\"limit\":{limit},\"skip\":{skip},\"include\":[\"productAbstract\"]}";
     public static final String CHECK_BARCODE = BuildConfig.BASE_API_URL+ "Barcodes?filter={\"where\":{\"code\":\"{Barcode}\"}}" ;
     public static final String SEARCH_PRODUCTS = BuildConfig.BASE_API_URL+ "Barcodes?filter={\"where\":{\"code\":\"{Barcode}\"}}" ;
-    public static final String ASSIGN_PACK = BuildConfig.BASE_API_URL+ "Barcodes?filter={\"where\":{\"code\":\"{Barcode}\"}}" ;
+    public static final String ASSIGN_PACK = ORDERS + "/{orderId}/assignPack" ;
 
 
 }

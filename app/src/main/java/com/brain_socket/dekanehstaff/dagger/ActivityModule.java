@@ -10,6 +10,7 @@ import com.brain_socket.dekanehstaff.activity.main.MainVP;
 import com.brain_socket.dekanehstaff.adapter.ClientsAdapter;
 import com.brain_socket.dekanehstaff.adapter.ItemsAdapter;
 import com.brain_socket.dekanehstaff.adapter.OrdersAdapter;
+import com.brain_socket.dekanehstaff.adapter.warehouse.StockCheckAdapter;
 import com.brain_socket.dekanehstaff.application.AppSchedulerProvider;
 import com.brain_socket.dekanehstaff.application.SchedulerProvider;
 import com.brain_socket.dekanehstaff.network.CacheStore;
@@ -98,6 +99,10 @@ public class ActivityModule {
         return new StockAdapter(providesContext());
     }
 
+//    @Provides
+//    StockCheckAdapter providesStockCheckAdapter() {
+//        return new StockCheckAdapter(provideCacheStore(ac));
+//    }
 
 
 

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
+import com.brain_socket.dekanehstaff.network.CacheStore;
 import com.brain_socket.dekanehstaff.network.model.OrderProduct;
 
 import java.util.ArrayList;
@@ -24,11 +25,13 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
 
 
     List<OrderProduct> data;
+    private CacheStore cacheStore ;
 
     @Inject
-    public StockCheckAdapter() {
+    public StockCheckAdapter(CacheStore cacheStore) {
 
         data = new ArrayList<>();
+        this.cacheStore  = cacheStore ;
 
     }
 
@@ -50,7 +53,8 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
         holder.manufacture.setText(data.get(position).getProduct().getManufacturer().getNameAr());
         holder.piecesNumber.setText(data.get(position).getProduct().getPack());
         holder.quantityText.setText(data.get(position).getCount().toString());
-        holder.checkIcon.setChecked(data.get(position).getChecked());
+
+        holder.checkIcon.setChecked(cacheStore.getSession().getProductChecked(data.get(position).getProductId()));
     }
 
     @Override
@@ -58,10 +62,7 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
         return data.size();
     }
 
-    public void checkProduct(Integer position) {
-        data.get(position).setChecked(true);
-        notifyItemChanged(position);
-    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
