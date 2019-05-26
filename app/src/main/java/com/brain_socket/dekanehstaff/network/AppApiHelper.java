@@ -8,10 +8,12 @@ import com.brain_socket.dekanehstaff.network.model.LoginRequest;
 import com.brain_socket.dekanehstaff.network.model.LoginResponse;
 import com.brain_socket.dekanehstaff.network.model.Message;
 import com.brain_socket.dekanehstaff.network.model.Order;
+import com.brain_socket.dekanehstaff.network.model.Report;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 import com.google.gson.JsonObject;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
+
 import java.util.List;
 
 import io.reactivex.Maybe;
@@ -91,7 +93,7 @@ public class AppApiHelper {
                 .getObjectListSingle(WarehouseOrder.class);
     }
 
-    public static Single<List<WareHouseProduct>> getWarehouseStock(Integer limit,Integer skip ) {
+    public static Single<List<WareHouseProduct>> getWarehouseStock(Integer limit, Integer skip) {
         return Rx2AndroidNetworking.get(ApiEndPoint.WAREHOUSE_STOCK)
 //                .addQueryParameter("access_token", accessToken)
                 .addPathParameter("skip", skip.toString())
@@ -104,24 +106,37 @@ public class AppApiHelper {
 
     public static Single<List<Barcode>> checkBarcode(String Barcode) {
         return Rx2AndroidNetworking.get(ApiEndPoint.CHECK_BARCODE)
-                .addPathParameter("Barcode",Barcode)
+                .addPathParameter("Barcode", Barcode)
                 .build()
                 .getObjectListSingle(Barcode.class);
     }
 
-    public static Single<Message> assignPack(String orderId,String accessToken) {
+    public static Single<Message> assignPack(String orderId, String accessToken) {
         return Rx2AndroidNetworking.post(ApiEndPoint.ASSIGN_PACK)
-                .addPathParameter("orderId",orderId)
-                .addQueryParameter("access_token", accessToken )
+                .addPathParameter("orderId", orderId)
+                .addQueryParameter("access_token", accessToken)
                 .build()
                 .getObjectSingle(Message.class);
     }
 
 
+    public static Single<List<WareHouseProduct>> searchWarehouseStock(String keyword,Integer limit,Integer skip) {
+        return Rx2AndroidNetworking.get(ApiEndPoint.SEARCH_PRODUCTS)
+//                .addQueryParameter("access_token", accessToken)
+                .addPathParameter("keyword", keyword)
+                .addPathParameter("skip", skip.toString())
+                .addPathParameter("limit", limit.toString())
+                .build()
+                .getObjectListSingle(WareHouseProduct.class);
+    }
 
-
-
-
+    public static Single<JsonObject> report(Report report, String accessToken) {
+        return Rx2AndroidNetworking.post(ApiEndPoint.REPORT)
+                .addBodyParameter(report)
+                .addQueryParameter("access_token", accessToken)
+                .build()
+                .getObjectSingle(JsonObject.class);
+    }
 
 
 }

@@ -65,7 +65,7 @@ public class WarehouseOrdersAdapter extends RecyclerView.Adapter<WarehouseOrders
         holder.owenerName.setText(filteredOrders.get(position).getClient().getOwnerName());
         holder.totalPrice.setText(filteredOrders.get(position).getTotalPrice().toString());
         holder.status.setText(filteredOrders.get(position).getStatus());
-        if (filteredOrders.get(position).getStatus().toString().equals(Enums.WarehouseStatuses.inWarehouse.toString()))
+        if (filteredOrders.get(position).getStatus().equals(Enums.WarehouseStatuses.inWarehouse.toString()))
             holder.status.setTextColor(ContextCompat.getColor(context, R.color.md_orange_500));
         else
             holder.status.setTextColor(ContextCompat.getColor(context, R.color.light_green));
@@ -76,6 +76,7 @@ public class WarehouseOrdersAdapter extends RecyclerView.Adapter<WarehouseOrders
 
 
         Pair<String, Long> p = DateHelper.diffBetweenDateAndCurrentTime(filteredOrders.get(position).getOrderDate());
+        holder.timerText.setText(p.first);
         holder.timer = new CountDownTimer(p.second, 1000) {
 
             @Override

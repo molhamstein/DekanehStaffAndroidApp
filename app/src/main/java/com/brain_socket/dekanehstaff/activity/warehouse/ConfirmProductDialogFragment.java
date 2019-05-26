@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.brain_socket.dekanehstaff.R;
 import com.brain_socket.dekanehstaff.network.model.Product;
+import com.brain_socket.dekanehstaff.network.model.Report;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -38,8 +39,8 @@ public class ConfirmProductDialogFragment extends DialogFragment {
     TextView productName;
     @BindView(R.id.textView2)
     TextView textView2;
-    @BindView(R.id.product)
-    TextView product;
+    @BindView(R.id.manufacturer)
+    TextView manufacturer;
     @BindView(R.id.textView4)
     TextView textView4;
     @BindView(R.id.pack)
@@ -78,7 +79,7 @@ public class ConfirmProductDialogFragment extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         productName.setText(data.getNameAr());
         quantity.setText(data.getParentCount().toString());
-        product.setText(data.getNameAr());
+        manufacturer.setText(data.getManufacturer().getNameAr());
         pack.setText(data.getPack());
         Picasso.get().load(data.getMedia().getUrl()).into(productImage);
 
@@ -99,6 +100,9 @@ public class ConfirmProductDialogFragment extends DialogFragment {
 
     @OnClick(R.id.buttonReport)
     void onReportClicked() {
+        Report report = new Report() ;
+        report.setWarehouseProudctId(data.getId());
+        ((OrderDetailsActivity)getActivity()).report(report);
         dismiss();
     }
 

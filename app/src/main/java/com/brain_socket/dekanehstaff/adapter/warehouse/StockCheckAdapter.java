@@ -54,7 +54,7 @@ public class StockCheckAdapter extends RecyclerView.Adapter<StockCheckAdapter.Vi
         holder.piecesNumber.setText(data.get(position).getProduct().getPack());
         holder.quantityText.setText(data.get(position).getCount().toString());
 
-        holder.checkIcon.setChecked(cacheStore.getSession().getProductChecked(data.get(position).getProductId()));
+        holder.checkIcon.setChecked(cacheStore.getSession().getProductChecked(data.get(position).getProductId()+data.get(position).getOrderId()));
     }
 
     @Override

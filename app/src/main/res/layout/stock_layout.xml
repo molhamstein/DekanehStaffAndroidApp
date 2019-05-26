@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/stockLayout"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -53,7 +54,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,5 +91,17 @@
             app:layout_constraintTop_toBottomOf="@+id/emptyCartImg" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/searchLoader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="180dp"
+        android:visibility="gone"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/refreshStock"
+        app:layout_constraintEnd_toEndOf="@+id/refreshStock"
+        app:layout_constraintStart_toStartOf="@+id/refreshStock"
+        app:layout_constraintTop_toBottomOf="@+id/search" />
 
 </android.support.constraint.ConstraintLayout>

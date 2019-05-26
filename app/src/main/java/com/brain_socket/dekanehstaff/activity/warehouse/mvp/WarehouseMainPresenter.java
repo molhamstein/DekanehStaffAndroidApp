@@ -40,6 +40,17 @@ public class WarehouseMainPresenter extends BasePresenterImpl<WarehouseMainVP.Vi
     }
 
     @Override
+    public void onAttach(WarehouseMainVP.View mvpView) {
+        super.onAttach(mvpView);
+
+        getView().setupOrdersLayout();
+        getView().setupStockLayout();
+        getView().setupMainView(getCacheStore().getSession().getUserName());
+
+        getOrders();
+    }
+
+    @Override
     public void getOrders() {
         getView().showLoading();
         getCompositeDisposable().add(
@@ -102,26 +113,43 @@ public class WarehouseMainPresenter extends BasePresenterImpl<WarehouseMainVP.Vi
     }
 
     @Override
+    public void searchStock(String keyword,Integer limit, Integer skip) {
+        getView().showSearchLoader();
+        getCompositeDisposable().add(
+                AppApiHelper.searchWarehouseStock(keyword,limit,skip)
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(new Consumer<List<WareHouseProduct>>() {
+                                       @Override
+                                       public void accept(List<WareHouseProduct> wareHouseProducts) throws Exception {
+
+                                           if (wareHouseProducts.isEmpty())
+                                               getView().showEmptyStockIcon();
+                                           else
+                                               getView().hideEmptyStockIcon();
+
+                                           getView().hideSearchLoader();
+                                           getView().stopStockRefreshing();
+                                           getView().addWareHouseProducts(wareHouseProducts);
+                                       }
+                                   }, new Consumer<Throwable>() {
+                                       @Override
+                                       public void accept(Throwable throwable) throws Exception {
+                                           getView().hideSearchLoader();
+                                       }
+                                   }
+                        ));
+    }
+
+    @Override
     public void filterOrders(Enums.WarehouseStatuses status) {
         getView().getFilteredOrders(status);
     }
 
 
     @Override
-    public void onAttach(WarehouseMainVP.View mvpView) {
-        super.onAttach(mvpView);
-
-        getView().setupOrdersLayout();
-        getView().setupStockLayout();
-        getView().setupMainView(getCacheStore().getSession().getUserName());
-
-        getOrders();
-    }
-
-
-    @Override
     public void logout() {
-        final Context context = (WarehouseMainActivity)getView() ;
+        final Context context = (WarehouseMainActivity) getView();
         final AlertDialog dialog = new AlertDialog.Builder(context).setMessage(context.getString(R.string.are_you_sure)).setPositiveButton(context.getString(R.string.ok_button), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -146,20 +174,19 @@ public class WarehouseMainPresenter extends BasePresenterImpl<WarehouseMainVP.Vi
 
             }
         })
-                .setNegativeButton(context.getString(R.string.cancel),null).create();
+                .setNegativeButton(context.getString(R.string.cancel), null).create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface arg0) {
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context,R.color.colorAccent));
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context,R.color.colorAccent));
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
 
             }
         });
         dialog.show();
 
         TextView textView = (TextView) dialog.getWindow().findViewById(android.R.id.message);
-        textView.setTextColor(ContextCompat.getColor(context,R.color.brown));
-
+        textView.setTextColor(ContextCompat.getColor(context, R.color.brown));
 
 
     }

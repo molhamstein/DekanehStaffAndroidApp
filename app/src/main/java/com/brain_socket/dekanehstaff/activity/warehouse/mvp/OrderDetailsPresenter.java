@@ -10,6 +10,8 @@ import com.brain_socket.dekanehstaff.network.CacheStore;
 import com.brain_socket.dekanehstaff.network.model.Barcode;
 import com.brain_socket.dekanehstaff.network.model.Message;
 import com.brain_socket.dekanehstaff.network.model.OrderProduct;
+import com.brain_socket.dekanehstaff.network.model.Report;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -71,25 +73,26 @@ public class OrderDetailsPresenter extends BasePresenterImpl<OrderDetailsVP.View
 
 
     @Override
-    public void setProductChecked(String productId) {
-        getCacheStore().getSession().setProductChecked(productId);
+    public void setProductChecked(String productId,String orderId) {
+        getCacheStore().getSession().setProductChecked(productId+orderId);
     }
 
-    private Boolean orderIsPacked(){
-        List<OrderProduct> products = getView().getAllProducts() ;
-        for (OrderProduct product:products) {
-            if(!getCacheStore().getSession().getProductChecked(product.getProductId()))
-                return false ;
+    private Boolean orderIsPacked() {
+        List<OrderProduct> products = getView().getAllProducts();
+        for (OrderProduct product : products) {
+            if (!getCacheStore().getSession().getProductChecked(product.getProductId()))
+                return false;
         }
 
-        return true ;
+        return true;
     }
+
     @Override
     public void assignPack(String orderId) {
         if (orderIsPacked()) {
             getView().showLoading();
             getCompositeDisposable().add(
-                    AppApiHelper.assignPack(orderId,getCacheStore().getSession().getAccessToken())
+                    AppApiHelper.assignPack(orderId, getCacheStore().getSession().getAccessToken())
                             .subscribeOn(getSchedulerProvider().io())
                             .observeOn(getSchedulerProvider().ui())
                             .subscribe(new Consumer<Message>() {
@@ -109,5 +112,28 @@ public class OrderDetailsPresenter extends BasePresenterImpl<OrderDetailsVP.View
         }
     }
 
+    @Override
+    public void report(Report report) {
+        report.setUserId(getCacheStore().getSession().getUserId());
+        getView().showLoading();
+        getCompositeDisposable().add(
+                AppApiHelper.report(report, getCacheStore().getSession().getAccessToken())
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(new Consumer<JsonObject>() {
+                            @Override
+                            public void accept(JsonObject jsonObject) throws Exception {
+                                getView().hideLoading();
 
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                getView().hideLoading();
+//                                Log.e("ASD", "accept: ", throwable);
+                            }
+                        })
+        );
+
+    }
 }

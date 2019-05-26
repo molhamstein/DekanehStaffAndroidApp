@@ -54,7 +54,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
         orderViewHolder.countDown.updateShow(orderDateMilliSeconds);
         orderViewHolder.countDown.start(orderDateMilliSeconds);
         if (orderViewHolder.countDown.getRemainTime() < 7200000) {
-            orderViewHolder.countDown.dynamicShow(new DynamicConfig.Builder().setSuffixTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.bad_rating_color)).setTimeTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.bad_rating_color)).build());
+            orderViewHolder.countDown.dynamicShow(new DynamicConfig.Builder()
+                    .setSuffixTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.bad_rating_color))
+                    .setTimeTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.bad_rating_color))
+                    .build());
         } else {
             orderViewHolder.countDown.dynamicShow(new DynamicConfig.Builder().setSuffixTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.primary_dark)).setTimeTextColor(orderViewHolder.countDown.getContext().getResources().getColor(R.color.primary_dark)).build());
         }

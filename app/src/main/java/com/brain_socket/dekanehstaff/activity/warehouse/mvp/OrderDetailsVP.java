@@ -7,6 +7,7 @@ import com.brain_socket.dekanehstaff.base.BaseView;
 import com.brain_socket.dekanehstaff.network.model.Order;
 import com.brain_socket.dekanehstaff.network.model.OrderProduct;
 import com.brain_socket.dekanehstaff.network.model.Product;
+import com.brain_socket.dekanehstaff.network.model.Report;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public class OrderDetailsVP {
 
         void updateProduct(String productId);
 
+        void  report(Report report) ;
+
 
     }
 
@@ -30,9 +33,11 @@ public class OrderDetailsVP {
 
         void checkBarcode(String Barcode);
 
-        void setProductChecked(String productId);
+        void setProductChecked(String productId,String orderId);
 
         void assignPack(String orderId);
+
+        void report(Report report);
 
 
     }

@@ -89,7 +89,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/productName" />
 
             <TextView
-                android:id="@+id/product"
+                android:id="@+id/manufacturer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -133,7 +133,7 @@
                 android:paddingBottom="25dp"
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product"
+                app:layout_constraintTop_toBottomOf="@+id/manufacturer"
                 app:srcCompat="@drawable/ic_done" />
 
             <Button

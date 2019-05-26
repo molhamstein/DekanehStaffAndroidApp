@@ -47,7 +47,6 @@ public class ScanBarcodeActivity extends BaseActivity implements ZXingScannerVie
 
     @Override
     public void handleResult(Result rawResult) {
-        // Do something with the result here
 
         mScannerView.stopCamera();
         Intent intent = new Intent() ;

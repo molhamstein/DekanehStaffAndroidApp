@@ -40,6 +40,10 @@ public class WarehouseMainVP {
         void getFilteredOrders(Enums.WarehouseStatuses status);
 
         void onOrderClicked(WarehouseOrder order);
+
+        void showSearchLoader();
+
+        void hideSearchLoader();
     }
 
     public interface Presenter<T extends BaseView> extends BasePresenter<T> {
@@ -47,6 +51,8 @@ public class WarehouseMainVP {
         ProfileDrawerItem getProfileItem();
 
         void getOrders();
+
+        void searchStock(String keyword,Integer limit, Integer skip);
 
         void getStock(Integer limit, Integer skip);
 

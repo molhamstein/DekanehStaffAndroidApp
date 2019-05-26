@@ -3,6 +3,7 @@ package com.brain_socket.dekanehstaff.activity.warehouse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,9 +11,12 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,7 +27,6 @@ import com.brain_socket.dekanehstaff.activity.warehouse.mvp.WarehouseMainVP;
 import com.brain_socket.dekanehstaff.adapter.warehouse.StockAdapter;
 import com.brain_socket.dekanehstaff.adapter.warehouse.WarehouseOrdersAdapter;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
-import com.brain_socket.dekanehstaff.network.model.User;
 import com.brain_socket.dekanehstaff.network.model.WareHouseProduct;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 import com.brain_socket.dekanehstaff.utils.Enums;
@@ -32,7 +35,6 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
@@ -123,6 +125,8 @@ public class WarehouseMainActivity extends BaseActivity implements
     TextView noResultText;
     @BindView(R.id.mainToolbar)
     Toolbar mainToolbar;
+    @BindView(R.id.searchLoader)
+    ProgressBar searchLoader;
     private Integer pageId = 0;
 
 
@@ -139,11 +143,19 @@ public class WarehouseMainActivity extends BaseActivity implements
             getActivityComponent().inject(this);
 
 
-
-
         presenter.onAttach(this);
 
 
+    }
+
+    @Override
+    public void showSearchLoader() {
+        searchLoader.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideSearchLoader() {
+        searchLoader.setVisibility(View.GONE);
     }
 
     @Override
@@ -247,16 +259,18 @@ public class WarehouseMainActivity extends BaseActivity implements
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int visibleItemCount = lm2.getChildCount();
-                int totalItemCount = lm2.getItemCount();
-                int firstVisibleItemPosition = lm2.findFirstVisibleItemPosition();
-                if (!isLoading())
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                            && firstVisibleItemPosition >= 0
-                            && totalItemCount >= limit) {
-                        pageId++;
-                        presenter.getStock(limit, pageId * limit);
-                    }
+                if (search.getText().toString().isEmpty()) {
+                    int visibleItemCount = lm2.getChildCount();
+                    int totalItemCount = lm2.getItemCount();
+                    int firstVisibleItemPosition = lm2.findFirstVisibleItemPosition();
+                    if (!isLoading())
+                        if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                                && firstVisibleItemPosition >= 0
+                                && totalItemCount >= limit) {
+                            pageId++;
+                            presenter.searchStock(search.getText().toString(), limit, pageId * limit);
+                        }
+                }
             }
 
         });
@@ -268,7 +282,34 @@ public class WarehouseMainActivity extends BaseActivity implements
             public void onRefresh() {
                 pageId = 0;
                 stockAdapter.reset();
-                presenter.getStock(limit, pageId * limit);
+                presenter.searchStock(search.getText().toString(), limit, pageId * limit);
+            }
+        });
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                pageId = 0;
+                stockAdapter.reset();
+                presenter.searchStock(search.getText().toString(), limit, pageId * limit);
+            }
+        };
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 1000);
             }
         });
 
@@ -280,7 +321,7 @@ public class WarehouseMainActivity extends BaseActivity implements
             stockLayout.setVisibility(View.VISIBLE);
             ordersLayout.setVisibility(View.GONE);
             stockAdapter.reset();
-            presenter.getStock(limit, pageId * limit);
+            presenter.searchStock(search.getText().toString(), limit, pageId * limit);
         } else if (buttonView == orders && isChecked) {
             stockLayout.setVisibility(View.GONE);
             ordersLayout.setVisibility(View.VISIBLE);
@@ -303,6 +344,7 @@ public class WarehouseMainActivity extends BaseActivity implements
 
     @Override
     public void addWareHouseProducts(List<WareHouseProduct> wareHouseProducts) {
+
         stockAdapter.addAll(wareHouseProducts);
     }
 
@@ -323,14 +365,12 @@ public class WarehouseMainActivity extends BaseActivity implements
     public void hideEmptyStockIcon() {
         noResultStock.setVisibility(View.GONE);
         recylcerViewStock.setVisibility(View.VISIBLE);
-        search.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showEmptyStockIcon() {
         noResultStock.setVisibility(View.VISIBLE);
         recylcerViewStock.setVisibility(View.GONE);
-        search.setVisibility(View.GONE);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class DateHelper {
             c2.setTime(formattedDate);
 
 
-            Long diff = Math.abs(c2.getTimeInMillis() - c1.getTimeInMillis());
+            Long diff = Math.max(c2.getTimeInMillis() - c1.getTimeInMillis(),0);
             Long hours = diff / (1000 * 60 * 60);
             Long minuts = (diff / (1000 * 60)) % 60;
             Long seconds = (diff / (1000)) % 60;

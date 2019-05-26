@@ -20,6 +20,7 @@ import com.brain_socket.dekanehstaff.adapter.warehouse.StockCheckAdapter;
 import com.brain_socket.dekanehstaff.base.BaseActivity;
 import com.brain_socket.dekanehstaff.network.model.OrderProduct;
 import com.brain_socket.dekanehstaff.network.model.Product;
+import com.brain_socket.dekanehstaff.network.model.Report;
 import com.brain_socket.dekanehstaff.network.model.WarehouseOrder;
 
 import java.util.List;
@@ -147,12 +148,17 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsVP
 
     @Override
     public void updateProduct(String productId) {
-        presenter.setProductChecked(productId);
+        presenter.setProductChecked(productId,order.getId());
         adapter.notifyDataSetChanged();
         presenter.assignPack(order.getId());
 
     }
 
+    @Override
+    public void report(Report report) {
+        report.setOrderId(order.getId());
+        presenter.report(report);
+    }
 
     @Override
     public List<OrderProduct> getAllProducts() {
