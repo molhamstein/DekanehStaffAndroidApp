@@ -19,7 +19,7 @@ public class ApiEndPoint {
     public static final String LOGOUT = USERS + "/logout";
     public static final String CLIENTS = USERS + "?filter={\"where\":{\"and\":[{\"status\":\"pending\"}]}}";
     public static final String AREAS = BuildConfig.BASE_API_URL + "areas";
-    public static final String DELIVER = ORDERS + "/{orderId}/delivered";
+    public static final String DELIVER = ORDERS + "/{orderId}/assignDelivered";
     public static final String WAREHOUSE_ORDERS = ORDERS + "?filter={\"where\":{\"and\":[{\"warehouseKeeperId\":\"{userId}\"}]}}";
     public static final String WAREHOUSE_STOCK = WAREHOUSE + "?filter={\"limit\":{limit},\"skip\":{skip},\"include\":[\"productAbstract\"]}";
     public static final String CHECK_BARCODE = BuildConfig.BASE_API_URL+ "Barcodes?filter={\"where\":{\"code\":\"{Barcode}\"}}" ;

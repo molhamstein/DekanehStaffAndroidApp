@@ -198,7 +198,7 @@ public class MainPresenter<T extends MainVP.View> extends BasePresenterImpl<T> i
                                 }, new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-//                                         Log.d("ASDASD", "accept: " + NetworkUtils.getError(throwable) + " id = " + order.getId());
+                                         Log.d("ASDASD", "accept: " + NetworkUtils.getError(throwable) + " id = " + order.getId());
                                     }
                                 })
                         );

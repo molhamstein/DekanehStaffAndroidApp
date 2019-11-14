@@ -13,21 +13,12 @@ public class OrderItem implements Serializable {
     @SerializedName("count")
     @Expose
     private int count;
-    @SerializedName("nameAr")
-    @Expose
-    private String nameAr;
-    @SerializedName("price")
+    @SerializedName("sellingPrice")
     @Expose
     private int retailPrice;
-    @SerializedName("dockanBuyingPrice")
+    @SerializedName("product")
     @Expose
-    private int dockanBuyingPrice;
-    @SerializedName("media")
-    @Expose
-    private Media media;
-    @SerializedName("pack")
-    @Expose
-    private String pack;
+    private Product product;
 
 
     public int getCount() {
@@ -35,7 +26,11 @@ public class OrderItem implements Serializable {
     }
 
     public String getNameAr() {
-        return nameAr;
+        if (product != null && product.getNameAr() != null) {
+            return product.getNameAr();
+        }else{
+            return "";
+        }
     }
 
     public int getRetailPrice() {
@@ -43,15 +38,25 @@ public class OrderItem implements Serializable {
     }
 
     public int getDockanBuyingPrice() {
-        return dockanBuyingPrice;
+        if (product != null && product.getProductAbstract() != null) {
+            return product.getProductAbstract().getOfficialMassMarketPrice();
+        }
+        return 0;
     }
 
     public String getPack() {
-        return pack;
+        if (product != null) {
+            return product.getPack();
+        }
+        return "";
     }
 
     public String getThumbnailUrl() {
-        return media.thumbnail;
+        if (product != null && product.getMedia() != null) {
+            return product.getMedia().getThumbnail();
+        } else {
+            return null;
+        }
     }
 
     public void setCount(int count) {
@@ -62,40 +67,25 @@ public class OrderItem implements Serializable {
         return id;
     }
 
-    public void setNameAr(String nameAr) {
-        this.nameAr = nameAr;
-    }
 
     public void setRetailPrice(int retailPrice) {
         this.retailPrice = retailPrice;
     }
 
-    public void setMedia(Media media) {
-        this.media = media;
-    }
-
-    public void setPack(String pack) {
-        this.pack = pack;
-    }
 
     public OrderItem(OrderItem item) {
         this.id = item.id;
         this.count = item.count;
-        this.nameAr = item.nameAr;
         this.retailPrice = item.retailPrice;
-        this.dockanBuyingPrice = item.getDockanBuyingPrice();
-        this.media = item.media;
-        this.pack = item.pack;
+        this.product = item.product;
     }
 
     @Override
     public String toString() {
         return "OrderItem{" +
                 "count=" + count +
-                ", nameAr='" + nameAr + '\'' +
                 ", retailPrice=" + retailPrice +
-                ", media=" + media +
-                ", pack='" + pack + '\'' +
+                '\'' +
                 '}';
     }
 

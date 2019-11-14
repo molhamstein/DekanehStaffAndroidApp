@@ -59,15 +59,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_API_URL", '"http://dockaan.com/api/"'
+            //buildConfigField "String", "BASE_API_URL", '"http://dockaan.com/api/"'
+            buildConfigField "String", "BASE_API_URL", '"http://dockaan.com:3033/api/"'
+
             debuggable false
             // signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            buildConfigField "String", "BASE_API_URL", '"http://104.217.253.15:3003/api/"'
-            //buildConfigField "String", "BASE_API_URL", '"http://192.168.1.5:3000/api/"'
+            //buildConfigField "String", "BASE_API_URL", '"http://104.217.253.15:3033/api/"'
+            //buildadb sheConfigField "String", "BASE_API_URL", '"http://192.168.1.5:3000/api/"'
 //            buildConfigField "String", "BASE_API_URL", '"http://dockaan.com/api/"'
             buildConfigField "String", "BASE_API_URL", '"http://dockaan.com:3033/api/"'
         }

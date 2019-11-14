@@ -104,9 +104,6 @@ public class Product implements Serializable {
     @SerializedName("marketOfficialPrice")
     @Expose
     private Integer marketOfficialPrice;
-    @SerializedName("dockanBuyingPrice")
-    @Expose
-    private Integer dockanBuyingPrice;
     @SerializedName("category")
     @Expose
     private Category category;
@@ -378,14 +375,6 @@ public class Product implements Serializable {
 
     public void setMarketOfficialPrice(Integer marketOfficialPrice) {
         this.marketOfficialPrice = marketOfficialPrice;
-    }
-
-    public Integer getDockanBuyingPrice() {
-        return dockanBuyingPrice;
-    }
-
-    public void setDockanBuyingPrice(Integer dockanBuyingPrice) {
-        this.dockanBuyingPrice = dockanBuyingPrice;
     }
 
     public Category getCategory() {
